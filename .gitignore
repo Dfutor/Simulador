@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+front/node_modules/
+front/dist/
+
+# Configuración local del editor
+.claude/
+
+# Material de consulta con derechos de autor: no se publica
+*.pdf

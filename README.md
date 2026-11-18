@@ -13,7 +13,27 @@ Coss Bu, Raúl. *Simulación: un enfoque práctico*. México: Limusa. El documen
 | `simulador2/` | Back en Python: el modelo, las pruebas estadísticas y la API (FastAPI) |
 | `front/` | Front en Vue 3 + Vite: asistente por pasos, gráficas (ECharts), banco en 3D (Three.js + Tweakpane) |
 
-## Instalar (una sola vez)
+## Iniciar con Docker (recomendado)
+
+Solo se necesita [Docker](https://docs.docker.com/get-docker/) (con Docker Compose, que ya viene incluido). En la carpeta del proyecto:
+
+```bash
+docker compose up --build -d
+```
+
+- Aplicación: http://localhost:8080
+- API y su documentación: http://localhost:8000/docs (también en http://localhost:8080/docs)
+
+| Comando | Para qué |
+|---|---|
+| `docker compose up -d` | Iniciar (sin recompilar) |
+| `docker compose up --build -d` | Iniciar recompilando tras cambiar el código |
+| `docker compose logs -f` | Ver los registros |
+| `docker compose down` | Detener |
+
+Se levantan dos contenedores: `back` (Python + FastAPI) y `front` (Vue compilado y servido con nginx, que reenvía `/api` al back).
+
+## Instalar sin Docker (una sola vez)
 
 ```bash
 python3 -m venv .venv

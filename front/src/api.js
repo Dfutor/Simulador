@@ -23,7 +23,7 @@ async function pedir(ruta, cuerpo) {
       body: JSON.stringify(cuerpo),
     });
   } catch {
-    throw new Error("No hay conexión con la API. Inicia el servidor con: .venv/bin/python simulador2/api.py");
+    throw new Error("No hay conexión con la API. Inicia el proyecto con: docker compose up -d");
   }
   const datos = await respuesta.json();
   if (!respuesta.ok) throw new Error(explicarError(datos.detail));

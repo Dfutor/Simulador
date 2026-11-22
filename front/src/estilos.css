@@ -151,6 +151,17 @@ tbody tr:last-child td { border-bottom: none; }
 
 details > summary { cursor: pointer; font-weight: 600; margin: 1rem 0 0.6rem; }
 
+/* Categoría de una franja: texto + borde (no depende solo del color) */
+.categoria { display: inline-block; padding: 0.05rem 0.55rem; border-radius: 999px; border: 1.5px solid currentColor; font-size: 0.82rem; font-weight: 600; }
+.categoria.valle { color: var(--estadoBuenoTexto); }
+.categoria.normal { color: var(--acento); }
+.categoria.pico { color: var(--estadoCritico); }
+.categoria.sinDatos { color: var(--textoTenue); border-style: dashed; }
+
+.aviso { border: 1.5px solid var(--bordeFuerte); border-radius: 10px; padding: 0.6rem 0.9rem; color: var(--textoSecundario); font-size: 0.9rem; margin: 0.5rem 0; }
+.aviso.simulacion { border-style: dashed; }
+.enlace { color: var(--acento); }
+
 @media (max-width: 640px) {
   .tarjeta { padding: 1rem; border-radius: 12px; }
   .rejillaGraficas { grid-template-columns: minmax(0, 1fr); }

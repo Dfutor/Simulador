@@ -43,6 +43,7 @@ const AJUSTES_INICIALES = {
   animaciones: true,
   mostrarEtiquetas: false,
   metaEsperaMinutos: 10,
+  ventanaPromedioMovil: 3,
   utilizacionMinima: 60,
   utilizacionMaxima: 90,
   variablesVisibles: todasVisibles(VARIABLES_OPCIONALES),
@@ -99,17 +100,43 @@ export const simulacion = reactive({
   entradaPorDefecto: null,
   entrada: null,
   escenario: "normal",
-  factorQuincena: 1.3,
   resultado: null,
   cajasNecesarias: null,
   cargando: false,
   error: "",
 });
 
+// ---------- Establecimiento (se guarda en el servidor: lo comparten la administración y el cliente) ----------
+
+export const establecimiento = reactive({
+  configuracion: null,   // horario semanal, excepciones, zona horaria, factor de quincena, franjas…
+  publicacion: null,     // semilla, fecha y vigencia de las estimaciones publicadas
+  guardada: false,
+  hoy: null,
+});
+
+const horaCorta = (hora) => hora.slice(0, 5);
+const jornadasCortas = (jornadas) => jornadas.map((jornada) => ({ inicio: horaCorta(jornada.inicio), fin: horaCorta(jornada.fin) }));
+
+export function cargarEstablecimiento(estado) {
+  const { configuracion } = estado;
+  Object.assign(establecimiento, {
+    ...estado,
+    configuracion: {
+      ...configuracion,
+      horarioSemanal: configuracion.horarioSemanal.map((dia) => ({ ...dia, jornadas: jornadasCortas(dia.jornadas) })),
+      excepciones: configuracion.excepciones.map((excepcion) => ({ ...excepcion, jornadas: jornadasCortas(excepcion.jornadas) })),
+    },
+  });
+}
+
+export const factorQuincena = () => establecimiento.configuracion?.factorQuincena ?? 1.3;
+
 export function jornadaParaFormulario(jornada) {
   return {
     inicio: jornada.inicio.slice(0, 5),
     fin: jornada.fin.slice(0, 5),
+    inicioConteos: jornada.inicioConteos ? jornada.inicioConteos.slice(0, 5) : "",
     conteosTexto: jornada.conteos.join(", "),
     minutosPorCliente: jornada.minutosPorCliente,
     servicioMinimo: jornada.servicioMinimo,
@@ -117,11 +144,14 @@ export function jornadaParaFormulario(jornada) {
   };
 }
 
-export function cargarEntradaPorDefecto(entradaPorDefecto) {
+/** Los valores por defecto, y si el establecimiento ya guardó sus parámetros, se arranca con esos. */
+export function cargarEntradaPorDefecto(entradaPorDefecto, entradaGuardada = null) {
   simulacion.entradaPorDefecto = entradaPorDefecto;
+  const inicial = entradaGuardada ?? entradaPorDefecto;
   simulacion.entrada = {
-    ...structuredClone(entradaPorDefecto),
-    jornadas: entradaPorDefecto.jornadas.map(jornadaParaFormulario),
+    ...structuredClone(inicial),
+    semilla: inicial.semilla ?? "",
+    jornadas: inicial.jornadas.map(jornadaParaFormulario),
   };
 }
 
@@ -146,15 +176,17 @@ export function entradaParaEnviar() {
     tiempoEntreTomasDeDatos: valor("tiempoEntreTomasDeDatos"),
     proporcionVanACaja: valor("proporcionVanACaja"),
     proporcionPrioritarios: valor("proporcionPrioritarios"),
-    factorLlegadas: esQuincena ? simulacion.factorQuincena : 1,
+    factorLlegadas: esQuincena ? factorQuincena() : 1,
     numeroCorridas: valor("numeroCorridas"),
     alfa: valor("alfa"),
     limiteIntentos: valor("limiteIntentos"),
-    semilla: ajustes.variablesVisibles.semilla && entrada.semilla !== "" ? entrada.semilla : null,
+    // Vacía → el servidor toma el reloj del computador (milisegundos) y devuelve la semilla usada
+    semilla: ajustes.variablesVisibles.semilla && entrada.semilla !== "" && entrada.semilla != null ? entrada.semilla : null,
     compararConCiw: valor("compararConCiw"),
     jornadas: entrada.jornadas.map((jornada) => ({
       inicio: jornada.inicio,
       fin: jornada.fin,
+      inicioConteos: jornada.inicioConteos || null,
       conteos: leerConteos(jornada.conteosTexto),
       minutosPorCliente: jornada.minutosPorCliente,
       servicioMinimo: jornada.servicioMinimo,

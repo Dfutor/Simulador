@@ -1,14 +1,41 @@
 <script setup>
-import { reactive, watch } from "vue";
-import { pedirAjustePoisson } from "../api.js";
-import { ajustes, conteosValidos, entradaParaEnviar, leerConteos, simulacion } from "../estado.js";
+import { reactive, ref, watch } from "vue";
+import { pedirAjustePoisson, pedirAnalisisLlegadas } from "../api.js";
+import { ajustes, conteosValidos, entradaParaEnviar, establecimiento, leerConteos, simulacion } from "../estado.js";
 import { formatearNumero } from "../formato.js";
+import AnalisisLlegadas from "../resultados/AnalisisLlegadas.vue";
 import ResultadoPoisson from "../resultados/ResultadoPoisson.vue";
 
 const entrada = simulacion.entrada;
 const visible = ajustes.variablesVisibles;
 const pruebasPoisson = reactive({});
 const temporizadores = {};
+
+// Promedios móviles y categorías de las franjas: se calculan en el servidor, como las demás pruebas
+const analisis = ref(null);
+const errorAnalisis = ref("");
+const minutosPorFranja = () => establecimiento.configuracion?.minutosPorFranja ?? 60;
+
+function revisarAnalisis() {
+  clearTimeout(temporizadores.analisis);
+  temporizadores.analisis = setTimeout(async () => {
+    if (!entrada.jornadas.every((jornada) => conteosValidos(jornada.conteosTexto)) || !(ajustes.ventanaPromedioMovil >= 2)) {
+      analisis.value = null;
+      return;
+    }
+    try {
+      analisis.value = await pedirAnalisisLlegadas(entradaParaEnviar(), minutosPorFranja(), ajustes.ventanaPromedioMovil);
+      errorAnalisis.value = "";
+    } catch (error) {
+      analisis.value = null;
+      errorAnalisis.value = error.message;
+    }
+  }, 500);
+}
+
+watch(() => [entrada.tiempoEntreTomasDeDatos, entrada.alfa, ajustes.ventanaPromedioMovil, minutosPorFranja(),
+  ...entrada.jornadas.flatMap((jornada) => [jornada.inicio, jornada.fin, jornada.inicioConteos, jornada.conteosTexto])],
+revisarAnalisis, { immediate: true });
 
 function revisarPoisson(posicion) {
   clearTimeout(temporizadores[posicion]);
@@ -38,7 +65,7 @@ function llegadasPorIntervalo(jornada) {
 }
 
 function agregarJornada() {
-  entrada.jornadas.push({ inicio: "08:00", fin: "12:00", conteosTexto: "", minutosPorCliente: 5, servicioMinimo: 1, servicioMaximo: 10 });
+  entrada.jornadas.push({ inicio: "08:00", fin: "12:00", inicioConteos: "", conteosTexto: "", minutosPorCliente: 5, servicioMinimo: 1, servicioMaximo: 10 });
 }
 
 function quitarJornada(posicion) {
@@ -68,11 +95,21 @@ function quitarJornada(posicion) {
           <option value="quincena">Día de quincena</option>
         </select>
       </label>
-      <label v-if="visible.escenario && simulacion.escenario === 'quincena'" class="campo">Aumento de llegadas en quincena
-        <input v-model.number="simulacion.factorQuincena" type="number" min="1" step="0.05" required>
-        <small>1,3 = llega 30 % más gente</small>
+      <label v-if="visible.escenario && simulacion.escenario === 'quincena' && establecimiento.configuracion" class="campo">
+        Aumento de llegadas en quincena
+        <input v-model.number="establecimiento.configuracion.factorQuincena" type="number" min="1" max="3" step="0.05" required>
+        <small>Supuesto, no observado: 1,3 = llega 30 % más gente. Es el mismo valor del calendario del cliente.</small>
+      </label>
+      <label class="campo">Ventana de los promedios móviles
+        <input v-model.number="ajustes.ventanaPromedioMovil" type="number" min="2" max="24" step="1" required>
+        <small>Intervalos que entran en cada promedio</small>
       </label>
     </div>
+    <p class="nota">
+      Solo hay conteos de un día observado: los promedios móviles muestran la tendencia dentro de cada jornada
+      y no reemplazan la tasa de llegadas del modelo. Para comparar fechas del calendario, usa la pestaña Establecimiento.
+    </p>
+    <p v-if="errorAnalisis" class="aviso" role="status">Análisis de llegadas: {{ errorAnalisis }}</p>
 
     <article v-for="(jornada, posicion) in entrada.jornadas" :key="posicion" class="jornada">
       <header>
@@ -82,12 +119,20 @@ function quitarJornada(posicion) {
       <div class="campos">
         <label class="campo">Abre a las <input v-model="jornada.inicio" type="time" required></label>
         <label class="campo">Cierra la puerta a las <input v-model="jornada.fin" type="time" required></label>
+        <label class="campo">Hora del primer conteo
+          <input v-model="jornada.inicioConteos" type="time" :min="jornada.inicio" :max="jornada.fin">
+          <small>Vacía = cuando abre. Ubica cada conteo en el reloj.</small>
+        </label>
       </div>
       <label class="campo conteos">Personas por intervalo ({{ leerConteos(jornada.conteosTexto).length }} intervalos)
         <textarea v-model="jornada.conteosTexto" rows="2" required></textarea>
         <small>Llegadas que se simulan: <b>{{ llegadasPorIntervalo(jornada) }}</b> personas por intervalo</small>
       </label>
       <ResultadoPoisson v-if="pruebasPoisson[posicion]" :prueba="pruebasPoisson[posicion]" />
+      <details v-if="analisis?.jornadas[posicion]" open>
+        <summary>Tendencia y franjas pico, valle y normal</summary>
+        <AnalisisLlegadas :analisis="analisis.jornadas[posicion]" :ventana="analisis.ventana" />
+      </details>
     </article>
 
     <button type="button" class="agregar" @click="agregarJornada">+ Agregar jornada</button>

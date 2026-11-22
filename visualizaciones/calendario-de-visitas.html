@@ -1,0 +1,255 @@
+<section id="visita-banco" aria-labelledby="visita-titulo">
+  <header class="visita-encabezado">
+    <div>
+      <h2 id="visita-titulo">Planifica tu visita</h2>
+      <p>Elige una fecha y consulta la espera en fila por horario.</p>
+    </div>
+    <span class="visita-demo">Datos de ejemplo</span>
+  </header>
+
+  <div class="visita-columnas">
+    <section class="visita-calendario" aria-label="Calendario de visitas">
+      <div class="visita-mes">
+        <h3 id="visita-mes" aria-live="polite"></h3>
+        <div class="visita-navegacion">
+          <button type="button" data-mes="-1" aria-label="Mes anterior">‹</button>
+          <button type="button" data-mes="1" aria-label="Mes siguiente">›</button>
+        </div>
+      </div>
+      <div class="visita-semana" aria-hidden="true">
+        <span>Lun</span><span>Mar</span><span>Mié</span><span>Jue</span><span>Vie</span><span>Sáb</span><span>Dom</span>
+      </div>
+      <div class="visita-dias" role="group" aria-labelledby="visita-mes"></div>
+      <p class="visita-leyenda"><span class="visita-punto" aria-hidden="true"></span> Período de quincena</p>
+    </section>
+
+    <section class="visita-resultados" aria-labelledby="visita-fecha" aria-live="polite">
+      <h3 id="visita-fecha"></h3>
+      <p class="visita-tipo"></p>
+      <ul class="visita-horarios" aria-label="Espera estimada por hora de llegada"></ul>
+      <p class="visita-conclusion"></p>
+      <button class="visita-siguiente" type="button" hidden></button>
+    </section>
+  </div>
+</section>
+
+<style>
+  #visita-banco {
+    --visita-fondo: light-dark(#eef4f9, #131f2e);
+    --visita-superficie: light-dark(#ffffff, #1c2b3d);
+    --visita-texto: light-dark(#142c43, #ecf5ff);
+    --visita-secundario: light-dark(#475e74, #bccce0);
+    --visita-borde: light-dark(#d5e1ed, #40536a);
+    --visita-accion: light-dark(#164b74, #b9dfff);
+    --visita-texto-accion: light-dark(#ffffff, #09233a);
+    --visita-quincena: light-dark(#a35700, #ffbd71);
+    --visita-destacado: light-dark(#e1f1ee, #213f40);
+    --visita-verde: light-dark(#14544d, #b6e9df);
+    background: var(--visita-fondo);
+    color: var(--visita-texto);
+    border-radius: 18px;
+    padding: clamp(8px, 3vw, 28px);
+    font: 14px/1.4 system-ui, sans-serif;
+  }
+  #visita-banco *, #visita-banco *::before, #visita-banco *::after { box-sizing: border-box; }
+  #visita-banco [hidden] { display: none; }
+  #visita-banco :is(h2, h3, p) { margin: 0; }
+  #visita-banco h2 { font-size: clamp(22px, 3vw, 29px); font-weight: 650; }
+  #visita-banco h3 { font-size: 17px; font-weight: 650; }
+  #visita-banco button { font: inherit; color: inherit; cursor: pointer; }
+  #visita-banco button:focus-visible { outline: 2px solid var(--visita-accion); outline-offset: 2px; }
+  #visita-banco .visita-encabezado { display: flex; flex-wrap: wrap; align-items: flex-start; gap: 8px 16px; margin-bottom: 18px; }
+  #visita-banco .visita-encabezado p { color: var(--visita-secundario); margin-top: 4px; }
+  #visita-banco .visita-demo { align-self: center; font-size: 12px; color: var(--visita-secundario); border: 1px solid var(--visita-borde); padding: 4px 10px; border-radius: 18px; }
+  #visita-banco .visita-columnas { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 12px; }
+  #visita-banco :is(.visita-calendario, .visita-resultados) { background: var(--visita-superficie); border: 1px solid var(--visita-borde); border-radius: 13px; padding: clamp(8px, 2.1vw, 18px); }
+  #visita-banco .visita-mes { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 8px; }
+  #visita-banco .visita-navegacion { display: flex; gap: 4px; }
+  #visita-banco .visita-navegacion button { width: 44px; height: 44px; padding: 0; border: 1px solid var(--visita-borde); border-radius: 8px; background: transparent; font-size: 22px; }
+  #visita-banco :is(.visita-semana, .visita-dias) { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; text-align: center; }
+  #visita-banco .visita-semana { color: var(--visita-secundario); font-size: 12px; margin-bottom: 5px; }
+  #visita-banco .visita-dia { position: relative; min-height: 44px; border: 0; border-radius: 7px; padding: 0 0 5px; background: transparent; font-variant-numeric: tabular-nums; }
+  #visita-banco .visita-dia:hover, #visita-banco .visita-navegacion button:hover { background: var(--visita-fondo); }
+  #visita-banco .visita-dia[data-cerrado] { color: var(--visita-secundario); }
+  #visita-banco .visita-dia[aria-pressed="true"] { background: var(--visita-accion); color: var(--visita-texto-accion); font-weight: 650; }
+  #visita-banco .visita-punto { display: inline-block; flex: 0 0 auto; width: 6px; height: 6px; border-radius: 50%; background: var(--visita-quincena); }
+  #visita-banco .visita-dia .visita-punto { position: absolute; bottom: 6px; left: calc(50% - 3px); }
+  #visita-banco .visita-dia[aria-pressed="true"] .visita-punto { background: currentColor; }
+  #visita-banco .visita-leyenda { display: flex; align-items: center; gap: 7px; margin-top: 11px; font-size: 12px; color: var(--visita-secundario); }
+  #visita-banco .visita-tipo { color: var(--visita-secundario); margin-top: 3px; }
+  #visita-banco .visita-horarios { list-style: none; padding: 0; margin: 14px 0; }
+  #visita-banco .visita-horarios:empty { display: none; }
+  #visita-banco .visita-horarios li { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 3px 12px; padding: 10px 8px; border-bottom: 1px solid var(--visita-borde); }
+  #visita-banco .visita-horarios .visita-mejor { border-color: transparent; border-radius: 8px; background: var(--visita-destacado); color: var(--visita-verde); }
+  #visita-banco .visita-horarios strong { display: block; font-variant-numeric: tabular-nums; }
+  #visita-banco .visita-categoria { display: block; color: var(--visita-secundario); font-size: 12px; }
+  #visita-banco .visita-conclusion { margin-top: 14px; }
+  #visita-banco .visita-siguiente { min-height: 44px; margin-top: 12px; padding: 6px 12px; border: 0; border-radius: 8px; background: var(--visita-accion); color: var(--visita-texto-accion); }
+  @media (max-width: 650px) { #visita-banco .visita-columnas { grid-template-columns: minmax(0, 1fr); } }
+</style>
+
+<script>
+  (() => {
+    const raiz = document.getElementById('visita-banco');
+    const mesTexto = raiz.querySelector('#visita-mes');
+    const dias = raiz.querySelector('.visita-dias');
+    const fechaTexto = raiz.querySelector('#visita-fecha');
+    const tipoTexto = raiz.querySelector('.visita-tipo');
+    const horarios = raiz.querySelector('.visita-horarios');
+    const conclusion = raiz.querySelector('.visita-conclusion');
+    const siguiente = raiz.querySelector('.visita-siguiente');
+    const restauraFecha = (valor, alternativa) => {
+      if (typeof valor !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(valor)) return alternativa;
+      const fecha = new Date(`${valor}T12:00:00Z`);
+      return Number.isFinite(fecha.getTime()) && fecha.toISOString().slice(0, 10) === valor ? fecha : alternativa;
+    };
+    const inicial = new Date('2026-12-05T12:00:00Z');
+    let seleccion = inicial;
+    let mes = inicioMes(inicial);
+    const formatoDia = new Intl.DateTimeFormat('es-CO', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' });
+    const formatoCorto = new Intl.DateTimeFormat('es-CO', { weekday: 'long', day: 'numeric', month: 'long', timeZone: 'UTC' });
+    const formatoMes = new Intl.DateTimeFormat('es-CO', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+    const franjas = [
+      { hora: '08:00–10:00', categoria: 'Valle', espera: 12, quincena: 21 },
+      { hora: '10:00–12:00', categoria: 'Pico', espera: 38, quincena: 54 },
+      { hora: '14:00–16:30', categoria: 'Normal', espera: 23, quincena: 34 },
+    ];
+
+    function fechaUtc(anio, mes, dia) {
+      return new Date(Date.UTC(anio, mes, dia, 12));
+    }
+
+    function inicioMes(fecha) {
+      return fechaUtc(fecha.getUTCFullYear(), fecha.getUTCMonth(), 1);
+    }
+
+    function clave(fecha) {
+      return fecha.toISOString().slice(0, 10);
+    }
+
+    function largoMes(fecha) {
+      return fechaUtc(fecha.getUTCFullYear(), fecha.getUTCMonth() + 1, 0).getUTCDate();
+    }
+
+    function esQuincena(fecha) {
+      const dia = fecha.getUTCDate();
+      return dia <= 4 || (dia >= 12 && dia <= 18) || dia > largoMes(fecha) - 4;
+    }
+
+    function estaCerrado(fecha) {
+      return fecha.getUTCDay() === 0;
+    }
+
+    function capitaliza(texto) {
+      return texto.charAt(0).toUpperCase() + texto.slice(1);
+    }
+
+    function renderCalendario() {
+      mesTexto.textContent = capitaliza(formatoMes.format(mes));
+      const celdas = document.createDocumentFragment();
+      const espacios = (mes.getUTCDay() + 6) % 7;
+      for (let i = 0; i < espacios; i++) {
+        const espacio = document.createElement('span');
+        espacio.setAttribute('aria-hidden', 'true');
+        celdas.append(espacio);
+      }
+      for (let dia = 1; dia <= largoMes(mes); dia++) {
+        const fecha = fechaUtc(mes.getUTCFullYear(), mes.getUTCMonth(), dia);
+        const esPeriodoQuincena = esQuincena(fecha);
+        const cerrado = estaCerrado(fecha);
+        const boton = document.createElement('button');
+        boton.type = 'button';
+        boton.className = 'visita-dia';
+        boton.dataset.fecha = clave(fecha);
+        boton.textContent = dia;
+        boton.setAttribute('aria-label', [formatoDia.format(fecha), esPeriodoQuincena && 'quincena', cerrado && 'cerrado'].filter(Boolean).join(', '));
+        boton.setAttribute('aria-pressed', String(clave(fecha) === clave(seleccion)));
+        if (cerrado) boton.dataset.cerrado = '';
+        if (esPeriodoQuincena) {
+          const punto = document.createElement('span');
+          punto.className = 'visita-punto';
+          punto.setAttribute('aria-hidden', 'true');
+          boton.append(punto);
+        }
+        celdas.append(boton);
+      }
+      dias.replaceChildren(celdas);
+    }
+
+    function renderResultados() {
+      const quincena = esQuincena(seleccion);
+      const cerrado = estaCerrado(seleccion);
+      fechaTexto.textContent = capitaliza(formatoCorto.format(seleccion));
+      tipoTexto.textContent = quincena ? 'Período de quincena' : 'Día regular';
+      horarios.replaceChildren();
+      siguiente.hidden = !cerrado;
+      if (cerrado) {
+        const manana = fechaUtc(seleccion.getUTCFullYear(), seleccion.getUTCMonth(), seleccion.getUTCDate() + 1);
+        conclusion.textContent = 'La sucursal está cerrada este día.';
+        siguiente.textContent = `Ver ${formatoCorto.format(manana)}`;
+        siguiente.dataset.fecha = clave(manana);
+        return;
+      }
+
+      const campo = quincena ? 'quincena' : 'espera';
+      const mejor = franjas.reduce((menor, franja) => franja[campo] < menor[campo] ? franja : menor);
+      for (const franja of franjas) {
+        const fila = document.createElement('li');
+        const etiqueta = document.createElement('span');
+        const hora = document.createElement('strong');
+        const categoria = document.createElement('span');
+        const espera = document.createElement('strong');
+        hora.textContent = franja.hora;
+        categoria.className = 'visita-categoria';
+        categoria.textContent = franja.categoria;
+        espera.textContent = `${franja[campo]} min`;
+        etiqueta.append(hora, categoria);
+        fila.append(etiqueta, espera);
+        if (franja === mejor) fila.className = 'visita-mejor';
+        horarios.append(fila);
+      }
+      conclusion.textContent = `Menor espera estimada si llegas entre ${mejor.hora.replace('–', ' y las ')}.`;
+    }
+
+    function guardaEstado() {
+      window.openai?.setWidgetState?.({
+        modelContent: { fecha: clave(seleccion), quincena: esQuincena(seleccion), ejemplo: true },
+        privateContent: { mes: clave(mes) },
+      })?.catch(() => {});
+    }
+
+    function selecciona(fecha) {
+      seleccion = fecha;
+      mes = inicioMes(fecha);
+      renderCalendario();
+      renderResultados();
+      dias.querySelector('[aria-pressed="true"]')?.focus();
+      guardaEstado();
+    }
+
+    function aplicaEstado(estado) {
+      seleccion = restauraFecha(estado?.modelContent?.fecha, seleccion);
+      mes = inicioMes(restauraFecha(estado?.privateContent?.mes, seleccion));
+      renderCalendario();
+      renderResultados();
+    }
+
+    for (const boton of raiz.querySelectorAll('[data-mes]')) {
+      boton.addEventListener('click', () => {
+        mes = fechaUtc(mes.getUTCFullYear(), mes.getUTCMonth() + Number(boton.dataset.mes), 1);
+        renderCalendario();
+        guardaEstado();
+      });
+    }
+    dias.addEventListener('click', (evento) => {
+      const boton = evento.target.closest('button[data-fecha]');
+      if (boton) selecciona(restauraFecha(boton.dataset.fecha, seleccion));
+    });
+    siguiente.addEventListener('click', () => selecciona(restauraFecha(siguiente.dataset.fecha, seleccion)));
+    window.addEventListener('openai:set_globals', (evento) => {
+      const estado = evento.detail?.globals?.widgetState;
+      if (estado) aplicaEstado(estado);
+    });
+    aplicaEstado(window.openai?.widgetState);
+  })();
+</script>

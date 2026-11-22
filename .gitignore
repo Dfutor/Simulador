@@ -8,3 +8,6 @@ front/dist/
 
 # Material de consulta con derechos de autor: no se publica
 *.pdf
+
+# Configuración del establecimiento y estimaciones publicadas (se generan al usar la app)
+simulador2/datos/

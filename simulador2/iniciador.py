@@ -2,6 +2,7 @@
 
 import math
 import random
+import time as reloj
 from datetime import time
 
 from medidas import calcularMedidas, resumirCorridas
@@ -13,6 +14,15 @@ from validacionCiw import compararConCiw
 corridasAceptadas: list[dict] = []
 
 MAXIMO_CAJAS_A_PROBAR = 30
+
+# Cambia cuando cambia cómo se generan los números: misma semilla + misma versión → mismo resultado.
+VERSION_MODELO = "2.1"
+
+
+def resolverSemilla(semilla: int | None) -> int:
+    """La semilla manual tiene prioridad; si no hay, se toma el reloj del computador en milisegundos.
+    El milisegundo no garantiza que dos simulaciones tengan semillas distintas, solo que casi siempre lo serán."""
+    return semilla if semilla is not None else reloj.time_ns() // 1_000_000
 
 
 class UniformidadRechazada(Exception):
@@ -78,6 +88,33 @@ def generarLlegadas(numeroJornada: int, mediaEntreLlegadas: float, cierre: float
     return llegadas
 
 
+def generarLlegadasPorTramos(numeroJornada: int, tramos: list[tuple[float, float, float]],
+                             proporcionPrioritarios: float) -> list[dict]:
+    """Llegadas con una tasa distinta en cada tramo (desde, hasta, media entre llegadas), en minutos de la jornada.
+    Por la falta de memoria de la exponencial, la llegada que cae en el tramo siguiente se descarta y se
+    vuelve a generar desde el borde con la media nueva: es exacto para un proceso de Poisson por tramos.
+    La fila no se reinicia en los bordes: los tramos solo cambian el ritmo de llegada."""
+    llegadas = []
+    anterior = 0.0
+    for posicion, (desde, hasta, media) in enumerate(tramos):
+        ultimo = posicion == len(tramos) - 1
+        aleatorio, entreLlegadas = generarExponencial(media)
+        momento = desde + entreLlegadas
+        while momento < hasta or (ultimo and momento == hasta):
+            llegadas.append({
+                "cliente": len(llegadas) + 1,
+                "jornada": numeroJornada,
+                "prioritario": random.random() < proporcionPrioritarios,
+                "aleatorioLlegada": aleatorio,
+                "tiempoEntreLlegadas": momento - anterior,
+                "momentoLlegada": momento,
+            })
+            anterior = momento
+            aleatorio, entreLlegadas = generarExponencial(media)
+            momento += entreLlegadas
+    return llegadas
+
+
 def siguienteEnFila(pendientes: list[dict], cajaLibre: float) -> dict:
     """Un prioritario que ya esté esperando cuando la caja se libera; si no, el primero en llegar."""
     for cliente in pendientes:
@@ -118,12 +155,17 @@ def atender(llegadas: list[dict], numeroServidores: int, generarServicio) -> Non
 
 
 def modelo(jornadas: dict, numeroServidores: int = 1, proporcionPrioritarios: float = 0.0) -> list[dict]:
-    """Simula un día. Cada jornada empieza con el banco vacío."""
+    """Simula un día. Cada jornada empieza con el banco vacío.
+    Si la jornada trae "tramos" [(desde, hasta, tasaLlegada)], la tasa cambia dentro de la jornada."""
     clientes = []
     for numeroJornada, jornada in jornadas.items():
-        mediaEntreLlegadas = jornada["tiempoEntreTomasDeDatos"] / jornada["tasaLlegada"]
-        llegadas = generarLlegadas(numeroJornada, mediaEntreLlegadas, duracionJornada(jornada),
-                                   proporcionPrioritarios)
+        if len(jornada.get("tramos") or []) > 1:
+            tramos = [(desde, hasta, jornada["tiempoEntreTomasDeDatos"] / tasa) for desde, hasta, tasa in jornada["tramos"]]
+            llegadas = generarLlegadasPorTramos(numeroJornada, tramos, proporcionPrioritarios)
+        else:
+            mediaEntreLlegadas = jornada["tiempoEntreTomasDeDatos"] / jornada["tasaLlegada"]
+            llegadas = generarLlegadas(numeroJornada, mediaEntreLlegadas, duracionJornada(jornada),
+                                       proporcionPrioritarios)
         if not llegadas:
             raise JornadaSinClientes(
                 f"La jornada {numeroJornada} no recibió ningún cliente en una corrida. "
@@ -177,6 +219,7 @@ def simularCorridas(jornadas: dict, numeroServidores: int, numeroCorridas: int, 
         return {
             "medidas": medidasPorJornada,
             "clientesCorrida1": corridasAceptadas[0]["clientes"],
+            "clientesPorCorrida": [aceptada["clientes"] for aceptada in corridasAceptadas],
             "ks": [{"corrida": aceptada["corrida"], "intentos": aceptada["intentos"], **aceptada["ks"]}
                    for aceptada in corridasAceptadas],
             "rechazos": rechazos,
@@ -214,7 +257,8 @@ def armarJornadas(entrada: dict) -> dict:
 def simular(entrada: dict) -> dict:
     """Recibe las variables de entrada (JSON) y devuelve los resultados (JSON)."""
     jornadas = armarJornadas(entrada)
-    random.seed(entrada.get("semilla"))
+    semilla = resolverSemilla(entrada.get("semilla"))
+    random.seed(semilla)
     resultado = simularCorridas(jornadas, entrada["numeroServidores"], entrada["numeroCorridas"],
                                 entrada["alfa"], entrada["limiteIntentos"], entrada["proporcionPrioritarios"])
     ciw = None
@@ -223,6 +267,9 @@ def simular(entrada: dict) -> dict:
                              entrada["alfa"], duracionJornada, resultado["medidas"])
 
     return {
+        "semilla": semilla,
+        "semillaManual": entrada.get("semilla") is not None,
+        "versionModelo": VERSION_MODELO,
         "ks": resultado["ks"],
         "rechazos": resultado["rechazos"],
         "jornadas": [{
@@ -249,10 +296,11 @@ def simular(entrada: dict) -> dict:
 def buscarCajasNecesarias(entrada: dict, metaEsperaMinutos: float) -> dict:
     """Simula con 1, 2, 3… cajas hasta que la espera promedio (Wq) de todas las jornadas cumpla la meta."""
     jornadas = armarJornadas(entrada)
+    semilla = resolverSemilla(entrada.get("semilla"))
     curva = []
     cajasRecomendadas = None
     for numeroServidores in range(1, MAXIMO_CAJAS_A_PROBAR + 1):
-        random.seed(entrada.get("semilla"))
+        random.seed(semilla)   # la misma semilla para cada número de cajas: solo cambian las cajas
         resultado = simularCorridas(jornadas, numeroServidores, entrada["numeroCorridas"], entrada["alfa"],
                                     entrada["limiteIntentos"], entrada["proporcionPrioritarios"])
         porJornada = []
@@ -265,4 +313,5 @@ def buscarCajasNecesarias(entrada: dict, metaEsperaMinutos: float) -> dict:
             cajasRecomendadas = numeroServidores
         elif cajasRecomendadas is not None:
             break   # una caja más que la recomendada, para ver cuánto mejora
-    return {"metaEsperaMinutos": metaEsperaMinutos, "cajasRecomendadas": cajasRecomendadas, "curva": curva}
+    return {"metaEsperaMinutos": metaEsperaMinutos, "cajasRecomendadas": cajasRecomendadas, "curva": curva,
+            "semilla": semilla}

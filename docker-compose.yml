@@ -6,6 +6,10 @@ services:
     restart: unless-stopped
     ports:
       - "8000:8000"   # API y su documentación en http://localhost:8000/docs
+    environment:
+      CARPETA_DATOS: /app/datos
+    volumes:
+      - datos:/app/datos   # horario del establecimiento y estimaciones publicadas: sobreviven a recompilar
     healthcheck:
       test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/entrada-por-defecto')"]
       interval: 10s
@@ -14,10 +18,15 @@ services:
       start_period: 10s
 
   front:
-    build: ./front
+    build:
+      context: .
+      dockerfile: front/Dockerfile
     restart: unless-stopped
     ports:
       - "8080:80"     # Aplicación en http://localhost:8080
     depends_on:
       back:
         condition: service_healthy
+
+volumes:
+  datos:

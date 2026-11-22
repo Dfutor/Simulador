@@ -261,6 +261,58 @@ export function opcionPoisson(clases, colores) {
   };
 }
 
+// ---------- Llegadas: promedios móviles y comparación de días ----------
+
+/** Color fijo de cada categoría: valle, normal y pico nunca cambian de color entre gráficas. */
+export function colorCategoria(categoria, colores) {
+  return { valle: colores.series[2], normal: colores.series[0], pico: colores.series[7], sinDatos: colores.textoTenue }[categoria];
+}
+
+export function opcionPromediosMoviles(intervalos, ventana, colores) {
+  const horas = intervalos.map((intervalo) => intervalo.desde);
+  // Una serie de barras por categoría, apiladas: cada conteo queda en su hora con el color de su franja
+  const barrasDe = (categoria, nombre) => ({
+    ...barras(nombre, intervalos.map((intervalo) => (intervalo.categoria === categoria ? intervalo.conteo : null)),
+      colorCategoria(categoria, colores)),
+    stack: "conteo",
+    barMaxWidth: 16,
+    itemStyle: { color: colorCategoria(categoria, colores), opacity: 0.55, borderRadius: [3, 3, 0, 0] },
+  });
+  const presentes = ["valle", "normal", "pico"].filter((categoria) => intervalos.some((intervalo) => intervalo.categoria === categoria));
+  return {
+    ...base(colores),
+    tooltip: { ...base(colores).tooltip, trigger: "axis", axisPointer: { type: "shadow" }, valueFormatter: (valor) => formatearNumero(valor, 2) },
+    xAxis: { ...eje(colores, "Inicio del intervalo", { distanciaNombre: 32 }), type: "category", data: horas },
+    yAxis: eje(colores, "Personas por intervalo", { extra: { minInterval: 1 } }),
+    series: [
+      ...presentes.map((categoria) => barrasDe(categoria, `Observado · ${{ valle: "valle", normal: "normal", pico: "pico" }[categoria]}`)),
+      linea(`Promedio móvil simple (${ventana})`, intervalos.map((intervalo) => intervalo.promedioSimple), colores.texto,
+        { connectNulls: false, lineStyle: { width: 2, color: colores.texto } }),
+      linea(`Promedio móvil ponderado (${ventana})`, intervalos.map((intervalo) => intervalo.promedioPonderado), colores.series[1],
+        { connectNulls: false, lineStyle: { width: 2, type: "dashed", color: colores.series[1] } }),
+    ],
+  };
+}
+
+export function opcionComparacionDias(comparacion, colores) {
+  const nombre = (serie) => `Simulado · ${serie.etiqueta}`;
+  const series = comparacion.series.filter((serie) => serie.n > 0)
+    .map((serie, posicion) => barras(nombre(serie), serie.relativas, colores.series[posicion === 0 ? 0 : 1]));
+  if (comparacion.observado) {
+    series.push(linea("Observado · día de conteo", comparacion.observado.relativas, colores.texto, {
+      showSymbol: true, symbol: "diamond", symbolSize: 9, lineStyle: { width: 1, type: "dotted", color: colores.texto },
+    }));
+  }
+  return {
+    ...base(colores),
+    tooltip: { ...base(colores).tooltip, trigger: "axis", axisPointer: { type: "shadow" }, valueFormatter: (valor) => formatearPorcentaje(valor, 1) },
+    xAxis: { ...eje(colores, `Personas que llegan en ${formatearNumero(comparacion.minutosIntervalo, 0)} min`, { distanciaNombre: 32 }),
+      type: "category", data: comparacion.clases },
+    yAxis: eje(colores, "Frecuencia relativa", { distanciaNombre: 48, extra: { axisLabel: { color: colores.textoTenue, formatter: (valor) => formatearPorcentaje(valor, 0) } } }),
+    series,
+  };
+}
+
 // ---------- Cajas necesarias ----------
 
 export function opcionCurvaCajas(curva, jornadas, campo, colores) {

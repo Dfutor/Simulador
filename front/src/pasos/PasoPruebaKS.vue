@@ -25,8 +25,9 @@ const visible = ajustes.variablesVisibles;
       <label v-if="visible.limiteIntentos" class="campo">Límite de intentos por corrida
         <input v-model.number="entrada.limiteIntentos" type="number" min="1" max="100" step="1" required>
       </label>
-      <label v-if="visible.semilla" class="campo">Semilla <small>(vacía = resultados distintos cada vez)</small>
-        <input v-model="entrada.semilla" type="number" step="1" placeholder="Ej. 12345">
+      <label v-if="visible.semilla" class="campo">Semilla
+        <input v-model="entrada.semilla" type="number" step="1" min="0" placeholder="Vacía = reloj del computador">
+        <small>Vacía: se toma la hora del computador en milisegundos y se muestra en los resultados para poder repetirla.</small>
       </label>
     </div>
     <label v-if="visible.compararConCiw" class="ciw">

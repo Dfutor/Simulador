@@ -7,7 +7,7 @@ function valorPorDefecto(nombre) {
   const porDefecto = simulacion.entradaPorDefecto;
   if (!porDefecto) return "";
   if (nombre === "escenario") return "día normal";
-  if (nombre === "semilla") return "al azar";
+  if (nombre === "semilla") return "reloj del computador (ms)";
   if (nombre === "compararConCiw") return "no";
   return porDefecto[nombre];
 }

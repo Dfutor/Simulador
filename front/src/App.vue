@@ -1,14 +1,16 @@
 <script setup>
-import { defineAsyncComponent, onMounted, ref } from "vue";
-import { pedirEntradaPorDefecto, pedirSimulacion } from "./api.js";
+import { computed, defineAsyncComponent, ref, watch } from "vue";
+import { pedirEntradaPorDefecto, pedirEstablecimiento, pedirSimulacion } from "./api.js";
 import BarraPasos from "./componentes/BarraPasos.vue";
 import PanelAjustes from "./componentes/PanelAjustes.vue";
-import { cargarEntradaPorDefecto, conteosValidos, entradaParaEnviar, simulacion } from "./estado.js";
+import { cargarEntradaPorDefecto, cargarEstablecimiento, conteosValidos, entradaParaEnviar, establecimiento, simulacion } from "./estado.js";
 import PasoLlegadas from "./pasos/PasoLlegadas.vue";
 import PasoPruebaKS from "./pasos/PasoPruebaKS.vue";
 import PasoServicio from "./pasos/PasoServicio.vue";
 
 const PasoResultados = defineAsyncComponent(() => import("./pasos/PasoResultados.vue"));
+const VistaEstablecimiento = defineAsyncComponent(() => import("./vistas/VistaEstablecimiento.vue"));
+const PlanificaVisita = defineAsyncComponent(() => import("./vistas/PlanificaVisita.vue"));
 
 const PASOS = ["Llegadas", "Servicio", "Prueba KS", "Resultados"];
 const COMPONENTES_PASO = [PasoLlegadas, PasoServicio, PasoPruebaKS, PasoResultados];
@@ -16,14 +18,26 @@ const COMPONENTES_PASO = [PasoLlegadas, PasoServicio, PasoPruebaKS, PasoResultad
 const formulario = ref(null);
 const pasoMaximoAlcanzado = ref(1);
 const ajustesAbiertos = ref(false);
+const pestana = ref("simulacion");
 
-onMounted(async () => {
+// Dos experiencias en la misma aplicación: #/visita (cliente) y el resto (administración)
+const ruta = ref(location.hash);
+window.addEventListener("hashchange", () => { ruta.value = location.hash; });
+const esCliente = computed(() => ruta.value.startsWith("#/visita"));
+const fechaDeLaRuta = computed(() => ruta.value.match(/^#\/visita\/(\d{4}-\d{2}-\d{2})$/)?.[1] ?? null);
+
+// El cliente solo necesita el calendario; la administración se carga al entrar a ella
+watch(esCliente, async (cliente) => {
+  if (cliente || simulacion.entrada) return;
   try {
-    cargarEntradaPorDefecto(await pedirEntradaPorDefecto());
+    const [porDefecto, estado] = await Promise.all([pedirEntradaPorDefecto(), pedirEstablecimiento()]);
+    cargarEstablecimiento(estado);
+    // Si el establecimiento ya guardó sus parámetros, el simulador arranca con esos
+    cargarEntradaPorDefecto(porDefecto, estado.guardada ? estado.configuracion.entrada : null);
   } catch (error) {
     simulacion.error = error.message;
   }
-});
+}, { immediate: true });
 
 function irAlPaso(numero) {
   simulacion.pasoActual = numero;
@@ -63,12 +77,30 @@ function siguiente() {
 </script>
 
 <template>
-  <main class="pagina" :class="{ ancha: simulacion.pasoActual === 4 }">
+  <main v-if="esCliente" class="pagina">
+    <PlanificaVisita :key="fechaDeLaRuta ?? 'hoy'" :fecha-inicial="fechaDeLaRuta" />
+  </main>
+
+  <main v-else class="pagina" :class="{ ancha: pestana === 'simulacion' && simulacion.pasoActual === 4 }">
     <header class="encabezado">
       <h1>Simulador de la fila del banco</h1>
       <p class="nota">Una fila con prioridad, varias cajas y varias jornadas · metodología de Coss Bu</p>
     </header>
 
+    <nav class="pestanas secciones" aria-label="Secciones">
+      <button type="button" :class="{ activa: pestana === 'simulacion' }" :aria-current="pestana === 'simulacion' ? 'page' : undefined"
+        @click="pestana = 'simulacion'">Simulación</button>
+      <button type="button" :class="{ activa: pestana === 'establecimiento' }" :aria-current="pestana === 'establecimiento' ? 'page' : undefined"
+        :disabled="!establecimiento.configuracion || !simulacion.entrada" @click="pestana = 'establecimiento'">Establecimiento</button>
+      <a class="botonManual" href="/manual/">Manual de usuario</a>
+      <a class="enlace vistaCliente" href="#/visita">Planifica tu visita (cliente) →</a>
+    </nav>
+
+    <div v-if="pestana === 'establecimiento'" class="tarjeta">
+      <VistaEstablecimiento />
+    </div>
+
+    <template v-else>
     <BarraPasos :pasos="PASOS" :paso-actual="simulacion.pasoActual" :paso-maximo-alcanzado="pasoMaximoAlcanzado" @ir="irAlPaso" />
 
     <form ref="formulario" class="tarjeta" novalidate @submit.prevent="siguiente">
@@ -96,6 +128,7 @@ function siguiente() {
         <button v-else type="button" class="principal" @click="irAlPaso(1)">Nueva simulación</button>
       </div>
     </form>
+    </template>
 
     <PanelAjustes v-if="ajustesAbiertos" @cerrar="ajustesAbiertos = false" />
   </main>
@@ -106,6 +139,18 @@ function siguiente() {
 .pagina.ancha { max-width: 1280px; }
 .encabezado { margin-bottom: 1.75rem; }
 .encabezado h1 { font-size: 1.6rem; }
+.secciones { align-items: center; }
+.secciones button:disabled { cursor: default; }
+.botonManual {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--bordeFuerte);
+  border-radius: 999px;
+  background: var(--superficie);
+  color: var(--acento);
+  text-decoration: none;
+}
+.botonManual:hover { text-decoration: underline; }
+.vistaCliente { margin-left: auto; font-size: 0.92rem; }
 .tituloPaso { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
 .navegacion { display: flex; justify-content: space-between; margin-top: 2rem; }
 .error {

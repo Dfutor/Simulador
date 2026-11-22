@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Informe de hallazgos · Simulador de la fila del banco</title><link rel="stylesheet" href="documento.css"><script defer src="indice.js"></script></head>
+<body><main>
+<nav aria-label="Entregables"><a href="manual.html">Manual</a><a href="matematicas.html">Anexo matemático</a><a href="pruebas.html">Anexo de pruebas</a><a href="matriz.html">Matriz</a><a href="defensa.html">Defensa</a><a href="hallazgos.html" aria-current="page">Hallazgos</a></nav>
+<header><p class="meta">Entregable F · Modelo 2.1</p><h1>Informe de hallazgos</h1><p class="bajada">En orden de impacto sobre la interpretación y la operación del simulador. Los fallos se reportan con su alcance y una prueba de aceptación propuesta.</p></header>
+<nav class="indice" aria-label="Índice"><h2>Índice</h2><ol id="indice-auto"></ol></nav>
+
+<h2 id="criticos">F.1. Hallazgo crítico sobre las conclusiones</h2>
+<article id="h01" class="ficha">
+<h3>H01 · Crítico para uso operativo. Drenaje y discontinuidad entre jornadas</h3>
+<p><b>Estado.</b> IV para la salida simulada y SM para iniciar cada jornada vacía. La mañana regular base cierra admisiones a 12:00, su último cliente sale en promedio 19:21 y la jornada independiente de la tarde abre vacía a 14:00. Los mismos cajeros o usuarios podrían estar siendo representados concurrentemente en dos modelos separados. La causa puede incluir servicio supuesto, proporción de uso de caja, dotación y delimitación operativa; los datos no identifican una causa única. <a href="pruebas.html#experimentos">T07–T08</a> · <a href="../../simulador2/iniciador.py">modelo y atender</a>.</p>
+<p><b>Acción y criterio.</b> Recoger eventos reales a la hora de cierre intermedio. O bien conservar cola y disponibilidad al reabrir, o demostrar cohortes y recursos separados y tiempos compatibles. Probar conteo de recursos a través de 12:00–14:00 y reportar el tiempo de salida frente a datos verificados. Antes de ello, los valores se pueden defender como resultados de escenarios hipotéticos.</p>
+</article>
+<h2 id="estadistica">F.2. Errores y límites estadísticos</h2>
+<article id="h02" class="ficha">
+<h3>H02 · Alto, estadístico. KS sobre uniformes condicionados y selección de réplicas</h3>
+<p><b>Estado.</b> IV para el filtro y su efecto en los casos medidos, INV para su calibración. La lista de llegadas omite la candidata que rebasa horizonte o tramo; la aceptación de un U depende de U por la inversa. También se descarta el resultado completo si falla algún KS. El conjunto pasado al resumen no es el conjunto sin filtrar del modelo especificado. En 900 intentos simulados de cinco minutos, Wq cae de 0,7911 a 0,6605 min al pasar de los no vacíos a los aceptados. El tamaño del efecto depende de la configuración. Con dos pruebas de nivel α la unión tampoco equivale exactamente a 2α. <a href="pruebas.html#experimentos">T06</a> · <a href="matematicas.html#bateria">A.2.5</a>.</p>
+<p><b>Acción y criterio.</b> Separar el diagnóstico del PRNG del cálculo de rendimiento. Para inspección por KS, probar flujos crudos de longitud prefijada (incluidos U no usados en llegadas si se registran), medir tamaño empírico y dependencia. Para resultados de cola, incluir réplicas representativas, declarar manejo de jornadas vacías y comparar IC y selección de capacidad tras el cambio.</p>
+</article>
+<article id="h03" class="ficha">
+<h3>H03 · Alto, estadístico y bibliográfico. Umbrales KS</h3>
+<p><b>Estado.</b> IV. El crítico aproximado para 36 supera al de 35 al mismo α, 0,22635 frente a 0,22431. Con n=1 es mayor a 1 a α=0,05. La Tabla 3.5 de Coss Bu limita su aproximación a n&gt;100 y ofrece umbrales tabulados que el código no lee. La sección de SciPy exacta se usó como referencia con distribución continua conocida. <a href="pruebas.html#casos">T05</a> · <a href="manual.html#mapa-coss">B1 impresa p. 42, PDF 34</a>.</p>
+<p><b>Acción y criterio.</b> Una vez definido un muestreo adecuado, usar cuantiles exactos o aproximación explícita que cumpla monotonicidad y niveles elegidos. Incluir casos n=1, 35, 36, 100 y 101 a los tres α de la UI. Corregir comentarios y README al método real.</p>
+</article>
+<article id="h04" class="ficha">
+<h3>H04 · Alto, estadístico y datos. Inferencia de Poisson con muestras escasas</h3>
+<p><b>Estado.</b> IV para Pearson implementado, INV para calibración, NV para la afirmación de proceso. Mañana solo tiene una libertad tras agrupar. λ se estima antes de agrupar y las clases dependen del máximo y esperados. El supuesto temporal de independencia y homogeneidad es adicional. El p por bootstrap de prueba cambia de 0,164 a 0,203 en mañana y de 0,141 a 0,086 en tarde. Ninguno rechaza a 0,05 en ese ejemplo. «Acepta» o «se ajusta» puede inducir una lectura demasiado fuerte. <a href="matematicas.html#pearson">A.3</a> · <a href="pruebas.html#datos">T04, T16</a>.</p>
+<p><b>Acción y criterio.</b> Prefijar protocolo de agrupación, calibrar con bootstrap o un contraste adecuado, reportar datos insuficientes y evaluar dispersión, dependencia y día de semana con datos múltiples. Sustituir lenguaje de confirmación por el dictamen condicional de contraste.</p>
+</article>
+
+<h2 id="implementacion">F.3. Fallos de implementación y resultados de borde</h2>
+<article id="h05" class="ficha">
+<h3>H05 · Alto, bloquea publicación. Tasa cero en modo franja</h3>
+<p><b>Estado.</b> IV como fallo. Una jornada con doce tomas cero y doce tomas diez es válida en Pydantic, produce valle con tasa cero y un pico con diez. <code>modelo</code> construye Δ/tasa para los tramos y lanza <code>ZeroDivisionError</code>. El controlador no captura esa clase. La ruta por franja debe poder representar una pausa sin admisiones conservando la cola. <a href="pruebas.html#experimentos">T17</a> · <a href="../../simulador2/iniciador.py">modelo</a>.</p>
+<p><b>Acción y criterio.</b> Representar intensidad cero explícita y omitir generación en ese tramo. Probar tasa cero en primera, intermedia y última franja, total de jornada cero, y conservación de servicio al llegar al tramo inactivo. Distinguir escenario abierto sin llegadas y error de parámetros.</p>
+</article>
+<article id="h06" class="ficha">
+<h3>H06 · Alto, bloquea verificación. Extremos y resultados Ciw</h3>
+<p><b>Estado.</b> IV para <code>ZeroDivisionError</code> con proporción prioritaria 1 y <code>NaN</code> con Welch [0,0] versus [0,0]. La clase regular se crea siempre; la tasa es r·(1−p), que se vuelve cero. En el caso constante Welch produce p no finito y la serialización JSON estricta falla. La etiqueta «coinciden» para p&gt;α tampoco establece equivalencia. <a href="pruebas.html#experimentos">T09 y T17</a> · <a href="../../simulador2/validacionCiw.py">validacionCiw.py</a>.</p>
+<p><b>Acción y criterio.</b> Omitir corrientes de tasa cero; definir estado no evaluable para constantes e insuficiencia, sin NaN en JSON; acotar reintentos de Ciw; declarar una diferencia operativamente tolerable antes de usar una prueba de equivalencia. Probar extremos p=0 y p=1 y métricas con varianza cero.</p>
+</article>
+<article id="h07" class="ficha">
+<h3>H07 · Alto, inferencia de espera. IC degenerado y estimando condicionado</h3>
+<p><b>Estado.</b> IV para las fórmulas, INV para cubrir toda la incertidumbre. Una única réplica con clientes retorna límites iguales a su media; un tramo con varias corridas vacías promedia solo las no vacías. La UI puede decir «promedio de 30 días» cuando ese estimando usa menos. La media diaria no equivale a la media ponderada por cliente y la incertidumbre de datos queda fuera del IC de Monte Carlo. <a href="matematicas.html#inferencias">A.7</a> · <a href="../../simulador2/medidas.py">promedioConIntervalo</a> · <a href="../../simulador2/planificacion.py">resumirFranja</a>.</p>
+<p><b>Acción y criterio.</b> Informar n efectivo, reportar «incertidumbre no estimable» para n=1 y definir si interesa día típico o cliente típico. Separar media estimada, distribución individual y variación por datos. Probar franjas con cero, una y dos réplicas no vacías.</p>
+</article>
+<article id="h08" class="ficha">
+<h3>H08 · Medio-alto, clasificación. Aproximación en residuos y desajuste de exposición</h3>
+<p><b>Estado.</b> IV para el procedimiento, INV para la validez inferencial. Residuo usa √E en vez de la desviación condicional multinomial y la clasificación continúa al advertir E&lt;5. La API de publicación comprueba múltiplos entre longitudes; el tiempo inicial todavía puede desalinear tomas. Se reprodujo 08:58–09:03 con toma de cinco minutos y franja de 60. La toma se asigna a 08:00–09:00. <code>llegadasEnElMinuto</code> busca un perfil en el inicio del tramo operativo, no integra un posible borde de cobertura interior. <a href="matematicas.html#homogeneidad">A.4</a> · <a href="pruebas.html#casos">T10, T17</a>.</p>
+<p><b>Acción y criterio.</b> Alinear inicio y duración o usar exposiciones por intersección sin inventar subconteos. Conservar la parte de la jornada observada como dato distinto de la parte extrapolada. Validar cortes y contrastes locales con nulos simulados y fuentes fechadas.</p>
+</article>
+<article id="h12" class="ficha">
+<h3>H12 · Medio, formulario y API. Conteos inválidos por ruta directa</h3>
+<p><b>Estado.</b> IV por inspección y llamada al cálculo. <code>Jornada</code> rechaza negativos y suma cero, pero <code>PedidoPoisson</code> solo exige longitud y su endpoint rechaza suma exactamente cero. Con [−1,3] se obtiene una clase observada con una entrada pese a que n=2 y la frecuencia esperada suma dos. Un caso con media negativa puede devolver resultados no finitos. <a href="pruebas.html#casos">T17</a> · <a href="../../simulador2/api.py">PedidoPoisson y ajustePoisson</a>.</p>
+<p><b>Acción y criterio.</b> Unificar validación de conteos no negativos, garantizar suma de frecuencias y respuesta 422 con explicación para datos fuera de soporte. Probar lista vacía, sumas no positivas y números negativos con suma positiva.</p>
+</article>
+
+<h2 id="alcance">F.4. Limitaciones por falta de datos</h2>
+<article id="h09" class="ficha">
+<h3>H09 · Alto para planificación. Una historia de llegada y una heurística por fecha</h3>
+<p><b>Estado.</b> NV para predicción y IV para proyección. Dos fechas con la misma llave consultan exactamente el mismo escenario. El observado es un solo día, con distinta cobertura AM frente a las series simuladas. El 30 % carece de observaciones de quincena en esta base. Para «parecidas», la interfaz se apoya en solapamiento de IC marginales y selección del mínimo de medias, sin calibrar diferencias pareadas. <a href="pruebas.html#datos">T12</a> · <a href="manual.html#c19">§19</a>.</p>
+<p><b>Acción y criterio.</b> Describir resultados como escenarios hasta controlar error por fecha. Incorporar observaciones fechadas con metadatos, comparar exposiciones equivalentes, evaluar la recomendación fuera de muestra y estimar incertidumbre de selección. Para una franja usar cuantiles de espera si la decisión depende del extremo superior.</p>
+</article>
+<h2 id="documentacion">F.5. Problemas de documentación, visualización y operación</h2>
+<article id="h10" class="ficha">
+<h3>H10 · Medio, interpretación gráfica y mensajes</h3>
+<p><b>Estado.</b> IV por código y capturas. La acumulada punteada recorta extremos y cambia la pendiente de las guías KS: las guías correctas para F₀=x son x±D<sub>c</sub> recortadas al dominio. El código une arriba (0,D<sub>c</sub>) con (1,1) y abajo (0,0) con (1−D<sub>c</sub>,1). El cálculo tabular de D usa su fórmula propia. La pantalla de metas sugiere que ambas metas deciden cajas, mientras el endpoint solo usa espera media. El veredicto lee número actual de cajas y <code>cajas-necesarias</code> usa los campos actuales; volver y editarlos puede desasociar un resultado previo. Si la semilla de entrada está vacía, esa búsqueda obtiene su propia semilla. <a href="../../front/src/graficas.js">opcionAcumuladaKS</a> · <a href="../../front/src/resultados/SeccionVeredicto.vue">Veredicto</a>.</p>
+<p><b>Acción y criterio.</b> Verificar guías en puntos de recorte y pendiente unitaria; afirmar la regla de capacidad exacta; asociar cada resultado a su configuración inmutable. Mostrar semilla de la búsqueda y actualizar Poisson preliminar si cambia α: su watcher depende de conteos, no de α en vivo.</p>
+</article>
+<article id="h11" class="ficha">
+<h3>H11 · Medio-alto en despliegue. Publicación y separación operativa de roles</h3>
+<p><b>Estado.</b> INV por inspección. Las dos escrituras JSON son atómicas individualmente y el candado coordina un proceso. No hay una transacción de ambos archivos, bloqueo real entre procesos, ni autenticación en la ruta administrativa. Un fallo entre escrituras o dos peticiones con vista previa de configuración antigua pueden dejar un par de archivos de diferente vigencia. La consulta comprueba huella y puede volver a publicar datos disponibles; las condiciones de carrera se deben probar aparte. <a href="../../simulador2/planificacion.py">Persistencia</a> · <a href="../../simulador2/api.py">API</a>.</p>
+<p><b>Acción y criterio.</b> Si se opera como servicio público, autenticar cambios, guardar un solo lote coherente/versionado y ensayar concurrencia y recuperación de caídas. Acreditar que una consulta nunca sobrescribe un lote válido de configuración nueva y medir latencia del primer GET sin publicación.</p>
+</article>
+<article id="h13" class="ficha">
+<h3>H13 · Medio-bajo, detalle temporal. Empates y horas de presentación</h3>
+<p><b>Estado.</b> IV para las reglas de código, INV para todos los puntos extremos. El barrido registra snapshots intermedios con timestamp idéntico. <code>personasAlLlegar</code> depende de la posición en la lista ante simultaneidad, y las longitudes máximas usan estados con duración positiva. La API maneja horas completas, pero el backend calcula en minutos enteros para la hora civil y descarta segundos. La UI redondea la hora de salida sin acotar horas a 23 y puede producir «25:00» con sobrecarga. <a href="../../simulador2/medidas.py">recorrerLineaDeTiempo</a> · <a href="../../front/src/formato.js">horaReloj</a>.</p>
+<p><b>Acción y criterio.</b> Fijar precedencia y criterio de simultaneidad, representar horarios explícitos con fecha o desplazamiento de día y llevar segundos si se admiten entradas con esa precisión. Agregar pruebas de frontera y un caso de cierre que cruza medianoche.</p>
+</article>
+<article id="h14" class="ficha">
+<h3>H14 · Bajo para reloj actual, relevante para repetición. Semilla y precisión de transporte</h3>
+<p><b>Estado.</b> IV para el reloj del servidor. Semillas manuales por API carecen de un máximo compatible con <code>Number</code>. En el front, el entero puede perder precisión más allá de 2⁵³−1, y el reloj puede repetir valores dentro del mismo ms. El manual debe decir «del servidor» y usar seed/configuración/versiones para repetir. <a href="matematicas.html#rng">A.1</a> · <a href="../../front/src/estado.js">entradaParaEnviar</a>.</p>
+<p><b>Acción y criterio.</b> Adoptar una representación exacta entre capas o un rango seguro. Separar el identificador de corrida de su semilla y guardar entrada íntegra asociada a cada resultado. Probar 0, dos valores grandes adyacentes, petición simultánea bajo reloj fijo y repetición entre versiones.</p>
+</article>
+<article id="h15" class="ficha">
+<h3>H15 · Medio, requerimiento de experiencia. Horario exacto y origen de datos</h3>
+<p><b>Estado.</b> DNI para bloques personalizados de longitud mixta y NV para el video mencionado. El corte de 120 min no mantiene entera la tarde de dos horas y media y la comparación usa un solo día real. Referencias a un video carecen de identificador suficiente. <a href="matriz.html#visita">Matriz D.2</a>.</p>
+<p><b>Acción y criterio.</b> Acordar si 14–16:30 debe publicarse como bloque único; si es requisito, agregar cortes por jornada con cálculo integrado y contrastar que la cola no se reinicia. Incorporar ficha primaria de recolección y referencia de video si existe.</p>
+</article>
+
+<h2 id="prioridad">F.6. Oportunidades de mejora y orden de trabajo</h2>
+<p>Para un resultado defendible, atender en paralelo la recolección de datos del banco y los fallos reproducidos. Verificar luego la política de réplicas y la continuidad de jornadas, refinar análisis estadístico de entradas y publicar métricas con incertidumbre diferenciada. El último umbral para uso real es verificar la capacidad predictiva temporal con criterios fijados antes del análisis. <a href="matriz.html#dictamen">Dictamen por dimensión</a>.</p>
+</main></body></html>

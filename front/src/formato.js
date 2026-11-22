@@ -19,6 +19,37 @@ export function horaReloj(inicio, minutosDesdeApertura) {
   return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
 }
 
+/** 59.4 → "59 min";  125 → "2 h 5 min" (para el cliente) */
+export function formatearDuracion(minutos) {
+  if (minutos == null) return "—";
+  const total = Math.round(minutos);
+  if (total < 60) return `${total} min`;
+  const horas = Math.floor(total / 60);
+  const resto = total % 60;
+  return resto ? `${horas} h ${resto} min` : `${horas} h`;
+}
+
+const FORMATOS_FECHA = {
+  larga: new Intl.DateTimeFormat("es-CO", { weekday: "long", day: "numeric", month: "long", year: "numeric", timeZone: "UTC" }),
+  diaMes: new Intl.DateTimeFormat("es-CO", { weekday: "long", day: "numeric", month: "long", timeZone: "UTC" }),
+  corta: new Intl.DateTimeFormat("es-CO", { weekday: "short", day: "numeric", month: "short", timeZone: "UTC" }),
+  mes: new Intl.DateTimeFormat("es-CO", { month: "long", year: "numeric", timeZone: "UTC" }),
+};
+
+/** "2026-12-07" → "Lunes, 7 de diciembre de 2026". La fecha es de calendario: se formatea sin zona horaria. */
+export function formatearFecha(iso, formato = "larga") {
+  const texto = FORMATOS_FECHA[formato].format(new Date(`${iso}T12:00:00Z`));
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+}
+
+/** Categoría de una franja según las llegadas observadas */
+export const CATEGORIAS = {
+  valle: { nombre: "Valle", cliente: "Afluencia baja" },
+  normal: { nombre: "Normal", cliente: "Afluencia habitual" },
+  pico: { nombre: "Pico", cliente: "Afluencia alta" },
+  sinDatos: { nombre: "Sin datos", cliente: "Afluencia sin medir" },
+};
+
 export const MEDIDAS = {
   Wq: { nombre: "Espera promedio en la fila (Wq)", descripcion: "Minutos que un cliente pasa haciendo fila", decimales: 2, unidad: "min" },
   W: { nombre: "Tiempo promedio en el banco (W)", descripcion: "Fila más atención en caja", decimales: 2, unidad: "min" },

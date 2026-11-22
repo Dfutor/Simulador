@@ -1,0 +1,3354 @@
+{
+  "entorno": {
+    "python": "3.12.3",
+    "plataforma": "Linux-7.0.0-43-generic-x86_64-with-glibc2.39",
+    "dependencias": {
+      "fastapi": "0.162.4",
+      "starlette": "1.10.0",
+      "pydantic": "2.14.3",
+      "scipy": "1.18.1",
+      "numpy": "2.5.4",
+      "ciw": "3.2.7",
+      "uvicorn": "0.54.0"
+    }
+  },
+  "semilla": 12345,
+  "uniformes": [
+    0.41661987254534116,
+    0.010169169457068361,
+    0.8252065092537432,
+    0.2986398551995928,
+    0.3684116894884757,
+    0.19366134904507426,
+    0.5660081687288613,
+    0.1616878239293682,
+    0.12426688428353017,
+    0.4329362680099159
+  ],
+  "semilla_reloj_controlado": 1797000000123,
+  "entrada": {
+    "numeroServidores": 5,
+    "distribucionServicio": "uniforme",
+    "tiempoEntreTomasDeDatos": 5.0,
+    "proporcionVanACaja": 1.0,
+    "proporcionPrioritarios": 0.05,
+    "factorLlegadas": 1.0,
+    "numeroCorridas": 30,
+    "alfa": 0.05,
+    "limiteIntentos": 10,
+    "semilla": 12345,
+    "compararConCiw": false,
+    "jornadas": [
+      {
+        "inicio": "08:00:00",
+        "fin": "12:00:00",
+        "conteos": [
+          7,
+          9,
+          8,
+          6,
+          4,
+          7,
+          5,
+          11,
+          8,
+          2,
+          4,
+          6,
+          3,
+          1,
+          3,
+          9,
+          6,
+          4,
+          8,
+          7,
+          2,
+          3,
+          4,
+          3
+        ],
+        "inicioConteos": "09:40:00",
+        "minutosPorCliente": 13.5,
+        "servicioMinimo": 1.0,
+        "servicioMaximo": 25.0
+      },
+      {
+        "inicio": "14:00:00",
+        "fin": "16:30:00",
+        "conteos": [
+          3,
+          3,
+          2,
+          3,
+          3,
+          7,
+          9,
+          4,
+          7,
+          6,
+          4,
+          4,
+          6,
+          3,
+          7,
+          4,
+          8,
+          5,
+          3,
+          5,
+          9,
+          3,
+          7,
+          6,
+          4,
+          2,
+          3,
+          3,
+          2,
+          0
+        ],
+        "inicioConteos": "14:00:00",
+        "minutosPorCliente": 14.0,
+        "servicioMinimo": 1.0,
+        "servicioMaximo": 25.0
+      }
+    ]
+  },
+  "normal": [
+    {
+      "Wq": 209.9654493065742,
+      "W": 222.92509657580848,
+      "L": 84.6155886551167,
+      "Lq": 79.69619130538315,
+      "utilizacion": 0.9838794699467088,
+      "ultimaSalida": 680.801291895202,
+      "clientesAtendidos": 258.46666666666664,
+      "WqIC": {
+        "promedio": 209.9654493065742,
+        "minimo": 170.98211174257725,
+        "maximo": 275.70029006801576,
+        "limiteInferior": 200.70943367500783,
+        "limiteSuperior": 219.22146493814054
+      },
+      "Poisson": {
+        "media": 5.416666666666667,
+        "varianza": 6.949275362318841,
+        "clases": [
+          {
+            "desde": 0,
+            "hasta": 3,
+            "observadas": 7,
+            "esperadas": 5.071746578419832
+          },
+          {
+            "desde": 4,
+            "hasta": 5,
+            "observadas": 5,
+            "esperadas": 7.966338594733934
+          },
+          {
+            "desde": 6,
+            "hasta": null,
+            "observadas": 12,
+            "esperadas": 10.961914826846238
+          }
+        ],
+        "estadistico": 1.9359616222939338,
+        "gradosLibertad": 1,
+        "critico": 3.841458820694124,
+        "pasa": true
+      }
+    },
+    {
+      "Wq": 100.11385649013796,
+      "W": 113.19397708593245,
+      "L": 41.89395176506232,
+      "Lq": 37.049605873319706,
+      "utilizacion": 0.9688691783485229,
+      "ultimaSalida": 372.61568559197735,
+      "clientesAtendidos": 138.03333333333333,
+      "WqIC": {
+        "promedio": 100.11385649013796,
+        "minimo": 66.35762279774681,
+        "maximo": 133.89240324806988,
+        "limiteInferior": 94.22720795452895,
+        "limiteSuperior": 106.00050502574697
+      },
+      "Poisson": {
+        "media": 4.5,
+        "varianza": 5.017241379310345,
+        "clases": [
+          {
+            "desde": 0,
+            "hasta": 2,
+            "observadas": 4,
+            "esperadas": 5.207342127301081
+          },
+          {
+            "desde": 3,
+            "hasta": 3,
+            "observadas": 9,
+            "esperadas": 5.06153654773665
+          },
+          {
+            "desde": 4,
+            "hasta": 4,
+            "observadas": 5,
+            "esperadas": 5.694228616203734
+          },
+          {
+            "desde": 5,
+            "hasta": 5,
+            "observadas": 2,
+            "esperadas": 5.124805754583364
+          },
+          {
+            "desde": 6,
+            "hasta": null,
+            "observadas": 10,
+            "esperadas": 8.912086954175175
+          }
+        ],
+        "estadistico": 5.467274378908644,
+        "gradosLibertad": 3,
+        "critico": 7.814727903251179,
+        "pasa": true
+      }
+    }
+  ],
+  "quincena": [
+    {
+      "Wq": 308.41602818258195,
+      "W": 321.421425127926,
+      "L": 122.1548541527395,
+      "Lq": 117.2120320827231,
+      "utilizacion": 0.9885644140032812,
+      "ultimaSalida": 876.4493896980821,
+      "clientesAtendidos": 333.1666666666667,
+      "WqIC": {
+        "promedio": 308.41602818258195,
+        "minimo": 267.7939305951684,
+        "maximo": 344.8815853824761,
+        "limiteInferior": 300.1938197557318,
+        "limiteSuperior": 316.6382366094321
+      },
+      "Poisson": {
+        "media": 5.416666666666667,
+        "varianza": 6.949275362318841,
+        "clases": [
+          {
+            "desde": 0,
+            "hasta": 3,
+            "observadas": 7,
+            "esperadas": 5.071746578419832
+          },
+          {
+            "desde": 4,
+            "hasta": 5,
+            "observadas": 5,
+            "esperadas": 7.966338594733934
+          },
+          {
+            "desde": 6,
+            "hasta": null,
+            "observadas": 12,
+            "esperadas": 10.961914826846238
+          }
+        ],
+        "estadistico": 1.9359616222939338,
+        "gradosLibertad": 1,
+        "critico": 3.841458820694124,
+        "pasa": true
+      }
+    },
+    {
+      "Wq": 150.96568844526064,
+      "W": 163.79778792517018,
+      "L": 62.42141915810501,
+      "Lq": 57.536687927224726,
+      "utilizacion": 0.9769462461760583,
+      "ultimaSalida": 473.6614921249433,
+      "clientesAtendidos": 180.5,
+      "WqIC": {
+        "promedio": 150.96568844526064,
+        "minimo": 118.50196220963133,
+        "maximo": 190.1850347317626,
+        "limiteInferior": 144.8314502134853,
+        "limiteSuperior": 157.09992667703597
+      },
+      "Poisson": {
+        "media": 4.5,
+        "varianza": 5.017241379310345,
+        "clases": [
+          {
+            "desde": 0,
+            "hasta": 2,
+            "observadas": 4,
+            "esperadas": 5.207342127301081
+          },
+          {
+            "desde": 3,
+            "hasta": 3,
+            "observadas": 9,
+            "esperadas": 5.06153654773665
+          },
+          {
+            "desde": 4,
+            "hasta": 4,
+            "observadas": 5,
+            "esperadas": 5.694228616203734
+          },
+          {
+            "desde": 5,
+            "hasta": 5,
+            "observadas": 2,
+            "esperadas": 5.124805754583364
+          },
+          {
+            "desde": 6,
+            "hasta": null,
+            "observadas": 10,
+            "esperadas": 8.912086954175175
+          }
+        ],
+        "estadistico": 5.467274378908644,
+        "gradosLibertad": 3,
+        "critico": 7.814727903251179,
+        "pasa": true
+      }
+    }
+  ],
+  "primer_ks": {
+    "corrida": 1,
+    "intentos": 1,
+    "llegada": {
+      "n": 404,
+      "D": 0.05084679324083685,
+      "critico": 0.06756807581212368,
+      "pasa": true
+    },
+    "servicio": {
+      "n": 404,
+      "D": 0.045043304306594645,
+      "critico": 0.06756807581212368,
+      "pasa": true
+    },
+    "pasa": true
+  },
+  "rechazos": [
+    3,
+    5
+  ],
+  "poisson": {
+    "manana": {
+      "media": 5.416666666666667,
+      "varianza": 6.949275362318841,
+      "clases": [
+        {
+          "desde": 0,
+          "hasta": 3,
+          "observadas": 7,
+          "esperadas": 5.071746578419832
+        },
+        {
+          "desde": 4,
+          "hasta": 5,
+          "observadas": 5,
+          "esperadas": 7.966338594733934
+        },
+        {
+          "desde": 6,
+          "hasta": null,
+          "observadas": 12,
+          "esperadas": 10.961914826846238
+        }
+      ],
+      "estadistico": 1.9359616222939338,
+      "gradosLibertad": 1,
+      "critico": 3.841458820694124,
+      "pasa": true,
+      "p_aproximado_auditoria": 0.16410768653108626,
+      "bootstrap_auditoria": {
+        "semilla": 12345,
+        "repeticiones": 999,
+        "exceden": 202,
+        "p": 0.203
+      }
+    },
+    "tarde": {
+      "media": 4.5,
+      "varianza": 5.017241379310345,
+      "clases": [
+        {
+          "desde": 0,
+          "hasta": 2,
+          "observadas": 4,
+          "esperadas": 5.207342127301081
+        },
+        {
+          "desde": 3,
+          "hasta": 3,
+          "observadas": 9,
+          "esperadas": 5.06153654773665
+        },
+        {
+          "desde": 4,
+          "hasta": 4,
+          "observadas": 5,
+          "esperadas": 5.694228616203734
+        },
+        {
+          "desde": 5,
+          "hasta": 5,
+          "observadas": 2,
+          "esperadas": 5.124805754583364
+        },
+        {
+          "desde": 6,
+          "hasta": null,
+          "observadas": 10,
+          "esperadas": 8.912086954175175
+        }
+      ],
+      "estadistico": 5.467274378908644,
+      "gradosLibertad": 3,
+      "critico": 7.814727903251179,
+      "pasa": true,
+      "p_aproximado_auditoria": 0.14060912696296093,
+      "bootstrap_auditoria": {
+        "semilla": 12345,
+        "repeticiones": 999,
+        "exceden": 85,
+        "p": 0.086
+      }
+    }
+  },
+  "analisis": {
+    "ventana": 3,
+    "minutosPorFranja": 60,
+    "fechasObservadas": 1,
+    "jornadas": [
+      {
+        "numero": 1,
+        "inicio": "08:00",
+        "fin": "12:00",
+        "media": 5.416666666666667,
+        "homogeneidad": {
+          "estadistico": 4.1923076923076925,
+          "gradosLibertad": 2,
+          "critico": 5.991464547107979,
+          "valorP": 0.12292832142063202,
+          "rechaza": false,
+          "zCritico": 2.3939797998185104,
+          "advertencia": ""
+        },
+        "intervalos": [
+          {
+            "desde": "09:40",
+            "hasta": "09:45",
+            "conteo": 7,
+            "promedioSimple": null,
+            "promedioPonderado": null,
+            "categoria": "normal"
+          },
+          {
+            "desde": "09:45",
+            "hasta": "09:50",
+            "conteo": 9,
+            "promedioSimple": null,
+            "promedioPonderado": null,
+            "categoria": "normal"
+          },
+          {
+            "desde": "09:50",
+            "hasta": "09:55",
+            "conteo": 8,
+            "promedioSimple": 8.0,
+            "promedioPonderado": 8.166666666666666,
+            "categoria": "normal"
+          },
+          {
+            "desde": "09:55",
+            "hasta": "10:00",
+            "conteo": 6,
+            "promedioSimple": 7.666666666666667,
+            "promedioPonderado": 7.166666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:00",
+            "hasta": "10:05",
+            "conteo": 4,
+            "promedioSimple": 6.0,
+            "promedioPonderado": 5.333333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:05",
+            "hasta": "10:10",
+            "conteo": 7,
+            "promedioSimple": 5.666666666666667,
+            "promedioPonderado": 5.833333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:10",
+            "hasta": "10:15",
+            "conteo": 5,
+            "promedioSimple": 5.333333333333333,
+            "promedioPonderado": 5.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:15",
+            "hasta": "10:20",
+            "conteo": 11,
+            "promedioSimple": 7.666666666666667,
+            "promedioPonderado": 8.333333333333334,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:20",
+            "hasta": "10:25",
+            "conteo": 8,
+            "promedioSimple": 8.0,
+            "promedioPonderado": 8.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:25",
+            "hasta": "10:30",
+            "conteo": 2,
+            "promedioSimple": 7.0,
+            "promedioPonderado": 5.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:30",
+            "hasta": "10:35",
+            "conteo": 4,
+            "promedioSimple": 4.666666666666667,
+            "promedioPonderado": 4.0,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:35",
+            "hasta": "10:40",
+            "conteo": 6,
+            "promedioSimple": 4.0,
+            "promedioPonderado": 4.666666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:40",
+            "hasta": "10:45",
+            "conteo": 3,
+            "promedioSimple": 4.333333333333333,
+            "promedioPonderado": 4.166666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:45",
+            "hasta": "10:50",
+            "conteo": 1,
+            "promedioSimple": 3.3333333333333335,
+            "promedioPonderado": 2.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:50",
+            "hasta": "10:55",
+            "conteo": 3,
+            "promedioSimple": 2.3333333333333335,
+            "promedioPonderado": 2.3333333333333335,
+            "categoria": "normal"
+          },
+          {
+            "desde": "10:55",
+            "hasta": "11:00",
+            "conteo": 9,
+            "promedioSimple": 4.333333333333333,
+            "promedioPonderado": 5.666666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "11:00",
+            "hasta": "11:05",
+            "conteo": 6,
+            "promedioSimple": 6.0,
+            "promedioPonderado": 6.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "11:05",
+            "hasta": "11:10",
+            "conteo": 4,
+            "promedioSimple": 6.333333333333333,
+            "promedioPonderado": 5.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "11:10",
+            "hasta": "11:15",
+            "conteo": 8,
+            "promedioSimple": 6.0,
+            "promedioPonderado": 6.333333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "11:15",
+            "hasta": "11:20",
+            "conteo": 7,
+            "promedioSimple": 6.333333333333333,
+            "promedioPonderado": 6.833333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "11:20",
+            "hasta": "11:25",
+            "conteo": 2,
+            "promedioSimple": 5.666666666666667,
+            "promedioPonderado": 4.666666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "11:25",
+            "hasta": "11:30",
+            "conteo": 3,
+            "promedioSimple": 4.0,
+            "promedioPonderado": 3.3333333333333335,
+            "categoria": "normal"
+          },
+          {
+            "desde": "11:30",
+            "hasta": "11:35",
+            "conteo": 4,
+            "promedioSimple": 3.0,
+            "promedioPonderado": 3.3333333333333335,
+            "categoria": "normal"
+          },
+          {
+            "desde": "11:35",
+            "hasta": "11:40",
+            "conteo": 3,
+            "promedioSimple": 3.3333333333333335,
+            "promedioPonderado": 3.3333333333333335,
+            "categoria": "normal"
+          }
+        ],
+        "franjas": [
+          {
+            "desde": "08:00",
+            "hasta": "09:00",
+            "observaciones": 0,
+            "media": null,
+            "z": null,
+            "categoria": "sinDatos",
+            "tasa": 5.416666666666667
+          },
+          {
+            "desde": "09:00",
+            "hasta": "10:00",
+            "observaciones": 4,
+            "media": 7.5,
+            "z": 1.790287185098582,
+            "categoria": "normal",
+            "tasa": 5.416666666666667
+          },
+          {
+            "desde": "10:00",
+            "hasta": "11:00",
+            "observaciones": 12,
+            "media": 5.25,
+            "z": -0.24806946917841693,
+            "categoria": "normal",
+            "tasa": 5.416666666666667
+          },
+          {
+            "desde": "11:00",
+            "hasta": "12:00",
+            "observaciones": 8,
+            "media": 4.625,
+            "z": -0.9621023987294836,
+            "categoria": "normal",
+            "tasa": 5.416666666666667
+          }
+        ]
+      },
+      {
+        "numero": 2,
+        "inicio": "14:00",
+        "fin": "16:30",
+        "media": 4.5,
+        "homogeneidad": {
+          "estadistico": 8.944444444444445,
+          "gradosLibertad": 2,
+          "critico": 5.991464547107979,
+          "valorP": 0.011421905614889935,
+          "rechaza": true,
+          "zCritico": 2.3939797998185104,
+          "advertencia": ""
+        },
+        "intervalos": [
+          {
+            "desde": "14:00",
+            "hasta": "14:05",
+            "conteo": 3,
+            "promedioSimple": null,
+            "promedioPonderado": null,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:05",
+            "hasta": "14:10",
+            "conteo": 3,
+            "promedioSimple": null,
+            "promedioPonderado": null,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:10",
+            "hasta": "14:15",
+            "conteo": 2,
+            "promedioSimple": 2.6666666666666665,
+            "promedioPonderado": 2.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:15",
+            "hasta": "14:20",
+            "conteo": 3,
+            "promedioSimple": 2.6666666666666665,
+            "promedioPonderado": 2.6666666666666665,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:20",
+            "hasta": "14:25",
+            "conteo": 3,
+            "promedioSimple": 2.6666666666666665,
+            "promedioPonderado": 2.8333333333333335,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:25",
+            "hasta": "14:30",
+            "conteo": 7,
+            "promedioSimple": 4.333333333333333,
+            "promedioPonderado": 5.0,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:30",
+            "hasta": "14:35",
+            "conteo": 9,
+            "promedioSimple": 6.333333333333333,
+            "promedioPonderado": 7.333333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:35",
+            "hasta": "14:40",
+            "conteo": 4,
+            "promedioSimple": 6.666666666666667,
+            "promedioPonderado": 6.166666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:40",
+            "hasta": "14:45",
+            "conteo": 7,
+            "promedioSimple": 6.666666666666667,
+            "promedioPonderado": 6.333333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:45",
+            "hasta": "14:50",
+            "conteo": 6,
+            "promedioSimple": 5.666666666666667,
+            "promedioPonderado": 6.0,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:50",
+            "hasta": "14:55",
+            "conteo": 4,
+            "promedioSimple": 5.666666666666667,
+            "promedioPonderado": 5.166666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "14:55",
+            "hasta": "15:00",
+            "conteo": 4,
+            "promedioSimple": 4.666666666666667,
+            "promedioPonderado": 4.333333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:00",
+            "hasta": "15:05",
+            "conteo": 6,
+            "promedioSimple": 4.666666666666667,
+            "promedioPonderado": 5.0,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:05",
+            "hasta": "15:10",
+            "conteo": 3,
+            "promedioSimple": 4.333333333333333,
+            "promedioPonderado": 4.166666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:10",
+            "hasta": "15:15",
+            "conteo": 7,
+            "promedioSimple": 5.333333333333333,
+            "promedioPonderado": 5.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:15",
+            "hasta": "15:20",
+            "conteo": 4,
+            "promedioSimple": 4.666666666666667,
+            "promedioPonderado": 4.833333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:20",
+            "hasta": "15:25",
+            "conteo": 8,
+            "promedioSimple": 6.333333333333333,
+            "promedioPonderado": 6.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:25",
+            "hasta": "15:30",
+            "conteo": 5,
+            "promedioSimple": 5.666666666666667,
+            "promedioPonderado": 5.833333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:30",
+            "hasta": "15:35",
+            "conteo": 3,
+            "promedioSimple": 5.333333333333333,
+            "promedioPonderado": 4.5,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:35",
+            "hasta": "15:40",
+            "conteo": 5,
+            "promedioSimple": 4.333333333333333,
+            "promedioPonderado": 4.333333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:40",
+            "hasta": "15:45",
+            "conteo": 9,
+            "promedioSimple": 5.666666666666667,
+            "promedioPonderado": 6.666666666666667,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:45",
+            "hasta": "15:50",
+            "conteo": 3,
+            "promedioSimple": 5.666666666666667,
+            "promedioPonderado": 5.333333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:50",
+            "hasta": "15:55",
+            "conteo": 7,
+            "promedioSimple": 6.333333333333333,
+            "promedioPonderado": 6.0,
+            "categoria": "normal"
+          },
+          {
+            "desde": "15:55",
+            "hasta": "16:00",
+            "conteo": 6,
+            "promedioSimple": 5.333333333333333,
+            "promedioPonderado": 5.833333333333333,
+            "categoria": "normal"
+          },
+          {
+            "desde": "16:00",
+            "hasta": "16:05",
+            "conteo": 4,
+            "promedioSimple": 5.666666666666667,
+            "promedioPonderado": 5.166666666666667,
+            "categoria": "valle"
+          },
+          {
+            "desde": "16:05",
+            "hasta": "16:10",
+            "conteo": 2,
+            "promedioSimple": 4.0,
+            "promedioPonderado": 3.3333333333333335,
+            "categoria": "valle"
+          },
+          {
+            "desde": "16:10",
+            "hasta": "16:15",
+            "conteo": 3,
+            "promedioSimple": 3.0,
+            "promedioPonderado": 2.8333333333333335,
+            "categoria": "valle"
+          },
+          {
+            "desde": "16:15",
+            "hasta": "16:20",
+            "conteo": 3,
+            "promedioSimple": 2.6666666666666665,
+            "promedioPonderado": 2.8333333333333335,
+            "categoria": "valle"
+          },
+          {
+            "desde": "16:20",
+            "hasta": "16:25",
+            "conteo": 2,
+            "promedioSimple": 2.6666666666666665,
+            "promedioPonderado": 2.5,
+            "categoria": "valle"
+          },
+          {
+            "desde": "16:25",
+            "hasta": "16:30",
+            "conteo": 0,
+            "promedioSimple": 1.6666666666666667,
+            "promedioPonderado": 1.1666666666666667,
+            "categoria": "valle"
+          }
+        ],
+        "franjas": [
+          {
+            "desde": "14:00",
+            "hasta": "15:00",
+            "observaciones": 12,
+            "media": 4.583333333333333,
+            "z": 0.13608276348795434,
+            "categoria": "normal",
+            "tasa": 5.041666666666667
+          },
+          {
+            "desde": "15:00",
+            "hasta": "16:00",
+            "observaciones": 12,
+            "media": 5.5,
+            "z": 1.632993161855452,
+            "categoria": "normal",
+            "tasa": 5.041666666666667
+          },
+          {
+            "desde": "16:00",
+            "hasta": "16:30",
+            "observaciones": 6,
+            "media": 2.3333333333333335,
+            "z": -2.5018511664883785,
+            "categoria": "valle",
+            "tasa": 2.3333333333333335
+          }
+        ]
+      }
+    ]
+  },
+  "visitas": {
+    "2026-12-05": {
+      "fecha": "2026-12-05",
+      "diaSemana": "sábado",
+      "abierto": false,
+      "jornadas": [],
+      "origen": "semanal",
+      "motivo": "",
+      "tipoDia": "regular",
+      "franjas": [],
+      "recomendada": null,
+      "similares": [],
+      "siguienteAbierta": {
+        "fecha": "2026-12-07",
+        "diaSemana": "lunes",
+        "abierto": true,
+        "jornadas": [
+          {
+            "inicio": "08:00",
+            "fin": "12:00"
+          },
+          {
+            "inicio": "14:00",
+            "fin": "16:30"
+          }
+        ],
+        "origen": "semanal",
+        "motivo": "",
+        "tipoDia": "regular"
+      },
+      "sinEstimacion": false,
+      "indicador": "Wq",
+      "corridas": 30,
+      "publicadoEn": "2026-11-22T01:06:23+00:00",
+      "vigente": true
+    },
+    "2026-12-07": {
+      "fecha": "2026-12-07",
+      "diaSemana": "lunes",
+      "abierto": true,
+      "jornadas": [
+        {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        {
+          "inicio": "14:00",
+          "fin": "16:30"
+        }
+      ],
+      "origen": "semanal",
+      "motivo": "",
+      "tipoDia": "regular",
+      "franjas": [
+        {
+          "desde": "08:00",
+          "hasta": "09:00",
+          "categoria": "sinDatos",
+          "Wq": {
+            "promedio": 58.18614506242058,
+            "minimo": 37.19916955046758,
+            "maximo": 88.76077758004995,
+            "limiteInferior": 52.72952861388664,
+            "limiteSuperior": 63.642761510954514
+          },
+          "servicio": {
+            "promedio": 13.183941855047577,
+            "minimo": 12.310868900060159,
+            "maximo": 14.911588393150431,
+            "limiteInferior": 12.941838819984776,
+            "limiteSuperior": 13.426044890110377
+          },
+          "W": {
+            "promedio": 71.37008691746816,
+            "minimo": 50.19617903181835,
+            "maximo": 103.67236597320039,
+            "limiteInferior": 65.80688221395835,
+            "limiteSuperior": 76.93329162097797
+          },
+          "clientes": 66.33333333333333,
+          "jornada": 1
+        },
+        {
+          "desde": "09:00",
+          "hasta": "10:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 172.88493475999584,
+            "minimo": 134.63797905854932,
+            "maximo": 223.65650601126987,
+            "limiteInferior": 163.66031726967546,
+            "limiteSuperior": 182.10955225031623
+          },
+          "servicio": {
+            "promedio": 12.793956006532028,
+            "minimo": 11.180362513085605,
+            "maximo": 13.988643494338113,
+            "limiteInferior": 12.508000523584673,
+            "limiteSuperior": 13.079911489479382
+          },
+          "W": {
+            "promedio": 185.67889076652787,
+            "minimo": 146.53317611788785,
+            "maximo": 236.205950222856,
+            "limiteInferior": 176.44915202199243,
+            "limiteSuperior": 194.9086295110633
+          },
+          "clientes": 64.83333333333333,
+          "jornada": 1
+        },
+        {
+          "desde": "10:00",
+          "hasta": "11:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 268.3450570275066,
+            "minimo": 207.15183727686568,
+            "maximo": 331.1794987976587,
+            "limiteInferior": 256.9991283756929,
+            "limiteSuperior": 279.69098567932025
+          },
+          "servicio": {
+            "promedio": 13.167707308700592,
+            "minimo": 11.269789836198917,
+            "maximo": 14.79491598551903,
+            "limiteInferior": 12.838598010281578,
+            "limiteSuperior": 13.496816607119607
+          },
+          "W": {
+            "promedio": 281.5127643362072,
+            "minimo": 220.54306295361908,
+            "maximo": 343.9726788405172,
+            "limiteInferior": 270.07926316279713,
+            "limiteSuperior": 292.9462655096173
+          },
+          "clientes": 64.6,
+          "jornada": 1
+        },
+        {
+          "desde": "11:00",
+          "hasta": "12:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 364.3653059321593,
+            "minimo": 273.78632856253137,
+            "maximo": 430.23445129675605,
+            "limiteInferior": 351.1394645420544,
+            "limiteSuperior": 377.5911473222642
+          },
+          "servicio": {
+            "promedio": 12.870313115191925,
+            "minimo": 10.274666732592655,
+            "maximo": 14.720188295105297,
+            "limiteInferior": 12.490095262472705,
+            "limiteSuperior": 13.250530967911144
+          },
+          "W": {
+            "promedio": 377.2356190473512,
+            "minimo": 286.1788565048076,
+            "maximo": 442.57683637590753,
+            "limiteInferior": 363.87958098475383,
+            "limiteSuperior": 390.5916571099485
+          },
+          "clientes": 63.9,
+          "jornada": 1
+        },
+        {
+          "desde": "14:00",
+          "hasta": "15:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 37.32674045016493,
+            "minimo": 20.678729643110653,
+            "maximo": 55.57076705886937,
+            "limiteInferior": 33.521826752381706,
+            "limiteSuperior": 41.13165414794815
+          },
+          "servicio": {
+            "promedio": 13.18826585336385,
+            "minimo": 11.563975647820113,
+            "maximo": 15.834236603912029,
+            "limiteInferior": 12.830239050799646,
+            "limiteSuperior": 13.546292655928054
+          },
+          "W": {
+            "promedio": 50.515006303528786,
+            "minimo": 33.627456062184585,
+            "maximo": 70.25218933919061,
+            "limiteInferior": 46.513772871484235,
+            "limiteSuperior": 54.516239735573336
+          },
+          "clientes": 53.56666666666667,
+          "jornada": 2
+        },
+        {
+          "desde": "15:00",
+          "hasta": "16:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 119.25526081142976,
+            "minimo": 64.70470861927896,
+            "maximo": 151.66849765621072,
+            "limiteInferior": 111.451366107755,
+            "limiteSuperior": 127.05915551510452
+          },
+          "servicio": {
+            "promedio": 13.226451347329178,
+            "minimo": 10.065959718467568,
+            "maximo": 14.940222514519387,
+            "limiteInferior": 12.837842520752305,
+            "limiteSuperior": 13.61506017390605
+          },
+          "W": {
+            "promedio": 132.48171215875897,
+            "minimo": 77.97522137093816,
+            "maximo": 165.1151738991626,
+            "limiteInferior": 124.56785617251259,
+            "limiteSuperior": 140.39556814500534
+          },
+          "clientes": 53.5,
+          "jornada": 2
+        },
+        {
+          "desde": "16:00",
+          "hasta": "16:30",
+          "categoria": "valle",
+          "Wq": {
+            "promedio": 172.61280190566043,
+            "minimo": 100.33617103157455,
+            "maximo": 223.29381835509136,
+            "limiteInferior": 161.7820538461347,
+            "limiteSuperior": 183.44354996518618
+          },
+          "servicio": {
+            "promedio": 12.98755565560715,
+            "minimo": 10.605270065251771,
+            "maximo": 15.570486229743173,
+            "limiteInferior": 12.509659186587573,
+            "limiteSuperior": 13.465452124626726
+          },
+          "W": {
+            "promedio": 185.6003575612676,
+            "minimo": 112.34931956350093,
+            "maximo": 237.67534824947526,
+            "limiteInferior": 174.75152273623468,
+            "limiteSuperior": 196.44919238630052
+          },
+          "clientes": 26.933333333333334,
+          "jornada": 2
+        }
+      ],
+      "recomendada": 4,
+      "similares": [],
+      "siguienteAbierta": null,
+      "sinEstimacion": false,
+      "indicador": "Wq",
+      "corridas": 30,
+      "publicadoEn": "2026-11-22T01:06:23+00:00",
+      "vigente": true
+    },
+    "2026-12-15": {
+      "fecha": "2026-12-15",
+      "diaSemana": "martes",
+      "abierto": true,
+      "jornadas": [
+        {
+          "inicio": "08:00",
+          "fin": "12:00"
+        },
+        {
+          "inicio": "14:00",
+          "fin": "16:30"
+        }
+      ],
+      "origen": "semanal",
+      "motivo": "",
+      "tipoDia": "quincena",
+      "franjas": [
+        {
+          "desde": "08:00",
+          "hasta": "09:00",
+          "categoria": "sinDatos",
+          "Wq": {
+            "promedio": 84.37977019206822,
+            "minimo": 54.078945130007625,
+            "maximo": 127.65996935770102,
+            "limiteInferior": 78.7764153119566,
+            "limiteSuperior": 89.98312507217985
+          },
+          "servicio": {
+            "promedio": 12.936798323637568,
+            "minimo": 10.797938326590652,
+            "maximo": 14.287928887083675,
+            "limiteInferior": 12.674857972741497,
+            "limiteSuperior": 13.198738674533638
+          },
+          "W": {
+            "promedio": 97.3165685157058,
+            "minimo": 66.90848435682771,
+            "maximo": 140.716433342042,
+            "limiteInferior": 91.65684719265933,
+            "limiteSuperior": 102.97628983875227
+          },
+          "clientes": 83.63333333333334,
+          "jornada": 1
+        },
+        {
+          "desde": "09:00",
+          "hasta": "10:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 246.22112364444516,
+            "minimo": 210.26916586227009,
+            "maximo": 301.5445198414829,
+            "limiteInferior": 237.33484327643345,
+            "limiteSuperior": 255.10740401245687
+          },
+          "servicio": {
+            "promedio": 13.184375568037558,
+            "minimo": 11.952083775553119,
+            "maximo": 15.27691285711115,
+            "limiteInferior": 12.867637670851162,
+            "limiteSuperior": 13.501113465223954
+          },
+          "W": {
+            "promedio": 259.4054992124827,
+            "minimo": 223.35395616503342,
+            "maximo": 314.1639299270087,
+            "limiteInferior": 250.4110264406965,
+            "limiteSuperior": 268.3999719842689
+          },
+          "clientes": 83.03333333333333,
+          "jornada": 1
+        },
+        {
+          "desde": "10:00",
+          "hasta": "11:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 383.52564842992416,
+            "minimo": 328.0521730026844,
+            "maximo": 452.1131430049731,
+            "limiteInferior": 372.25209126662946,
+            "limiteSuperior": 394.79920559321886
+          },
+          "servicio": {
+            "promedio": 12.994234197854611,
+            "minimo": 11.430668980119705,
+            "maximo": 14.33210108804114,
+            "limiteInferior": 12.767330398705033,
+            "limiteSuperior": 13.22113799700419
+          },
+          "W": {
+            "promedio": 396.5198826277787,
+            "minimo": 341.5111506248222,
+            "maximo": 465.6905116605039,
+            "limiteInferior": 385.2287471827842,
+            "limiteSuperior": 407.8110180727732
+          },
+          "clientes": 84.36666666666666,
+          "jornada": 1
+        },
+        {
+          "desde": "11:00",
+          "hasta": "12:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 527.6154758927115,
+            "minimo": 454.26895594959154,
+            "maximo": 618.2148040036282,
+            "limiteInferior": 513.4092520603838,
+            "limiteSuperior": 541.8216997250393
+          },
+          "servicio": {
+            "promedio": 13.116825855886725,
+            "minimo": 11.74510953036904,
+            "maximo": 14.185417116690756,
+            "limiteInferior": 12.844261765098643,
+            "limiteSuperior": 13.389389946674807
+          },
+          "W": {
+            "promedio": 540.7323017485982,
+            "minimo": 466.5261219982485,
+            "maximo": 632.0948928377198,
+            "limiteInferior": 526.4640166478355,
+            "limiteSuperior": 555.0005868493608
+          },
+          "clientes": 85.53333333333333,
+          "jornada": 1
+        },
+        {
+          "desde": "14:00",
+          "hasta": "15:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 64.5070496109968,
+            "minimo": 26.947481864404118,
+            "maximo": 93.70180375550281,
+            "limiteInferior": 57.74003022378532,
+            "limiteSuperior": 71.27406899820829
+          },
+          "servicio": {
+            "promedio": 12.972156112229928,
+            "minimo": 11.356059182455258,
+            "maximo": 15.090026853993521,
+            "limiteInferior": 12.599619428495295,
+            "limiteSuperior": 13.344692795964562
+          },
+          "W": {
+            "promedio": 77.47920572322673,
+            "minimo": 38.50855524716759,
+            "maximo": 107.60132861260801,
+            "limiteInferior": 70.47609030302705,
+            "limiteSuperior": 84.4823211434264
+          },
+          "clientes": 72.4,
+          "jornada": 2
+        },
+        {
+          "desde": "15:00",
+          "hasta": "16:00",
+          "categoria": "normal",
+          "Wq": {
+            "promedio": 182.6395653523735,
+            "minimo": 117.87778140684144,
+            "maximo": 228.0691133166028,
+            "limiteInferior": 171.6349499697312,
+            "limiteSuperior": 193.6441807350158
+          },
+          "servicio": {
+            "promedio": 12.977527947881933,
+            "minimo": 10.83494164724944,
+            "maximo": 15.17054432256495,
+            "limiteInferior": 12.648686028511264,
+            "limiteSuperior": 13.306369867252602
+          },
+          "W": {
+            "promedio": 195.61709330025542,
+            "minimo": 130.26912548047102,
+            "maximo": 241.55951823243765,
+            "limiteInferior": 184.5684855252534,
+            "limiteSuperior": 206.66570107525743
+          },
+          "clientes": 70.1,
+          "jornada": 2
+        },
+        {
+          "desde": "16:00",
+          "hasta": "16:30",
+          "categoria": "valle",
+          "Wq": {
+            "promedio": 261.52597418959,
+            "minimo": 178.2010548447858,
+            "maximo": 329.13018274225976,
+            "limiteInferior": 246.9906026063968,
+            "limiteSuperior": 276.06134577278317
+          },
+          "servicio": {
+            "promedio": 13.071349444326183,
+            "minimo": 10.141009812594033,
+            "maximo": 15.479142875066248,
+            "limiteInferior": 12.590343069143952,
+            "limiteSuperior": 13.552355819508414
+          },
+          "W": {
+            "promedio": 274.5973236339162,
+            "minimo": 191.01093889243614,
+            "maximo": 343.4865775272832,
+            "limiteInferior": 259.9959482637475,
+            "limiteSuperior": 289.19869900408486
+          },
+          "clientes": 32.36666666666667,
+          "jornada": 2
+        }
+      ],
+      "recomendada": 4,
+      "similares": [],
+      "siguienteAbierta": null,
+      "sinEstimacion": false,
+      "indicador": "Wq",
+      "corridas": 30,
+      "publicadoEn": "2026-11-22T01:06:23+00:00",
+      "vigente": true
+    }
+  },
+  "comparacion": {
+    "categoria": "todas",
+    "clases": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "minutosIntervalo": 5.0,
+    "origen": "simulacion",
+    "corridas": 30,
+    "series": [
+      {
+        "fecha": "2026-12-07",
+        "diaSemana": "lunes",
+        "tipoDia": "regular",
+        "abierto": true,
+        "n": 2340,
+        "media": 5.047008547008547,
+        "relativas": [
+          0.00641025641025641,
+          0.03247863247863248,
+          0.08504273504273505,
+          0.13504273504273503,
+          0.17777777777777778,
+          0.1829059829059829,
+          0.13504273504273503,
+          0.10256410256410256,
+          0.06709401709401709,
+          0.040170940170940174,
+          0.017094017094017096,
+          0.010683760683760684,
+          0.0038461538461538464,
+          0.0017094017094017094,
+          0.0017094017094017094,
+          0.00042735042735042735,
+          0.0
+        ]
+      },
+      {
+        "fecha": "2026-12-15",
+        "diaSemana": "martes",
+        "tipoDia": "quincena",
+        "abierto": true,
+        "n": 2340,
+        "media": 6.556837606837607,
+        "relativas": [
+          0.001282051282051282,
+          0.011965811965811967,
+          0.03205128205128205,
+          0.06538461538461539,
+          0.11794871794871795,
+          0.14145299145299145,
+          0.15726495726495726,
+          0.13418803418803418,
+          0.12136752136752137,
+          0.0829059829059829,
+          0.05299145299145299,
+          0.037606837606837605,
+          0.020085470085470087,
+          0.013675213675213675,
+          0.004700854700854701,
+          0.004700854700854701,
+          0.00042735042735042735
+        ]
+      }
+    ],
+    "observado": {
+      "n": 54,
+      "media": 4.907407407407407,
+      "relativas": [
+        0.018518518518518517,
+        0.018518518518518517,
+        0.09259259259259259,
+        0.24074074074074073,
+        0.16666666666666666,
+        0.05555555555555555,
+        0.1111111111111111,
+        0.12962962962962962,
+        0.07407407407407407,
+        0.07407407407407407,
+        0.0,
+        0.018518518518518517,
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    "fechasObservadas": 1
+  },
+  "comparacion_mismo_escenario_igual": true,
+  "publicacion": {
+    "huella": "38f4c796b1554a37",
+    "versionModelo": "2.1",
+    "semilla": 12345
+  },
+  "manual": {
+    "clientes": [
+      {
+        "cliente": 1,
+        "momentoLlegada": 0,
+        "prioritario": false,
+        "servidor": 1,
+        "inicioServicio": 0,
+        "tiempoEspera": 0,
+        "aleatorioServicio": 0.0,
+        "tiempoServicio": 4,
+        "terminacionServicio": 4,
+        "tiempoTotal": 4,
+        "tiempoOcio": 0.0,
+        "personasAlLlegar": 0
+      },
+      {
+        "cliente": 2,
+        "momentoLlegada": 1,
+        "prioritario": false,
+        "servidor": 1,
+        "inicioServicio": 6,
+        "tiempoEspera": 5,
+        "aleatorioServicio": 0.0,
+        "tiempoServicio": 3,
+        "terminacionServicio": 9,
+        "tiempoTotal": 8,
+        "tiempoOcio": 0.0,
+        "personasAlLlegar": 1
+      },
+      {
+        "cliente": 3,
+        "momentoLlegada": 2,
+        "prioritario": true,
+        "servidor": 1,
+        "inicioServicio": 4,
+        "tiempoEspera": 2,
+        "aleatorioServicio": 0.0,
+        "tiempoServicio": 2,
+        "terminacionServicio": 6,
+        "tiempoTotal": 4,
+        "tiempoOcio": 0.0,
+        "personasAlLlegar": 2
+      },
+      {
+        "cliente": 4,
+        "momentoLlegada": 3,
+        "prioritario": false,
+        "servidor": 1,
+        "inicioServicio": 9,
+        "tiempoEspera": 6,
+        "aleatorioServicio": 0.0,
+        "tiempoServicio": 1,
+        "terminacionServicio": 10,
+        "tiempoTotal": 7,
+        "tiempoOcio": 0.0,
+        "personasAlLlegar": 3
+      }
+    ],
+    "medidas": {
+      "clientesAtendidos": 4,
+      "clientesPrioritarios": 1,
+      "L": 2.3,
+      "Lq": 1.3,
+      "tiempoTotalSistema": 23,
+      "W": 5.75,
+      "tiempoTotalCola": 13,
+      "Wq": 3.25,
+      "esperaMaxima": 6,
+      "WqPrioritarios": 2.0,
+      "WqNormales": 3.6666666666666665,
+      "personasAlLlegar": 1.5,
+      "longitudMaximaSistema": 4,
+      "longitudMaximaCola": 3,
+      "ocioTotal": 0.0,
+      "ocioPorServidor": [
+        0.0
+      ],
+      "utilizacion": 1.0,
+      "utilizacionPorServidor": [
+        1.0
+      ],
+      "ultimaSalida": 10,
+      "tiempoObservado": 10,
+      "probabilidadSistema": {
+        "1": 0.2,
+        "2": 0.4,
+        "3": 0.3,
+        "4": 0.1
+      },
+      "probabilidadCola": {
+        "0": 0.2,
+        "1": 0.4,
+        "2": 0.3,
+        "3": 0.1
+      },
+      "serie": [
+        [
+          0.0,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          1,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          2
+        ],
+        [
+          3,
+          4,
+          3
+        ],
+        [
+          4,
+          3,
+          3
+        ],
+        [
+          4,
+          3,
+          2
+        ],
+        [
+          6,
+          3,
+          1
+        ],
+        [
+          6,
+          2,
+          1
+        ],
+        [
+          9,
+          1,
+          1
+        ],
+        [
+          9,
+          1,
+          0
+        ],
+        [
+          10,
+          0,
+          0
+        ]
+      ]
+    }
+  },
+  "traza_sembrada": {
+    "semilla": 1,
+    "entrada": {
+      "tiempoEntreTomasDeDatos": 2,
+      "proporcionVanACaja": 1,
+      "factorLlegadas": 1,
+      "distribucionServicio": "uniforme",
+      "jornadas": [
+        {
+          "inicio": "08:00",
+          "fin": "08:08",
+          "conteos": [
+            1,
+            1,
+            1,
+            1
+          ],
+          "servicioMinimo": 2,
+          "servicioMaximo": 3
+        }
+      ]
+    },
+    "clientes": [
+      {
+        "cliente": 1,
+        "jornada": 1,
+        "prioritario": false,
+        "aleatorioLlegada": 0.13436424411240122,
+        "tiempoEntreLlegadas": 0.2885821282190184,
+        "momentoLlegada": 0.2885821282190184,
+        "servidor": 1,
+        "inicioServicio": 0.2885821282190184,
+        "tiempoEspera": 0.0,
+        "aleatorioServicio": 0.43276706790505337,
+        "tiempoServicio": 2.4327670679050533,
+        "terminacionServicio": 2.7213491961240717,
+        "tiempoTotal": 2.4327670679050533,
+        "tiempoOcio": 0.2885821282190184,
+        "personasAlLlegar": 0
+      },
+      {
+        "cliente": 2,
+        "jornada": 1,
+        "prioritario": false,
+        "aleatorioLlegada": 0.763774618976614,
+        "tiempoEntreLlegadas": 2.8859378506933258,
+        "momentoLlegada": 3.174519978912344,
+        "servidor": 1,
+        "inicioServicio": 3.174519978912344,
+        "tiempoEspera": 0.0,
+        "aleatorioServicio": 0.762280082457942,
+        "tiempoServicio": 2.762280082457942,
+        "terminacionServicio": 5.9368000613702865,
+        "tiempoTotal": 2.762280082457942,
+        "tiempoOcio": 0.4531707827882725,
+        "personasAlLlegar": 0
+      },
+      {
+        "cliente": 3,
+        "jornada": 1,
+        "prioritario": false,
+        "aleatorioLlegada": 0.49543508709194095,
+        "tiempoEntreLlegadas": 1.3681175593192005,
+        "momentoLlegada": 4.542637538231545,
+        "servidor": 1,
+        "inicioServicio": 5.9368000613702865,
+        "tiempoEspera": 1.3941625231387418,
+        "aleatorioServicio": 0.0021060533511106927,
+        "tiempoServicio": 2.0021060533511106,
+        "terminacionServicio": 7.938906114721397,
+        "tiempoTotal": 3.3962685764898524,
+        "tiempoOcio": 0.0,
+        "personasAlLlegar": 1
+      },
+      {
+        "cliente": 4,
+        "jornada": 1,
+        "prioritario": false,
+        "aleatorioLlegada": 0.651592972722763,
+        "tiempoEntreLlegadas": 2.108767728131761,
+        "momentoLlegada": 6.651405266363305,
+        "servidor": 1,
+        "inicioServicio": 10.384293308776199,
+        "tiempoEspera": 3.7328880424128936,
+        "aleatorioServicio": 0.7215400323407826,
+        "tiempoServicio": 2.7215400323407826,
+        "terminacionServicio": 13.10583334111698,
+        "tiempoTotal": 6.454428074753676,
+        "tiempoOcio": 0.0,
+        "personasAlLlegar": 1
+      },
+      {
+        "cliente": 5,
+        "jornada": 1,
+        "prioritario": true,
+        "aleatorioLlegada": 0.0938595867742349,
+        "tiempoEntreLlegadas": 0.19712200692431095,
+        "momentoLlegada": 6.848527273287616,
+        "servidor": 1,
+        "inicioServicio": 7.938906114721397,
+        "tiempoEspera": 1.0903788414337807,
+        "aleatorioServicio": 0.4453871940548014,
+        "tiempoServicio": 2.4453871940548013,
+        "terminacionServicio": 10.384293308776199,
+        "tiempoTotal": 3.535766035488582,
+        "tiempoOcio": 0.0,
+        "personasAlLlegar": 2
+      }
+    ],
+    "medidas": {
+      "clientesAtendidos": 5,
+      "clientesPrioritarios": 1,
+      "L": 1.4178045266911234,
+      "Lq": 0.4744016839798696,
+      "tiempoTotalSistema": 18.581509837095105,
+      "W": 3.716301967419021,
+      "tiempoTotalCola": 6.217429406985416,
+      "Wq": 1.2434858813970833,
+      "esperaMaxima": 3.7328880424128936,
+      "WqPrioritarios": 1.0903788414337807,
+      "WqNormales": 1.2817626413879089,
+      "personasAlLlegar": 0.8,
+      "longitudMaximaSistema": 3,
+      "longitudMaximaCola": 2,
+      "ocioTotal": 0.7417529110072909,
+      "ocioPorServidor": [
+        0.7417529110072909
+      ],
+      "utilizacion": 0.9434028427112539,
+      "utilizacionPorServidor": [
+        0.9434028427112539
+      ],
+      "ultimaSalida": 13.10583334111698,
+      "tiempoObservado": 13.10583334111698,
+      "probabilidadSistema": {
+        "0": 0.056597157288746126,
+        "1": 0.5521991372996704,
+        "2": 0.30800572684329725,
+        "3": 0.08319797856828616
+      },
+      "probabilidadCola": {
+        "0": 0.6087962945884166,
+        "1": 0.30800572684329725,
+        "2": 0.08319797856828616
+      },
+      "serie": [
+        [
+          0.0,
+          0,
+          0
+        ],
+        [
+          0.2885821282190184,
+          1,
+          0
+        ],
+        [
+          2.7213491961240717,
+          0,
+          0
+        ],
+        [
+          3.174519978912344,
+          1,
+          0
+        ],
+        [
+          4.542637538231545,
+          2,
+          1
+        ],
+        [
+          5.9368000613702865,
+          1,
+          1
+        ],
+        [
+          5.9368000613702865,
+          1,
+          0
+        ],
+        [
+          6.651405266363305,
+          2,
+          1
+        ],
+        [
+          6.848527273287616,
+          3,
+          2
+        ],
+        [
+          7.938906114721397,
+          2,
+          2
+        ],
+        [
+          7.938906114721397,
+          2,
+          1
+        ],
+        [
+          10.384293308776199,
+          2,
+          0
+        ],
+        [
+          10.384293308776199,
+          1,
+          0
+        ],
+        [
+          13.10583334111698,
+          0,
+          0
+        ]
+      ]
+    }
+  },
+  "ic_ejemplo": {
+    "promedio": 12.0,
+    "minimo": 10,
+    "maximo": 14,
+    "limiteInferior": 7.0317245764993395,
+    "limiteSuperior": 16.96827542350066
+  },
+  "ks_sintetico": {
+    "muestra": [
+      0.14,
+      0.3,
+      0.44,
+      0.8
+    ],
+    "D": 0.31,
+    "p_exacto": 0.73925608
+  },
+  "ks_criticos": [
+    {
+      "n": 1,
+      "codigo": 1.1041475737728612,
+      "exacto": 0.975
+    },
+    {
+      "n": 4,
+      "codigo": 0.624414489995687,
+      "exacto": 0.6239385421352037
+    },
+    {
+      "n": 10,
+      "codigo": 0.409428953463094,
+      "exacto": 0.40924608477750496
+    },
+    {
+      "n": 20,
+      "codigo": 0.29416940576417655,
+      "exacto": 0.2940753144343289
+    },
+    {
+      "n": 35,
+      "codigo": 0.22430632935996275,
+      "exacto": 0.22424657894604544
+    },
+    {
+      "n": 36,
+      "codigo": 0.22635025262343658,
+      "exacto": 0.22119076937802992
+    },
+    {
+      "n": 100,
+      "codigo": 0.13581015157406195,
+      "exacto": 0.13402791648569568
+    },
+    {
+      "n": 101,
+      "codigo": 0.13513615162424736,
+      "exacto": 0.13337211970354854
+    }
+  ],
+  "experimento_ks": {
+    "manana": {
+      "intentos": 900,
+      "vacias": 0,
+      "rechazo_llegada": 31,
+      "rechazo_servicio": 38,
+      "rechazo_union": 69,
+      "crudas": {
+        "n": 259.99111111111114,
+        "Wq": 213.51463261253727
+      },
+      "filtradas": {
+        "n": 259.7509025270758,
+        "Wq": 212.954689317254
+      }
+    },
+    "cierre_5_min": {
+      "intentos": 900,
+      "vacias": 2,
+      "rechazo_llegada": 36,
+      "rechazo_servicio": 45,
+      "rechazo_union": 80,
+      "crudas": {
+        "n": 5.314031180400891,
+        "Wq": 0.7911005732208167
+      },
+      "filtradas": {
+        "n": 5.19682151589242,
+        "Wq": 0.6604603778470594
+      }
+    }
+  },
+  "sensibilidad": {
+    "25": [
+      {
+        "Wq": 209.9654493065742,
+        "W": 222.92509657580848,
+        "L": 84.6155886551167,
+        "Lq": 79.69619130538315,
+        "utilizacion": 0.9838794699467088,
+        "ultimaSalida": 680.801291895202,
+        "clientesAtendidos": 258.46666666666664,
+        "WqIC": {
+          "promedio": 209.9654493065742,
+          "minimo": 170.98211174257725,
+          "maximo": 275.70029006801576,
+          "limiteInferior": 200.70943367500783,
+          "limiteSuperior": 219.22146493814054
+        },
+        "Poisson": {
+          "media": 5.416666666666667,
+          "varianza": 6.949275362318841,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 3,
+              "observadas": 7,
+              "esperadas": 5.071746578419832
+            },
+            {
+              "desde": 4,
+              "hasta": 5,
+              "observadas": 5,
+              "esperadas": 7.966338594733934
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 12,
+              "esperadas": 10.961914826846238
+            }
+          ],
+          "estadistico": 1.9359616222939338,
+          "gradosLibertad": 1,
+          "critico": 3.841458820694124,
+          "pasa": true
+        }
+      },
+      {
+        "Wq": 100.11385649013796,
+        "W": 113.19397708593245,
+        "L": 41.89395176506232,
+        "Lq": 37.049605873319706,
+        "utilizacion": 0.9688691783485229,
+        "ultimaSalida": 372.61568559197735,
+        "clientesAtendidos": 138.03333333333333,
+        "WqIC": {
+          "promedio": 100.11385649013796,
+          "minimo": 66.35762279774681,
+          "maximo": 133.89240324806988,
+          "limiteInferior": 94.22720795452895,
+          "limiteSuperior": 106.00050502574697
+        },
+        "Poisson": {
+          "media": 4.5,
+          "varianza": 5.017241379310345,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 2,
+              "observadas": 4,
+              "esperadas": 5.207342127301081
+            },
+            {
+              "desde": 3,
+              "hasta": 3,
+              "observadas": 9,
+              "esperadas": 5.06153654773665
+            },
+            {
+              "desde": 4,
+              "hasta": 4,
+              "observadas": 5,
+              "esperadas": 5.694228616203734
+            },
+            {
+              "desde": 5,
+              "hasta": 5,
+              "observadas": 2,
+              "esperadas": 5.124805754583364
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 10,
+              "esperadas": 8.912086954175175
+            }
+          ],
+          "estadistico": 5.467274378908644,
+          "gradosLibertad": 3,
+          "critico": 7.814727903251179,
+          "pasa": true
+        }
+      }
+    ],
+    "15": [
+      {
+        "Wq": 84.99652349241244,
+        "W": 92.97298439946577,
+        "L": 57.11119319162228,
+        "Lq": 52.20903236794732,
+        "utilizacion": 0.9804321647349895,
+        "ultimaSalida": 420.4930844636276,
+        "clientesAtendidos": 258.46666666666664,
+        "WqIC": {
+          "promedio": 84.99652349241244,
+          "minimo": 62.92524614475413,
+          "maximo": 124.56981687178626,
+          "limiteInferior": 79.43406428381253,
+          "limiteSuperior": 90.55898270101234
+        },
+        "Poisson": {
+          "media": 5.416666666666667,
+          "varianza": 6.949275362318841,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 3,
+              "observadas": 7,
+              "esperadas": 5.071746578419832
+            },
+            {
+              "desde": 4,
+              "hasta": 5,
+              "observadas": 5,
+              "esperadas": 7.966338594733934
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 12,
+              "esperadas": 10.961914826846238
+            }
+          ],
+          "estadistico": 1.9359616222939338,
+          "gradosLibertad": 1,
+          "critico": 3.841458820694124,
+          "pasa": true
+        }
+      },
+      {
+        "Wq": 34.752031345241804,
+        "W": 42.79876835945526,
+        "L": 25.55075109294522,
+        "Lq": 20.74060620219414,
+        "utilizacion": 0.9620289781502165,
+        "ultimaSalida": 230.8096942038092,
+        "clientesAtendidos": 138.03333333333333,
+        "WqIC": {
+          "promedio": 34.752031345241804,
+          "minimo": 14.593309026885201,
+          "maximo": 54.77573657520805,
+          "limiteInferior": 31.305204484800285,
+          "limiteSuperior": 38.19885820568332
+        },
+        "Poisson": {
+          "media": 4.5,
+          "varianza": 5.017241379310345,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 2,
+              "observadas": 4,
+              "esperadas": 5.207342127301081
+            },
+            {
+              "desde": 3,
+              "hasta": 3,
+              "observadas": 9,
+              "esperadas": 5.06153654773665
+            },
+            {
+              "desde": 4,
+              "hasta": 4,
+              "observadas": 5,
+              "esperadas": 5.694228616203734
+            },
+            {
+              "desde": 5,
+              "hasta": 5,
+              "observadas": 2,
+              "esperadas": 5.124805754583364
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 10,
+              "esperadas": 8.912086954175175
+            }
+          ],
+          "estadistico": 5.467274378908644,
+          "gradosLibertad": 3,
+          "critico": 7.814727903251179,
+          "pasa": true
+        }
+      }
+    ],
+    "10": [
+      {
+        "Wq": 24.152474188858758,
+        "W": 29.63734191482162,
+        "L": 26.173635899141978,
+        "Lq": 21.320831436613094,
+        "utilizacion": 0.9705608925057768,
+        "ultimaSalida": 292.08932323318555,
+        "clientesAtendidos": 258.46666666666664,
+        "WqIC": {
+          "promedio": 24.152474188858758,
+          "minimo": 9.441647888405093,
+          "maximo": 49.1749807170135,
+          "limiteInferior": 20.51324799545284,
+          "limiteSuperior": 27.791700382264676
+        },
+        "Poisson": {
+          "media": 5.416666666666667,
+          "varianza": 6.949275362318841,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 3,
+              "observadas": 7,
+              "esperadas": 5.071746578419832
+            },
+            {
+              "desde": 4,
+              "hasta": 5,
+              "observadas": 5,
+              "esperadas": 7.966338594733934
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 12,
+              "esperadas": 10.961914826846238
+            }
+          ],
+          "estadistico": 1.9359616222939338,
+          "gradosLibertad": 1,
+          "critico": 3.841458820694124,
+          "pasa": true
+        }
+      },
+      {
+        "Wq": 6.166255983701461,
+        "W": 11.696301207124396,
+        "L": 9.71628379608234,
+        "Lq": 5.145136731791378,
+        "utilizacion": 0.9142294128581927,
+        "ultimaSalida": 166.783645081335,
+        "clientesAtendidos": 138.03333333333333,
+        "WqIC": {
+          "promedio": 6.166255983701461,
+          "minimo": 1.9730900299756773,
+          "maximo": 15.214977473686325,
+          "limiteInferior": 4.9105145251873585,
+          "limiteSuperior": 7.421997442215564
+        },
+        "Poisson": {
+          "media": 4.5,
+          "varianza": 5.017241379310345,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 2,
+              "observadas": 4,
+              "esperadas": 5.207342127301081
+            },
+            {
+              "desde": 3,
+              "hasta": 3,
+              "observadas": 9,
+              "esperadas": 5.06153654773665
+            },
+            {
+              "desde": 4,
+              "hasta": 4,
+              "observadas": 5,
+              "esperadas": 5.694228616203734
+            },
+            {
+              "desde": 5,
+              "hasta": 5,
+              "observadas": 2,
+              "esperadas": 5.124805754583364
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 10,
+              "esperadas": 8.912086954175175
+            }
+          ],
+          "estadistico": 5.467274378908644,
+          "gradosLibertad": 3,
+          "critico": 7.814727903251179,
+          "pasa": true
+        }
+      }
+    ],
+    "8": [
+      {
+        "Wq": 5.875440519327947,
+        "W": 10.363670972854617,
+        "L": 10.676510693993986,
+        "Lq": 6.094816138587942,
+        "utilizacion": 0.9163389110812088,
+        "ultimaSalida": 252.96220848907643,
+        "clientesAtendidos": 258.46666666666664,
+        "WqIC": {
+          "promedio": 5.875440519327947,
+          "minimo": 1.4704690538738066,
+          "maximo": 19.32711714171071,
+          "limiteInferior": 4.356092321913123,
+          "limiteSuperior": 7.394788716742771
+        },
+        "Poisson": {
+          "media": 5.416666666666667,
+          "varianza": 6.949275362318841,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 3,
+              "observadas": 7,
+              "esperadas": 5.071746578419832
+            },
+            {
+              "desde": 4,
+              "hasta": 5,
+              "observadas": 5,
+              "esperadas": 7.966338594733934
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 12,
+              "esperadas": 10.961914826846238
+            }
+          ],
+          "estadistico": 1.9359616222939338,
+          "gradosLibertad": 1,
+          "critico": 3.841458820694124,
+          "pasa": true
+        }
+      },
+      {
+        "Wq": 1.666517185825,
+        "W": 6.1898856929317265,
+        "L": 5.476809491633898,
+        "Lq": 1.4992957351214606,
+        "utilizacion": 0.7955027513024875,
+        "ultimaSalida": 156.91638064331798,
+        "clientesAtendidos": 138.03333333333333,
+        "WqIC": {
+          "promedio": 1.666517185825,
+          "minimo": 0.5141800837126846,
+          "maximo": 3.8562603815321426,
+          "limiteInferior": 1.3188419551690418,
+          "limiteSuperior": 2.0141924164809586
+        },
+        "Poisson": {
+          "media": 4.5,
+          "varianza": 5.017241379310345,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 2,
+              "observadas": 4,
+              "esperadas": 5.207342127301081
+            },
+            {
+              "desde": 3,
+              "hasta": 3,
+              "observadas": 9,
+              "esperadas": 5.06153654773665
+            },
+            {
+              "desde": 4,
+              "hasta": 4,
+              "observadas": 5,
+              "esperadas": 5.694228616203734
+            },
+            {
+              "desde": 5,
+              "hasta": 5,
+              "observadas": 2,
+              "esperadas": 5.124805754583364
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 10,
+              "esperadas": 8.912086954175175
+            }
+          ],
+          "estadistico": 5.467274378908644,
+          "gradosLibertad": 3,
+          "critico": 7.814727903251179,
+          "pasa": true
+        }
+      }
+    ],
+    "7": [
+      {
+        "Wq": 2.045737475398076,
+        "W": 6.035649292706652,
+        "L": 6.397531668252439,
+        "Lq": 2.200847742172238,
+        "utilizacion": 0.8393367852160402,
+        "ultimaSalida": 245.62583037760075,
+        "clientesAtendidos": 258.46666666666664,
+        "WqIC": {
+          "promedio": 2.045737475398076,
+          "minimo": 0.5961561870819896,
+          "maximo": 4.939221085981709,
+          "limiteInferior": 1.6194983372507503,
+          "limiteSuperior": 2.4719766135454018
+        },
+        "Poisson": {
+          "media": 5.416666666666667,
+          "varianza": 6.949275362318841,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 3,
+              "observadas": 7,
+              "esperadas": 5.071746578419832
+            },
+            {
+              "desde": 4,
+              "hasta": 5,
+              "observadas": 5,
+              "esperadas": 7.966338594733934
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 12,
+              "esperadas": 10.961914826846238
+            }
+          ],
+          "estadistico": 1.9359616222939338,
+          "gradosLibertad": 1,
+          "critico": 3.841458820694124,
+          "pasa": true
+        }
+      },
+      {
+        "Wq": 0.8062814108550188,
+        "W": 4.826311559803642,
+        "L": 4.317710506649241,
+        "Lq": 0.7362562805373684,
+        "utilizacion": 0.7162908452223745,
+        "ultimaSalida": 154.9407173318377,
+        "clientesAtendidos": 138.03333333333333,
+        "WqIC": {
+          "promedio": 0.8062814108550188,
+          "minimo": 0.254841930547121,
+          "maximo": 2.1394215388170554,
+          "limiteInferior": 0.6448269748174215,
+          "limiteSuperior": 0.9677358468926162
+        },
+        "Poisson": {
+          "media": 4.5,
+          "varianza": 5.017241379310345,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 2,
+              "observadas": 4,
+              "esperadas": 5.207342127301081
+            },
+            {
+              "desde": 3,
+              "hasta": 3,
+              "observadas": 9,
+              "esperadas": 5.06153654773665
+            },
+            {
+              "desde": 4,
+              "hasta": 4,
+              "observadas": 5,
+              "esperadas": 5.694228616203734
+            },
+            {
+              "desde": 5,
+              "hasta": 5,
+              "observadas": 2,
+              "esperadas": 5.124805754583364
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 10,
+              "esperadas": 8.912086954175175
+            }
+          ],
+          "estadistico": 5.467274378908644,
+          "gradosLibertad": 3,
+          "critico": 7.814727903251179,
+          "pasa": true
+        }
+      }
+    ],
+    "6": [
+      {
+        "Wq": 0.771733636596586,
+        "W": 4.263326817687067,
+        "L": 4.539050383226339,
+        "Lq": 0.8342974833215073,
+        "utilizacion": 0.7409505799809665,
+        "ultimaSalida": 243.54270612428547,
+        "clientesAtendidos": 258.46666666666664,
+        "WqIC": {
+          "promedio": 0.771733636596586,
+          "minimo": 0.24852725260439013,
+          "maximo": 1.450667593703186,
+          "limiteInferior": 0.6396094288360153,
+          "limiteSuperior": 0.9038578443571567
+        },
+        "Poisson": {
+          "media": 5.416666666666667,
+          "varianza": 6.949275362318841,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 3,
+              "observadas": 7,
+              "esperadas": 5.071746578419832
+            },
+            {
+              "desde": 4,
+              "hasta": 5,
+              "observadas": 5,
+              "esperadas": 7.966338594733934
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 12,
+              "esperadas": 10.961914826846238
+            }
+          ],
+          "estadistico": 1.9359616222939338,
+          "gradosLibertad": 1,
+          "critico": 3.841458820694124,
+          "pasa": true
+        }
+      },
+      {
+        "Wq": 0.36263314573500965,
+        "W": 3.8793249365255287,
+        "L": 3.4873337097696133,
+        "Lq": 0.3322993779927589,
+        "utilizacion": 0.6310068663553708,
+        "ultimaSalida": 153.8740377538806,
+        "clientesAtendidos": 138.03333333333333,
+        "WqIC": {
+          "promedio": 0.36263314573500965,
+          "minimo": 0.13901403638780155,
+          "maximo": 0.8946147542721613,
+          "limiteInferior": 0.29552534480555603,
+          "limiteSuperior": 0.4297409466644633
+        },
+        "Poisson": {
+          "media": 4.5,
+          "varianza": 5.017241379310345,
+          "clases": [
+            {
+              "desde": 0,
+              "hasta": 2,
+              "observadas": 4,
+              "esperadas": 5.207342127301081
+            },
+            {
+              "desde": 3,
+              "hasta": 3,
+              "observadas": 9,
+              "esperadas": 5.06153654773665
+            },
+            {
+              "desde": 4,
+              "hasta": 4,
+              "observadas": 5,
+              "esperadas": 5.694228616203734
+            },
+            {
+              "desde": 5,
+              "hasta": 5,
+              "observadas": 2,
+              "esperadas": 5.124805754583364
+            },
+            {
+              "desde": 6,
+              "hasta": null,
+              "observadas": 10,
+              "esperadas": 8.912086954175175
+            }
+          ],
+          "estadistico": 5.467274378908644,
+          "gradosLibertad": 3,
+          "critico": 7.814727903251179,
+          "pasa": true
+        }
+      }
+    ]
+  },
+  "cajas": {
+    "regular": {
+      "metaEsperaMinutos": 10,
+      "cajasRecomendadas": 14,
+      "curva": [
+        {
+          "cajas": 1,
+          "jornadas": [
+            {
+              "Wq": 1546.1367382414435,
+              "utilizacion": 0.9997496003755718
+            },
+            {
+              "Wq": 816.5449326364475,
+              "utilizacion": 0.9994221464496325
+            }
+          ]
+        },
+        {
+          "cajas": 2,
+          "jornadas": [
+            {
+              "Wq": 710.072328899628,
+              "utilizacion": 0.9969465966120692
+            },
+            {
+              "Wq": 368.01396188308206,
+              "utilizacion": 0.9931811476198623
+            }
+          ]
+        },
+        {
+          "cajas": 3,
+          "jornadas": [
+            {
+              "Wq": 431.76906042720697,
+              "utilizacion": 0.9934711005139405
+            },
+            {
+              "Wq": 218.82843443569132,
+              "utilizacion": 0.9858797545614618
+            }
+          ]
+        },
+        {
+          "cajas": 4,
+          "jornadas": [
+            {
+              "Wq": 293.0077990504076,
+              "utilizacion": 0.9883876419326845
+            },
+            {
+              "Wq": 144.5019103713855,
+              "utilizacion": 0.9779607924804341
+            }
+          ]
+        },
+        {
+          "cajas": 5,
+          "jornadas": [
+            {
+              "Wq": 209.9654493065742,
+              "utilizacion": 0.9838794699467088
+            },
+            {
+              "Wq": 100.11385649013796,
+              "utilizacion": 0.9688691783485229
+            }
+          ]
+        },
+        {
+          "cajas": 6,
+          "jornadas": [
+            {
+              "Wq": 154.85722324755713,
+              "utilizacion": 0.9790322127116152
+            },
+            {
+              "Wq": 70.75263524078787,
+              "utilizacion": 0.9582263942391412
+            }
+          ]
+        },
+        {
+          "cajas": 7,
+          "jornadas": [
+            {
+              "Wq": 115.68260668766796,
+              "utilizacion": 0.9729534850696712
+            },
+            {
+              "Wq": 49.962092677322985,
+              "utilizacion": 0.9479498712215176
+            }
+          ]
+        },
+        {
+          "cajas": 8,
+          "jornadas": [
+            {
+              "Wq": 86.55194133209592,
+              "utilizacion": 0.9660300457839127
+            },
+            {
+              "Wq": 34.70179276860305,
+              "utilizacion": 0.9358742500552071
+            }
+          ]
+        },
+        {
+          "cajas": 9,
+          "jornadas": [
+            {
+              "Wq": 64.09072997688061,
+              "utilizacion": 0.9588329588069315
+            },
+            {
+              "Wq": 23.40503629054403,
+              "utilizacion": 0.9215687102808835
+            }
+          ]
+        },
+        {
+          "cajas": 10,
+          "jornadas": [
+            {
+              "Wq": 46.35095773785305,
+              "utilizacion": 0.9510314057114191
+            },
+            {
+              "Wq": 14.870899164957828,
+              "utilizacion": 0.9050772136215796
+            }
+          ]
+        },
+        {
+          "cajas": 11,
+          "jornadas": [
+            {
+              "Wq": 32.11160783452912,
+              "utilizacion": 0.943404686144068
+            },
+            {
+              "Wq": 8.493881276097047,
+              "utilizacion": 0.8830158555192384
+            }
+          ]
+        },
+        {
+          "cajas": 12,
+          "jornadas": [
+            {
+              "Wq": 20.696875514260377,
+              "utilizacion": 0.933861433057865
+            },
+            {
+              "Wq": 4.431481475836615,
+              "utilizacion": 0.8477338793344712
+            }
+          ]
+        },
+        {
+          "cajas": 13,
+          "jornadas": [
+            {
+              "Wq": 12.232692057214216,
+              "utilizacion": 0.9158439228961035
+            },
+            {
+              "Wq": 2.2411295657506156,
+              "utilizacion": 0.8025249201668895
+            }
+          ]
+        },
+        {
+          "cajas": 14,
+          "jornadas": [
+            {
+              "Wq": 6.7984028893725075,
+              "utilizacion": 0.8838405432845851
+            },
+            {
+              "Wq": 1.1768743402234751,
+              "utilizacion": 0.7528648407578018
+            }
+          ]
+        },
+        {
+          "cajas": 15,
+          "jornadas": [
+            {
+              "Wq": 3.444968696985616,
+              "utilizacion": 0.8474052567149656
+            },
+            {
+              "Wq": 0.6006865351842865,
+              "utilizacion": 0.707818177453925
+            }
+          ]
+        }
+      ],
+      "semilla": 12345
+    },
+    "quincena": {
+      "metaEsperaMinutos": 10,
+      "cajasRecomendadas": 18,
+      "curva": [
+        {
+          "cajas": 1,
+          "jornadas": [
+            {
+              "Wq": 2044.3360321134558,
+              "utilizacion": 0.9998006145282818
+            },
+            {
+              "Wq": 1077.5121386337498,
+              "utilizacion": 0.9996350887327369
+            }
+          ]
+        },
+        {
+          "cajas": 2,
+          "jornadas": [
+            {
+              "Wq": 958.9830215247785,
+              "utilizacion": 0.9973772447441315
+            },
+            {
+              "Wq": 497.77147366041606,
+              "utilizacion": 0.9949414934497643
+            }
+          ]
+        },
+        {
+          "cajas": 3,
+          "jornadas": [
+            {
+              "Wq": 597.3818218886802,
+              "utilizacion": 0.9949514814366579
+            },
+            {
+              "Wq": 304.7662654405809,
+              "utilizacion": 0.9899256703867869
+            }
+          ]
+        },
+        {
+          "cajas": 4,
+          "jornadas": [
+            {
+              "Wq": 416.70493078306316,
+              "utilizacion": 0.9915061669861072
+            },
+            {
+              "Wq": 208.51309671051243,
+              "utilizacion": 0.9827636021875835
+            }
+          ]
+        },
+        {
+          "cajas": 5,
+          "jornadas": [
+            {
+              "Wq": 308.41602818258195,
+              "utilizacion": 0.9885644140032812
+            },
+            {
+              "Wq": 150.96568844526064,
+              "utilizacion": 0.9769462461760583
+            }
+          ]
+        },
+        {
+          "cajas": 6,
+          "jornadas": [
+            {
+              "Wq": 236.3552631336978,
+              "utilizacion": 0.9853618587251327
+            },
+            {
+              "Wq": 112.7902754971774,
+              "utilizacion": 0.9694387160857183
+            }
+          ]
+        },
+        {
+          "cajas": 7,
+          "jornadas": [
+            {
+              "Wq": 185.03794991025933,
+              "utilizacion": 0.9815058708364526
+            },
+            {
+              "Wq": 85.63551462417054,
+              "utilizacion": 0.9614886800369294
+            }
+          ]
+        },
+        {
+          "cajas": 8,
+          "jornadas": [
+            {
+              "Wq": 146.68613297003185,
+              "utilizacion": 0.9779865938227903
+            },
+            {
+              "Wq": 65.37481590427386,
+              "utilizacion": 0.9529646685209907
+            }
+          ]
+        },
+        {
+          "cajas": 9,
+          "jornadas": [
+            {
+              "Wq": 116.94924106897962,
+              "utilizacion": 0.9740912486753003
+            },
+            {
+              "Wq": 49.710452531211814,
+              "utilizacion": 0.9459964188405021
+            }
+          ]
+        },
+        {
+          "cajas": 10,
+          "jornadas": [
+            {
+              "Wq": 93.25372329552192,
+              "utilizacion": 0.969303666296897
+            },
+            {
+              "Wq": 37.4065587632551,
+              "utilizacion": 0.937165438835418
+            }
+          ]
+        },
+        {
+          "cajas": 11,
+          "jornadas": [
+            {
+              "Wq": 73.99828260832832,
+              "utilizacion": 0.96416753024596
+            },
+            {
+              "Wq": 27.536957991883366,
+              "utilizacion": 0.9270731616892441
+            }
+          ]
+        },
+        {
+          "cajas": 12,
+          "jornadas": [
+            {
+              "Wq": 58.066317021222844,
+              "utilizacion": 0.9594680445806619
+            },
+            {
+              "Wq": 19.58867642526374,
+              "utilizacion": 0.9173927796468251
+            }
+          ]
+        },
+        {
+          "cajas": 13,
+          "jornadas": [
+            {
+              "Wq": 44.7142994314012,
+              "utilizacion": 0.9537056124590372
+            },
+            {
+              "Wq": 13.244192893070238,
+              "utilizacion": 0.9024029184599361
+            }
+          ]
+        },
+        {
+          "cajas": 14,
+          "jornadas": [
+            {
+              "Wq": 33.4556889091788,
+              "utilizacion": 0.9480307404119426
+            },
+            {
+              "Wq": 8.283445119493942,
+              "utilizacion": 0.8860888292376867
+            }
+          ]
+        },
+        {
+          "cajas": 15,
+          "jornadas": [
+            {
+              "Wq": 23.979118608991154,
+              "utilizacion": 0.9411990118312097
+            },
+            {
+              "Wq": 4.753021011448104,
+              "utilizacion": 0.8616670322768527
+            }
+          ]
+        },
+        {
+          "cajas": 16,
+          "jornadas": [
+            {
+              "Wq": 16.183240616672414,
+              "utilizacion": 0.9316091080849648
+            },
+            {
+              "Wq": 2.6629436782027156,
+              "utilizacion": 0.8283106114845539
+            }
+          ]
+        },
+        {
+          "cajas": 17,
+          "jornadas": [
+            {
+              "Wq": 10.026973464471963,
+              "utilizacion": 0.9178311906381518
+            },
+            {
+              "Wq": 1.5385460777624806,
+              "utilizacion": 0.7907583612554447
+            }
+          ]
+        },
+        {
+          "cajas": 18,
+          "jornadas": [
+            {
+              "Wq": 5.8292900481582794,
+              "utilizacion": 0.8939596364821654
+            },
+            {
+              "Wq": 0.8960139959373269,
+              "utilizacion": 0.7531537625438799
+            }
+          ]
+        },
+        {
+          "cajas": 19,
+          "jornadas": [
+            {
+              "Wq": 3.179555950926581,
+              "utilizacion": 0.8643052910070524
+            },
+            {
+              "Wq": 0.5055536503057675,
+              "utilizacion": 0.7174195262877582
+            }
+          ]
+        }
+      ],
+      "semilla": 12345
+    }
+  },
+  "ciw": [
+    {
+      "L": {
+        "ciw": {
+          "promedio": 87.03985823013967,
+          "minimo": 72.7240757297633,
+          "maximo": 112.76788581156502,
+          "limiteInferior": 83.308281569323,
+          "limiteSuperior": 90.77143489095634
+        },
+        "valorP": 0.32651753464373495,
+        "coinciden": true
+      },
+      "Lq": {
+        "ciw": {
+          "promedio": 82.12079703227077,
+          "minimo": 67.80108178104958,
+          "maximo": 107.8606451026662,
+          "limiteInferior": 78.39374605410767,
+          "limiteSuperior": 85.84784801043388
+        },
+        "valorP": 0.3260788670219849,
+        "coinciden": true
+      },
+      "W": {
+        "ciw": {
+          "promedio": 230.3583366753254,
+          "minimo": 183.24172867499485,
+          "maximo": 304.8648267832914,
+          "limiteInferior": 219.25711984537472,
+          "limiteSuperior": 241.4595535052761
+        },
+        "valorP": 0.2985948424531878,
+        "coinciden": true
+      },
+      "Wq": {
+        "ciw": {
+          "promedio": 217.35289579485055,
+          "minimo": 171.3151390412306,
+          "maximo": 291.59823871226695,
+          "limiteInferior": 206.34936197626484,
+          "limiteSuperior": 228.35642961343626
+        },
+        "valorP": 0.2978451466781828,
+        "coinciden": true
+      },
+      "WqPrioritarios": {
+        "ciw": {
+          "promedio": 2.4905034977037532,
+          "minimo": 0.6869070127706323,
+          "maximo": 4.195497384723991,
+          "limiteInferior": 2.209744921876938,
+          "limiteSuperior": 2.7712620735305684
+        },
+        "valorP": 0.9420194120733703,
+        "coinciden": true
+      },
+      "WqNormales": {
+        "ciw": {
+          "promedio": 228.9168888053364,
+          "minimo": 182.0803712615194,
+          "maximo": 312.38310949821,
+          "limiteInferior": 216.8157840379221,
+          "limiteSuperior": 241.01799357275073
+        },
+        "valorP": 0.3653328033763582,
+        "coinciden": true
+      },
+      "utilizacion": {
+        "ciw": {
+          "promedio": 0.9838122395737776,
+          "minimo": 0.97193896822167,
+          "maximo": 0.9937044464593779,
+          "limiteInferior": 0.9816508967346689,
+          "limiteSuperior": 0.9859735824128864
+        },
+        "valorP": 0.9614776402438834,
+        "coinciden": true
+      }
+    },
+    {
+      "L": {
+        "ciw": {
+          "promedio": 40.144166404678806,
+          "minimo": 22.7434521154382,
+          "maximo": 50.42968224952716,
+          "limiteInferior": 37.68494051800583,
+          "limiteSuperior": 42.60339229135178
+        },
+        "valorP": 0.2662040112046325,
+        "coinciden": true
+      },
+      "Lq": {
+        "ciw": {
+          "promedio": 35.30981092928649,
+          "minimo": 17.975292931084013,
+          "maximo": 45.603062380735025,
+          "limiteInferior": 32.86206648536722,
+          "limiteSuperior": 37.75755537320576
+        },
+        "valorP": 0.26692174871116947,
+        "coinciden": true
+      },
+      "W": {
+        "ciw": {
+          "promedio": 108.78667629354658,
+          "minimo": 57.14457339488539,
+          "maximo": 143.2450594563939,
+          "limiteInferior": 101.62227657700106,
+          "limiteSuperior": 115.9510760100921
+        },
+        "valorP": 0.33832263699625204,
+        "coinciden": true
+      },
+      "Wq": {
+        "ciw": {
+          "promedio": 95.69978839225682,
+          "minimo": 45.16422753156459,
+          "maximo": 129.53508907312772,
+          "limiteInferior": 88.657230469935,
+          "limiteSuperior": 102.74234631457864
+        },
+        "valorP": 0.3295510253524619,
+        "coinciden": true
+      },
+      "WqPrioritarios": {
+        "ciw": {
+          "promedio": 2.485597807392763,
+          "minimo": 1.197032122510386,
+          "maximo": 5.765266627258139,
+          "limiteInferior": 2.112939855717532,
+          "limiteSuperior": 2.8582557590679945
+        },
+        "valorP": 0.3391657945797406,
+        "coinciden": true
+      },
+      "WqNormales": {
+        "ciw": {
+          "promedio": 101.1023515921852,
+          "minimo": 46.67957218173023,
+          "maximo": 134.20661290035014,
+          "limiteInferior": 93.50232886207067,
+          "limiteSuperior": 108.70237432229973
+        },
+        "valorP": 0.3837960565654695,
+        "coinciden": true
+      },
+      "utilizacion": {
+        "ciw": {
+          "promedio": 0.9668710950784635,
+          "minimo": 0.9345470605089754,
+          "maximo": 0.9839884982757132,
+          "limiteInferior": 0.9619336733710516,
+          "limiteSuperior": 0.9718085167858753
+        },
+        "valorP": 0.5180117666523467,
+        "coinciden": true
+      }
+    }
+  ],
+  "casos_adversos": {
+    "franja_cero": {
+      "franjas": [
+        {
+          "desde": 480,
+          "hasta": 540,
+          "conteos": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "observaciones": 12,
+          "media": 0.0,
+          "z": -7.745966692414833,
+          "categoria": "valle",
+          "tasa": 0.0
+        },
+        {
+          "desde": 540,
+          "hasta": 600,
+          "conteos": [
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10,
+            10
+          ],
+          "observaciones": 12,
+          "media": 10.0,
+          "z": 7.745966692414833,
+          "categoria": "pico",
+          "tasa": 10.0
+        }
+      ],
+      "excepcion": "ZeroDivisionError",
+      "mensaje": "float division by zero"
+    },
+    "ciw_prioridad_total": {
+      "excepcion": "ZeroDivisionError",
+      "mensaje": "float division by zero"
+    },
+    "welch_constante": {
+      "p": "nan",
+      "coinciden": false
+    },
+    "serializar_welch_constante": {
+      "excepcion": "ValueError",
+      "mensaje": "Out of range float values are not JSON compliant: nan"
+    },
+    "poisson_con_negativo": {
+      "media": 1.0,
+      "varianza": 8.0,
+      "clases": [
+        {
+          "desde": 0,
+          "hasta": null,
+          "observadas": 1,
+          "esperadas": 2.0
+        }
+      ],
+      "estadistico": 0.5,
+      "gradosLibertad": -1,
+      "critico": null,
+      "pasa": null
+    },
+    "conteo_que_cruza_borde": [
+      [
+        538,
+        543,
+        5
+      ]
+    ]
+  }
+}

@@ -53,7 +53,8 @@ function revisarPoisson(posicion) {
   }, 400);
 }
 
-watch(() => entrada.jornadas.map((jornada) => jornada.conteosTexto),
+// También con α: la prueba preliminar debe usar el mismo nivel de significancia que se va a simular
+watch(() => [entrada.alfa, ...entrada.jornadas.map((jornada) => jornada.conteosTexto)],
   () => entrada.jornadas.forEach((_, posicion) => revisarPoisson(posicion)), { immediate: true });
 
 function llegadasPorIntervalo(jornada) {
@@ -98,11 +99,11 @@ function quitarJornada(posicion) {
       <label v-if="visible.escenario && simulacion.escenario === 'quincena' && establecimiento.configuracion" class="campo">
         Aumento de llegadas en quincena
         <input v-model.number="establecimiento.configuracion.factorQuincena" type="number" min="1" max="3" step="0.05" required>
-        <small>Supuesto, no observado: 1,3 = llega 30 % más gente. Es el mismo valor del calendario del cliente.</small>
+        <small>Dato de experto: 1,3 = llega 30 % más gente. Es el mismo valor del calendario del cliente.</small>
       </label>
-      <label class="campo">Ventana de los promedios móviles
+      <label class="campo">Ventana del promedio móvil
         <input v-model.number="ajustes.ventanaPromedioMovil" type="number" min="2" max="24" step="1" required>
-        <small>Intervalos que entran en cada promedio</small>
+        <small>Conteos seguidos que se promedian en cada punto de la tendencia (3 = el actual y los 2 anteriores). No cambia la simulación.</small>
       </label>
     </div>
     <p class="nota">

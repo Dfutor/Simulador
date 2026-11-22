@@ -137,9 +137,12 @@ export function opcionLongitudes(probabilidadSistema, probabilidadCola, colores)
 
 export function opcionEsperaPorCorrida(medidasPorCorrida, resumenWq, colores) {
   const meta = ajustes.metaEsperaMinutos;
+  const opciones = base(colores, false);
   return {
-    ...base(colores, false),
-    tooltip: { ...base(colores).tooltip, trigger: "item", formatter: (punto) => `Corrida ${punto.name}: <b>${formatearNumero(punto.value)} min</b>` },
+    ...opciones,
+    // Las etiquetas de las líneas van a la derecha, fuera de las barras, para que no se tapen
+    grid: { ...opciones.grid, right: 84 },
+    tooltip: { ...opciones.tooltip, trigger: "item", formatter: (punto) => `Corrida ${punto.name}: <b>${formatearNumero(punto.value)} min</b>` },
     xAxis: { ...eje(colores, "Corrida", { distanciaNombre: 32 }), type: "category", data: medidasPorCorrida.map((_, posicion) => posicion + 1) },
     yAxis: eje(colores, "Espera en la fila (min)"),
     series: [{
@@ -147,8 +150,8 @@ export function opcionEsperaPorCorrida(medidasPorCorrida, resumenWq, colores) {
       markArea: {
         silent: true,
         itemStyle: { color: colores.series[0], opacity: 0.12 },
-        data: [[{ yAxis: resumenWq.limiteInferior, name: "IC 95 %" }, { yAxis: resumenWq.limiteSuperior }]],
-        label: { color: colores.textoSecundario, position: "insideTopRight" },
+        label: { show: false },   // el subtítulo de la gráfica explica la franja
+        data: [[{ yAxis: resumenWq.limiteInferior }, { yAxis: resumenWq.limiteSuperior }]],
       },
       markLine: {
         silent: true,
@@ -157,7 +160,10 @@ export function opcionEsperaPorCorrida(medidasPorCorrida, resumenWq, colores) {
           { yAxis: resumenWq.promedio, name: "Promedio", lineStyle: { color: colores.texto, width: 1.5 } },
           { yAxis: meta, name: "Meta", lineStyle: { color: colores.textoSecundario, type: "dashed" } },
         ],
-        label: { formatter: (punto) => `${punto.name}: ${formatearNumero(punto.value, 1)}`, color: colores.textoSecundario, position: "insideEndTop" },
+        label: {
+          position: "end", distance: 6, color: colores.textoSecundario, lineHeight: 15,
+          formatter: (punto) => `${punto.name}\n${formatearNumero(punto.value, 1)}`,
+        },
       },
     }],
   };
@@ -174,8 +180,8 @@ export function opcionOcupacionPorCaja(utilizacionPorServidor, colores) {
       markArea: {
         silent: true,
         itemStyle: { color: colores.estadoBueno, opacity: 0.1 },
-        label: { color: colores.textoSecundario, position: "insideTopLeft" },
-        data: [[{ yAxis: ajustes.utilizacionMinima / 100, name: "Rango meta" }, { yAxis: ajustes.utilizacionMaxima / 100 }]],
+        label: { show: false },   // las barras la tapaban; el subtítulo dice que la franja verde es el rango meta
+        data: [[{ yAxis: ajustes.utilizacionMinima / 100 }, { yAxis: ajustes.utilizacionMaxima / 100 }]],
       },
     }],
   };
@@ -189,9 +195,11 @@ function acumuladaObservada(numeros) {
 }
 
 export function opcionAcumuladaKS(aleatoriosLlegada, aleatoriosServicio, critico, colores) {
-  const banda = (desplazamiento) => [[0, Math.max(0, desplazamiento)], [1 + desplazamiento, 1]]
-    .map(([equis, ye]) => [Math.min(Math.max(equis, 0), 1), Math.min(Math.max(ye, 0), 1)]);
-  const lineaBanda = (nombre, desplazamiento) => linea(nombre, banda(desplazamiento), colores.textoTenue, {
+  // Guías de la prueba: F₀(x) ± crítico, recortadas a [0, 1]. Son paralelas a la diagonal (pendiente 1).
+  const c = Math.min(critico, 1);
+  const bandaSuperior = [[0, c], [1 - c, 1], [1, 1]];
+  const bandaInferior = [[0, 0], [c, 0], [1, 1 - c]];
+  const lineaBanda = (nombre, puntos) => linea(nombre, puntos, colores.textoTenue, {
     lineStyle: { width: 1, type: "dashed", color: colores.textoTenue }, tooltip: { show: false }, emphasis: { disabled: true },
   });
   return {
@@ -203,8 +211,8 @@ export function opcionAcumuladaKS(aleatoriosLlegada, aleatoriosServicio, critico
       linea("R de llegadas", acumuladaObservada(aleatoriosLlegada), colores.series[0], { step: "end" }),
       linea("R de servicios", acumuladaObservada(aleatoriosServicio), colores.series[1], { step: "end" }),
       linea("Uniforme U(0, 1)", [[0, 0], [1, 1]], colores.texto, { lineStyle: { width: 1.5, color: colores.texto } }),
-      lineaBanda("Límite superior (± valor crítico)", critico),
-      lineaBanda("Límite inferior", -critico),
+      lineaBanda("Límite superior (± valor crítico)", bandaSuperior),
+      lineaBanda("Límite inferior", bandaInferior),
     ],
     legend: { ...base(colores).legend, data: ["R de llegadas", "R de servicios", "Uniforme U(0, 1)", "Límite superior (± valor crítico)"] },
   };
@@ -232,7 +240,10 @@ export function opcionDPorCorrida(aceptadas, rechazos, colores) {
         markLine: {
           silent: true, symbol: "none",
           lineStyle: { color: colores.texto, type: "dashed" },
-          label: { formatter: "Límite: por encima se rechaza", color: colores.textoSecundario, position: "insideEndTop" },
+          label: {
+            formatter: "Límite: por encima se rechaza", color: colores.textoSecundario, position: "insideEndTop",
+            backgroundColor: colores.superficie, padding: [2, 6], borderRadius: 4,
+          },
           data: [{ yAxis: 1 }],
         },
       },

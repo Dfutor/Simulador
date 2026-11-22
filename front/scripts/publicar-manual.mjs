@@ -27,7 +27,6 @@ export async function prepararArchivosPublicos(comando) {
   for (const pagina of paginas) {
     const html = await readFile(join(auditoria, pagina), "utf8");
     const publicado = html
-      .replace(/(<nav aria-label="Entregables">)/, '$1<a href="/">Volver al simulador</a>')
       .replace(/href="manual\.html([#"])/g, 'href="./$1')
       .replace(/<a href="\.\.\/\.\.\/([^"#]+)(#[^"]*)?">([\s\S]*?)<\/a>/g, (_, ruta, ancla = "", etiqueta) => {
         const fuente = decodeURIComponent(ruta);

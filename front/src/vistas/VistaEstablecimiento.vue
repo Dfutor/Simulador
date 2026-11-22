@@ -148,9 +148,9 @@ const fechaHora = (iso) => new Date(iso).toLocaleString("es-CO", { dateStyle: "m
       </p>
       <div class="vistaPrevia">
         <CalendarioMes v-model:seleccion="fechaVistaPrevia" :version="version" />
-        <p v-if="fechaVistaPrevia" class="nota">
-          Seleccionada: {{ formatearFecha(fechaVistaPrevia) }}.
-          <a class="enlace" :href="`#/visita/${fechaVistaPrevia}`" target="_blank" rel="noopener">Consultar sus esperas ↗</a>
+        <p v-if="fechaVistaPrevia" class="nota seleccionada">
+          <span>{{ formatearFecha(fechaVistaPrevia) }}</span>
+          <a class="enlace" :href="`#/visita/${fechaVistaPrevia}`" target="_blank" rel="noopener">Ver como cliente ↗</a>
         </p>
       </div>
     </section>
@@ -176,4 +176,4 @@ const fechaHora = (iso) => new Date(iso).toLocaleString("es-CO", { dateStyle: "m
 .error { border-color: var(--estadoCritico); color: var(--estadoCritico); }
 .publicacion { margin-top: 0.75rem; }
 .vistaPrevia { max-width: 420px; }
-</style>
+.seleccionada { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; }</style>

@@ -16,7 +16,11 @@ export function formatearMedida(valor, medida) {
 export function horaReloj(inicio, minutosDesdeApertura) {
   const [horas, minutos] = inicio.split(":").map(Number);
   const total = horas * 60 + minutos + Math.round(minutosDesdeApertura);
-  return `${String(Math.floor(total / 60)).padStart(2, "0")}:${String(total % 60).padStart(2, "0")}`;
+  // Con mucha sobrecarga la atención pasa de la medianoche: 25:10 se muestra como 01:10 (+1 d)
+  const dias = Math.floor(total / 1440);
+  const enElDia = total - dias * 1440;
+  const hora = `${String(Math.floor(enElDia / 60)).padStart(2, "0")}:${String(enElDia % 60).padStart(2, "0")}`;
+  return dias > 0 ? `${hora} (+${dias} d)` : hora;
 }
 
 /** 59.4 → "59 min";  125 → "2 h 5 min" (para el cliente) */

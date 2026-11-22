@@ -63,7 +63,7 @@ Pestaña *Establecimiento*: días y horarios de atención, excepciones (festivos
 
 La configuración y las estimaciones se guardan en `simulador2/datos/` (en Docker, en el volumen `datos`).
 
-El botón **Manual de usuario** abre el manual integral en `/manual/`, con su índice, capturas y anexos. El build prepara esta página a partir de [`docs/auditoria/`](docs/auditoria/). Para compartirla en un servidor, usa el dominio del simulador seguido de `/manual/`. Si se ejecuta con FastAPI sin Docker, la ruta local es http://localhost:8000/manual/.
+El botón **Manual de usuario** abre el manual en `/manual/`, en tres partes: **Uso** (cada pantalla), **Fundamentos** (cada fórmula con su página en Coss Bu y su archivo en el código) y **Defensa** (argumento, cifras clave y preguntas probables). El build lo prepara a partir de [`docs/auditoria/`](docs/auditoria/). Las fórmulas están en MathML, así que no necesitan JavaScript. Para compartirla en un servidor, usa el dominio del simulador seguido de `/manual/`. Si se ejecuta con FastAPI sin Docker, la ruta local es http://localhost:8000/manual/.
 
 El ícono de herramienta abre los ajustes: tema, letra, estilo de las gráficas, metas (resultados óptimos), qué variables se piden y qué resultados se muestran. Se guardan en el navegador.
 

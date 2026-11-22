@@ -335,6 +335,29 @@ class PruebasMedidasAMano(unittest.TestCase):
         self.assertAlmostEqual(self.m["utilizacion"], 23 / 28)
 
 
+class PruebasEjemploDeLaDefensa(unittest.TestCase):
+    """El ejemplo resuelto a mano de la guía de defensa del manual (una caja, el 3 es prioritario).
+
+    Cliente | Llega | Servicio | Inicio | Fin | Espera
+       1    |   0   |    4     |   0    |  4  |   0
+       2    |   1   |    3     |   6    |  9  |   5
+       3 ★  |   2   |    2     |   4    |  6  |   2    ← a los 4 min pasa antes que el 2
+       4    |   3   |    1     |   9    | 10  |   6
+    T = max(5 de puerta, 10 última salida) = 10.
+    """
+
+    def test_tablaYMedidas(self):
+        clientes = [{"cliente": numero, "momentoLlegada": llegada, "prioritario": numero == 3}
+                    for numero, llegada in enumerate((0, 1, 2, 3), 1)]
+        servicios = iter((4, 2, 3, 1))   # en el orden en que se atiende: 1, 3, 2, 4
+        iniciador.atender(clientes, 1, lambda: (0.0, next(servicios)))
+        self.assertEqual([(c["inicioServicio"], c["terminacionServicio"], c["tiempoEspera"]) for c in clientes],
+                         [(0, 4, 0), (6, 9, 5), (4, 6, 2), (9, 10, 6)])
+
+        m = medidas.calcularMedidas(clientes, numeroServidores=1, duracionJornada=5)
+        self.assertEqual((m["Wq"], m["W"], m["Lq"], m["L"], m["utilizacion"]), (3.25, 5.75, 1.3, 2.3, 1.0))
+
+
 class PruebasResumenCorridas(unittest.TestCase):
 
     def test_promedioConIntervalo(self):
@@ -501,6 +524,23 @@ class PruebasCiw(unittest.TestCase):
     def test_welchDetectaUnaDiferenciaReal(self):
         self.assertFalse(validacionCiw.compararMedida([1.0, 1.1, 0.9, 1.0] * 10, [2.0, 2.1, 1.9, 2.0] * 10, 0.05)["coinciden"])
 
+    def test_medidasSinVariacionNoDanNaN(self):
+        # Sin varianza no hay t de Welch: el valor p queda vacío y la respuesta se puede enviar en JSON
+        iguales = validacionCiw.compararMedida([0.0, 0.0], [0.0, 0.0], 0.05)
+        self.assertEqual(iguales, {"valorP": None, "coinciden": True})
+        json.dumps(iguales, allow_nan=False)
+        self.assertFalse(validacionCiw.compararMedida([1.0, 1.0], [2.0, 2.0], 0.05)["coinciden"])
+
+    def test_todosPrioritarios(self):
+        # Con proporción 1 no llega ningún cliente normal: Ciw no debe crear una clase con tasa cero
+        random.seed(5)
+        clientes = validacionCiw.simularJornadaConCiw(iniciador.armarJornadas({
+            "tiempoEntreTomasDeDatos": 5, "proporcionVanACaja": 1, "factorLlegadas": 1, "distribucionServicio": "uniforme",
+            "jornadas": [{"inicio": "08:00", "fin": "09:00", "conteos": [3, 4], "servicioMinimo": 1, "servicioMaximo": 3}],
+        })[1], 60, 2, 1.0)
+        self.assertTrue(clientes)
+        self.assertTrue(all(cliente["prioritario"] for cliente in clientes))
+
 
 class PruebasCajasNecesarias(unittest.TestCase):
 
@@ -574,6 +614,11 @@ class PruebasAPI(unittest.TestCase):
         entrada["alfa"] = 2
         entrada["jornadas"][0]["fin"] = "07:00"
         self.assertEqual(self.cliente.post("/api/simular", json=entrada).status_code, 422)
+
+    def test_poissonRechazaConteosNegativos(self):
+        for conteos in ([-1, 3], [0, 0]):
+            with self.subTest(conteos=conteos):
+                self.assertEqual(self.cliente.post("/api/poisson", json={"conteos": conteos}).status_code, 422)
 
     def test_valoresPorDefectoComoElDocumento(self):
         entrada = self.cliente.get("/api/entrada-por-defecto").json()

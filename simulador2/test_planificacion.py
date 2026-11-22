@@ -322,6 +322,29 @@ class PruebasLlegadasPorTramos(unittest.TestCase):
         self.assertEqual(planificacion.unirTramosIguales([[0, 60, 5], [60, 120, 5], [120, 150, 2]]),
                          [[0, 120, 5], [120, 150, 2]])
 
+    def test_tramoSinLlegadas(self):
+        # Una franja con tasa cero no recibe a nadie, pero la jornada sigue (antes: división por cero)
+        random.seed(4)
+        llegadas = iniciador.generarLlegadasPorTramos(1, [(0, 60, None), (60, 120, 1.0)], 0)
+        self.assertTrue(llegadas)
+        self.assertTrue(all(60 < llegada["momentoLlegada"] <= 120 for llegada in llegadas))
+        jornadas = {1: {"inicio": time(8, 0), "fin": time(10, 0), "tiempoEntreTomasDeDatos": 5,
+                        "tasaLlegada": 5.0, "tasaServicio": 1.0, "tramos": [[0, 60, 0.0], [60, 120, 10.0]]}}
+        clientes = iniciador.modelo(jornadas, 3)
+        self.assertTrue(all(cliente["momentoLlegada"] > 60 for cliente in clientes))
+
+    def test_publicarConUnaFranjaVacia(self):
+        # Una hora sin nadie y otra llena, con tasa por franja: la hora vacía queda como valle con tasa cero
+        configuracion = configuracionDePrueba(modeloLlegadas="franja")
+        configuracion["entrada"] = {**configuracion["entrada"], "numeroCorridas": 2, "jornadas": [
+            {"inicio": "08:00", "fin": "10:00", "conteos": [0] * 12 + [10] * 12, "inicioConteos": "08:00",
+             "minutosPorCliente": 13.5, "servicioMinimo": 1, "servicioMaximo": 25}]}
+        with patch("builtins.print"):
+            estimaciones = planificacion.publicar(configuracion)
+        franjas = estimaciones["escenarios"]["regular|08:00-12:00,14:00-16:30"]["jornadas"][0]["franjas"]
+        self.assertEqual(franjas[0]["categoria"], "valle")
+        self.assertEqual(franjas[0]["clientes"], 0)
+
 
 class PruebasSimulacionPorFranjas(unittest.TestCase):
 

@@ -93,10 +93,13 @@ def generarLlegadasPorTramos(numeroJornada: int, tramos: list[tuple[float, float
     """Llegadas con una tasa distinta en cada tramo (desde, hasta, media entre llegadas), en minutos de la jornada.
     Por la falta de memoria de la exponencial, la llegada que cae en el tramo siguiente se descarta y se
     vuelve a generar desde el borde con la media nueva: es exacto para un proceso de Poisson por tramos.
-    La fila no se reinicia en los bordes: los tramos solo cambian el ritmo de llegada."""
+    La fila no se reinicia en los bordes: los tramos solo cambian el ritmo de llegada.
+    Un tramo con media None (tasa cero) no recibe a nadie, pero la fila sigue atendiéndose."""
     llegadas = []
     anterior = 0.0
     for posicion, (desde, hasta, media) in enumerate(tramos):
+        if media is None:
+            continue
         ultimo = posicion == len(tramos) - 1
         aleatorio, entreLlegadas = generarExponencial(media)
         momento = desde + entreLlegadas
@@ -160,7 +163,8 @@ def modelo(jornadas: dict, numeroServidores: int = 1, proporcionPrioritarios: fl
     clientes = []
     for numeroJornada, jornada in jornadas.items():
         if len(jornada.get("tramos") or []) > 1:
-            tramos = [(desde, hasta, jornada["tiempoEntreTomasDeDatos"] / tasa) for desde, hasta, tasa in jornada["tramos"]]
+            tramos = [(desde, hasta, jornada["tiempoEntreTomasDeDatos"] / tasa if tasa > 0 else None)
+                      for desde, hasta, tasa in jornada["tramos"]]
             llegadas = generarLlegadasPorTramos(numeroJornada, tramos, proporcionPrioritarios)
         else:
             mediaEntreLlegadas = jornada["tiempoEntreTomasDeDatos"] / jornada["tasaLlegada"]

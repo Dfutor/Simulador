@@ -196,8 +196,9 @@ def cajasNecesarias(pedido: PedidoCajas) -> dict:
 
 @app.post("/api/poisson")
 def ajustePoisson(pedido: PedidoPoisson) -> dict:
-    if sum(pedido.conteos) == 0:
-        raise HTTPException(status_code=422, detail="Debe haber al menos una llegada")
+    # La misma regla que en Jornada: un conteo negativo no es una cantidad de personas
+    if any(conteo < 0 for conteo in pedido.conteos) or sum(pedido.conteos) == 0:
+        raise HTTPException(status_code=422, detail="Los conteos no pueden ser negativos y debe haber al menos una llegada")
     return pruebaChiCuadradaPoisson(pedido.conteos, pedido.alfa)
 
 

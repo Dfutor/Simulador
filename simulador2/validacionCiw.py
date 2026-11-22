@@ -4,7 +4,10 @@ Cada medida se compara con la prueba t de Welch: si el valor p es mayor que α,
 no hay diferencia significativa entre los dos simuladores.
 """
 
+import math
 import random
+import statistics
+import warnings
 
 import ciw
 from scipy.stats import ttest_ind
@@ -32,14 +35,17 @@ def simularJornadaConCiw(jornada: dict, duracion: float, numeroServidores: int,
                          proporcionPrioritarios: float) -> list[dict]:
     llegadasPorMinuto = jornada["tasaLlegada"] / jornada["tiempoEntreTomasDeDatos"]
     serviciosPorMinuto = jornada["tasaServicio"] / jornada["tiempoEntreTomasDeDatos"]
-    llegadas = {"normal": [LlegadasHastaElCierre(llegadasPorMinuto * (1 - proporcionPrioritarios), duracion)]}
     def distribucionDeServicio():
         if jornada.get("distribucionServicio") == "uniforme":
             return ciw.dists.Uniform(jornada["servicioMinimo"], jornada["servicioMaximo"])
         return ciw.dists.Exponential(serviciosPorMinuto)
 
-    servicios = {"normal": [distribucionDeServicio()]}
-    prioridades = {"normal": 1}
+    # Una clase solo existe si llega alguien de ella (con tasa cero, la exponencial no está definida)
+    llegadas, servicios, prioridades = {}, {}, {}
+    if proporcionPrioritarios < 1:
+        llegadas["normal"] = [LlegadasHastaElCierre(llegadasPorMinuto * (1 - proporcionPrioritarios), duracion)]
+        servicios["normal"] = [distribucionDeServicio()]
+        prioridades["normal"] = 1
     if proporcionPrioritarios > 0:
         llegadas["prioritario"] = [LlegadasHastaElCierre(llegadasPorMinuto * proporcionPrioritarios, duracion)]
         servicios["prioritario"] = [distribucionDeServicio()]
@@ -71,8 +77,14 @@ def simularJornadaConCiw(jornada: dict, duracion: float, numeroServidores: int,
 
 
 def compararMedida(valoresPropios: list[float], valoresCiw: list[float], alfa: float) -> dict:
-    resultadoWelch = ttest_ind(valoresPropios, valoresCiw, equal_var=False)
+    with warnings.catch_warnings():
+        warnings.simplefilter("ignore", RuntimeWarning)
+        resultadoWelch = ttest_ind(valoresPropios, valoresCiw, equal_var=False)
     valorP = float(resultadoWelch.pvalue)
+    if not math.isfinite(valorP):
+        # Las dos muestras no varían (por ejemplo, 100 % de ocupación en todas las corridas): no hay t de Welch.
+        # Se comparan directamente y el valor p queda vacío (NaN no se puede enviar en JSON).
+        return {"valorP": None, "coinciden": statistics.fmean(valoresPropios) == statistics.fmean(valoresCiw)}
     return {"valorP": valorP, "coinciden": valorP > alfa}
 
 
@@ -84,10 +96,16 @@ def compararConCiw(jornadas: dict, numeroServidores: int, proporcionPrioritarios
         duracion = duracionJornada(jornada)
         medidasPropias = medidasPropiasPorJornada[numeroJornada]
         medidasCiw = []
-        while len(medidasCiw) < len(medidasPropias):
+        intentos = 0
+        # Las jornadas en que Ciw no recibe a nadie se repiten, con un tope para no quedar en un ciclo sin fin
+        while len(medidasCiw) < len(medidasPropias) and intentos < 20 * len(medidasPropias):
+            intentos += 1
             clientes = simularJornadaConCiw(jornada, duracion, numeroServidores, proporcionPrioritarios)
             if clientes:
                 medidasCiw.append(calcularMedidas(clientes, numeroServidores, duracion))
+        if len(medidasCiw) < 2:
+            comparacionPorJornada[numeroJornada] = {}
+            continue
         resumenCiw = resumirCorridas(medidasCiw)
 
         comparacion = {}

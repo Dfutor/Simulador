@@ -105,6 +105,8 @@ input, select, textarea {
   padding: 0.6rem 0.8rem;
   width: 100%;
 }
+/* Misma altura para campos de texto, fecha, hora y listas: así quedan alineados en una fila */
+input:not([type="checkbox"]):not([type="range"]):not([type="radio"]), select { height: 2.85rem; }
 textarea { resize: vertical; min-height: 4.5rem; font-variant-numeric: tabular-nums; }
 input:focus-visible, select:focus-visible, textarea:focus-visible, button:focus-visible {
   outline: 2px solid var(--acento);

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fundamentos del modelo · Manual del simulador</title>
+<meta name="description" content="Modelo matemático del simulador con cada fórmula ubicada en el libro de Coss Bu y en el código.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="tipografia/stix-two-math.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="documento.css">
+<script>try{var t=JSON.parse(localStorage.getItem("ajustesSimuladorBanco")||"{}").tema;if(t==="claro")document.documentElement.dataset.theme="light";else if(t==="oscuro")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<script defer src="indice.js"></script>
+</head>
+<body>
+<header class="barra">
+<a class="marca" href="/" title="Volver al simulador"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="largo">Simulador de la fila del banco</span><span class="corto">Simulador</span></a>
+<nav aria-label="Partes del manual"><a href="manual.html">Uso</a><a href="fundamentos.html" aria-current="page">Fundamentos</a><a href="defensa.html">Defensa</a></nav>
+</header>
+<div class="marco">
+<aside class="indice" aria-label="Índice de la página"><p>En esta página</p><ol id="indice-auto"></ol></aside>
+<main>
+<details class="indiceMovil"><summary>En esta página</summary><ol id="indice-movil"></ol></details>
+<header class="portada">
+  <p class="etiqueta">Manual · Parte 2 de 3</p>
+  <h1>Fundamentos del modelo</h1>
+  <p class="bajada">Cada fórmula dice qué calcula, dónde está en el libro de Coss Bu y en qué archivo del código vive.</p>
+</header>
+<p class="aviso">Libro: Coss Bu, R. <i>Simulación: un enfoque práctico</i>. Limusa. Las páginas son las impresas en el libro.</p>
+
+<h2 id="etapas" data-corto="Etapas de Coss Bu">Las 8 etapas de Coss Bu</h2>
+<p>El proyecto sigue las etapas de un estudio de simulación de la <span class="libro">§1.2 · pp. 12–14</span>.</p>
+<div class="tabla"><table>
+  <thead><tr><th>Etapa</th><th>Qué se hizo</th></tr></thead>
+  <tbody>
+    <tr><td><b>1. Definición del sistema</b></td><td>Una sola fila, 5 cajas, prioridad (embarazadas y adultos mayores), jornadas de 08:00–12:00 y 14:00–16:30. Medidas: <b>W<sub>q</sub></b>, W, L<sub>q</sub>, L y ocupación.</td></tr>
+    <tr><td><b>2. Formulación del modelo</b></td><td>Eventos discretos: llegada, inicio y fin de atención, cierre de la puerta.</td></tr>
+    <tr><td><b>3. Colección de datos</b></td><td>54 conteos de 5 min de un día (24 de mañana y 30 de tarde). El servicio y la quincena salen de la opinión de expertos (p. 13).</td></tr>
+    <tr><td><b>4. Implementación</b></td><td>Motor propio en Python (<code>iniciador.py</code>), API FastAPI e interfaz Vue.</td></tr>
+    <tr><td><b>5. Validación</b></td><td>KS de los aleatorios, χ² de Poisson, comparación con la librería Ciw y opinión de expertos.</td></tr>
+    <tr><td><b>6. Experimentación</b></td><td>30 réplicas por escenario, día normal contra quincena, búsqueda del número de cajas y sensibilidad del servicio.</td></tr>
+    <tr><td><b>7. Interpretación</b></td><td>Intervalos de confianza del 95 % y veredicto contra metas (W<sub>q</sub> ≤ 10 min, ocupación de 60 a 90 %).</td></tr>
+    <tr><td><b>8. Documentación</b></td><td>Este manual: técnica (Fundamentos) y de usuario (Uso). Coss Bu pide las dos (p. 14).</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="sistema" data-corto="Datos y supuestos">Qué es dato y qué es supuesto</h2>
+<div class="tabla"><table>
+  <thead><tr><th>Componente</th><th>Valor</th><th>Origen</th></tr></thead>
+  <tbody>
+    <tr><td>Llegadas por intervalo de 5 min</td><td>mañana 5,42 · tarde 4,50</td><td><span class="marca-dato">Dato</span> conteo de un día</td></tr>
+    <tr><td>Distribución de las llegadas</td><td>Poisson</td><td><span class="marca-dato">Prueba</span> χ² no la rechaza</td></tr>
+    <tr><td>Tiempo de atención</td><td>Uniforme 1–25 min (media 13)</td><td><span class="marca-supuesto">Supuesto</span> acuerdo del equipo</td></tr>
+    <tr><td>Aumento en quincena</td><td>× 1,3</td><td><span class="marca-supuesto">Experto</span> no se contó una quincena</td></tr>
+    <tr><td>Clientes prioritarios</td><td>5 %</td><td><span class="marca-supuesto">Supuesto</span></td></tr>
+    <tr><td>Proporción que va a caja</td><td>1 (todos)</td><td><span class="marca-supuesto">Supuesto</span></td></tr>
+    <tr><td>Inicio de cada jornada</td><td>Banco vacío</td><td><span class="marca-supuesto">Supuesto</span> sistema terminante</td></tr>
+  </tbody>
+</table></div>
+
+<h2 id="entrada">Datos de entrada</h2>
+
+<section class="formula" id="tasa">
+  <header><b>Tasa de llegadas</b><span class="libro">§1.2 colección de datos · p. 13</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mrow><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover><mo>=</mo><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo>⋅</mo><msub><mi>p</mi><mtext>caja</mtext></msub><mo>⋅</mo><mi>g</mi><mo separator="true">,</mo><mspace width="2em"></mspace><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo>=</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>t</mi><mo>=</mo><mn>1</mn></mrow><mi>n</mi></munderover></mrow><msub><mi>x</mi><mi>t</mi></msub></mrow><annotation encoding="application/x-tex">\hat{\lambda}=\bar{x}\cdot p_{\text{caja}}\cdot g,\qquad \bar{x}=\frac{1}{n}\sum_{t=1}^{n}x_t</annotation></semantics></math></div>
+  <div class="texto">
+    <ul class="variables">
+      <li><math><semantics><msub><mi>x</mi><mi>t</mi></msub><annotation encoding="application/x-tex">x_t</annotation></semantics></math>: personas contadas en el intervalo <math><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math></li>
+      <li><math><semantics><msub><mi>p</mi><mtext>caja</mtext></msub><annotation encoding="application/x-tex">p_{\text{caja}}</annotation></semantics></math>: proporción que va a caja (1)</li>
+      <li><math><semantics><mi>g</mi><annotation encoding="application/x-tex">g</annotation></semantics></math>: 1 en día normal, 1,3 en quincena</li>
+      <li><math><semantics><mrow><mi mathvariant="normal">Δ</mi><mspace></mspace></mrow><annotation encoding="application/x-tex">\Delta</annotation></semantics></math>: minutos por intervalo (5)</li>
+    </ul>
+    <p>Mañana: <math><semantics><mrow><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo>=</mo><mn>130</mn><mi>/</mi><mn>24</mn><mo>=</mo><mn>5,42</mn></mrow><annotation encoding="application/x-tex">\bar{x}=130/24=5{,}42</annotation></semantics></math> personas cada 5 min. Tarde: <math><semantics><mrow><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo>=</mo><mn>135</mn><mi>/</mi><mn>30</mn><mo>=</mo><mn>4,50</mn></mrow><annotation encoding="application/x-tex">\bar{x}=135/30=4{,}50</annotation></semantics></math>.</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/iniciador.py">iniciador.py</a> · <code>armarJornadas</code></footer>
+</section>
+
+<section class="formula" id="poisson">
+  <header><b>¿Las llegadas son Poisson? Prueba χ²</b><span class="libro">ec. 3.3 · p. 33 · ec. 4.32 · p. 62</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mtable displaystyle="true" class="tml-jot"><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msubsup><mi>X</mi><mn>0</mn><mn class="tml-med-pad">2</mn></msubsup><mo>=</mo><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></munderover></mrow><mfrac><msup><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><msub><mi>𝐹𝑂</mi><mi>i</mi></msub><mo>−</mo><msub><mi>𝐹𝐸</mi><mi>i</mi></msub><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mn>2</mn></msup><msub><mi>𝐹𝐸</mi><mi>i</mi></msub></mfrac></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>𝐹𝐸</mi><mi>i</mi></msub><mo>=</mo><mi>n</mi><mspace width="0.1667em"></mspace><mi>P</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>X</mi><mo>∈</mo><mi>i</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo separator="true">,</mo><mspace width="2em"></mspace><mi>P</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>X</mi><mo>=</mo><mi>x</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>=</mo><mfrac><mrow><msup><mi>e</mi><mrow class="tml-sml-pad"><mo form="prefix" stretchy="false" lspace="0em" rspace="0em">−</mo><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover></mrow></msup><mspace width="0.1667em"></mspace><msup><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover><mi>x</mi></msup></mrow><mrow><mi>x</mi><mo form="postfix" stretchy="false" lspace="0em" rspace="0em">!</mo></mrow></mfrac></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}X_0^2=\sum_{i=1}^{k}\frac{(\mathit{FO}_i-\mathit{FE}_i)^2}{\mathit{FE}_i} \\[6pt] \mathit{FE}_i=n\,P(X\in i),\qquad P(X=x)=\frac{e^{-\hat{\lambda}}\,\hat{\lambda}^{x}}{x!}\end{gathered}</annotation></semantics></math></div>
+  <div class="texto">
+    <p><math><semantics><msub><mi>𝐹𝑂</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\mathit{FO}_i</annotation></semantics></math> y <math><semantics><msub><mi>𝐹𝐸</mi><mi>i</mi></msub><annotation encoding="application/x-tex">\mathit{FE}_i</annotation></semantics></math> son las frecuencias observada y esperada de la clase <math><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>. Las clases con <math><semantics><mrow><msub><mi>𝐹𝐸</mi><mi>i</mi></msub><mo>&lt;</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">\mathit{FE}_i&lt;5</annotation></semantics></math> se agrupan. Si <math><semantics><mrow><msubsup><mi>X</mi><mn>0</mn><mn class="tml-med-pad">2</mn></msubsup><mo>&lt;</mo><msubsup><mi>χ</mi><mrow><mi>α</mi><mo separator="true">,</mo><mspace width="0.1667em"></mspace><mi>k</mi><mo>−</mo><mn>2</mn></mrow><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">X_0^2&lt;\chi^2_{\alpha,\,k-2}</annotation></semantics></math>, no se rechaza Poisson. Se restan 2 grados de libertad: 1 por la suma fija y 1 por estimar <math><semantics><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover><annotation encoding="application/x-tex">\hat{\lambda}</annotation></semantics></math> con los mismos datos.</p>
+    <p>Mañana: <math><semantics><mrow><msubsup><mi>X</mi><mn>0</mn><mn class="tml-med-pad">2</mn></msubsup><mo>=</mo><mn>1,94</mn><mo>&lt;</mo><mn>3,84</mn></mrow><annotation encoding="application/x-tex">X_0^2=1{,}94&lt;3{,}84</annotation></semantics></math> (<math><semantics><mrow><mi>ν</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\nu=1</annotation></semantics></math>). Tarde: <math><semantics><mrow><msubsup><mi>X</mi><mn>0</mn><mn class="tml-med-pad">2</mn></msubsup><mo>=</mo><mn>5,47</mn><mo>&lt;</mo><mn>7,81</mn></mrow><annotation encoding="application/x-tex">X_0^2=5{,}47&lt;7{,}81</annotation></semantics></math> (<math><semantics><mrow><mi>ν</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\nu=3</annotation></semantics></math>). <b>No se rechaza Poisson</b> en ninguna.</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/pruebaPoisson.py">pruebaPoisson.py</a></footer>
+</section>
+
+<section class="formula" id="moviles">
+  <header><b>Promedios móviles (solo tendencia)</b><span class="libro">complemento descriptivo</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mtable displaystyle="true" class="tml-jot"><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mpadded lspace="0"><mi>PMS</mi></mpadded><mi>t</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>k</mi></mfrac><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>j</mi><mo>=</mo><mn>0</mn></mrow><mrow><mi>k</mi><mo>−</mo><mn>1</mn></mrow></munderover></mrow><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mi>j</mi></mrow></msub></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mpadded lspace="0"><mi>PMP</mi></mpadded><mi>t</mi></msub><mo>=</mo><mfrac><mrow><msubsup><mo movablelimits="false">∑</mo><mrow><mi>j</mi><mo>=</mo><mn>1</mn></mrow><mi>k</mi></msubsup><mi>j</mi><mspace width="0.1667em"></mspace><msub><mi>x</mi><mrow><mi>t</mi><mo>−</mo><mi>k</mi><mo>+</mo><mi>j</mi></mrow></msub></mrow><mrow><mi>k</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>k</mi><mo>+</mo><mn>1</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mi>/</mi><mn>2</mn></mrow></mfrac></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}\mathrm{PMS}_t=\frac{1}{k}\sum_{j=0}^{k-1}x_{t-j} \\[6pt] \mathrm{PMP}_t=\frac{\sum_{j=1}^{k} j\,x_{t-k+j}}{k(k+1)/2}\end{gathered}</annotation></semantics></math></div>
+  <div class="texto">
+    <p><math><semantics><mi>k</mi><annotation encoding="application/x-tex">k</annotation></semantics></math> es la <b>ventana</b>: cuántos conteos seguidos se promedian (3 por defecto). El ponderado da más peso al conteo más reciente. Con la tarde (…3, 7, 9) a las 14:30: <math><semantics><mrow><mpadded lspace="0"><mi>PMS</mi></mpadded><mo>=</mo><mn>6,33</mn></mrow><annotation encoding="application/x-tex">\mathrm{PMS}=6{,}33</annotation></semantics></math> y <math><semantics><mrow><mpadded lspace="0"><mi>PMP</mi></mpadded><mo>=</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>1</mn><mo>⋅</mo><mn>3</mn><mo>+</mo><mn>2</mn><mo>⋅</mo><mn>7</mn><mo>+</mo><mn>3</mn><mo>⋅</mo><mn>9</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mi>/</mi><mn>6</mn><mo>=</mo><mn>7,33</mn></mrow><annotation encoding="application/x-tex">\mathrm{PMP}=(1\cdot3+2\cdot7+3\cdot9)/6=7{,}33</annotation></semantics></math>. No cambian <math><semantics><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover><annotation encoding="application/x-tex">\hat{\lambda}</annotation></semantics></math> ni la simulación.</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/analisisLlegadas.py">analisisLlegadas.py</a></footer>
+</section>
+
+<section class="formula" id="franjas">
+  <header><b>Franjas pico, valle o normal</b><span class="libro">misma idea que ec. 3.3</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mtable displaystyle="true" class="tml-jot"><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msup><mi>X</mi><mn class="tml-med-pad">2</mn></msup><mo>=</mo><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>f</mi><mo>=</mo><mn>1</mn></mrow><mi>m</mi></munderover></mrow><mfrac><msup><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><msub><mi>S</mi><mi>f</mi></msub><mo>−</mo><msub><mi>n</mi><mi>f</mi></msub><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mn>2</mn></msup><mrow><msub><mi>n</mi><mi>f</mi></msub><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover></mrow></mfrac><mspace width="1em"></mspace><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>ν</mi><mo>=</mo><mi>m</mi><mo>−</mo><mn>1</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>z</mi><mi>f</mi></msub><mo>=</mo><mfrac><mrow><msub><mi>S</mi><mi>f</mi></msub><mo>−</mo><msub><mi>n</mi><mi>f</mi></msub><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover></mrow><msqrt><mrow><msub><mi>n</mi><mi>f</mi></msub><mover><mi>x</mi><mo stretchy="false" class="chr-sml wbk-sml-acc" style="math-depth:0;">‾</mo></mover></mrow></msqrt></mfrac></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}X^2=\sum_{f=1}^{m}\frac{(S_f-n_f\bar{x})^2}{n_f\bar{x}}\quad(\nu=m-1) \\[6pt] z_f=\frac{S_f-n_f\bar{x}}{\sqrt{n_f\bar{x}}}\end{gathered}</annotation></semantics></math></div>
+  <div class="texto">
+    <p><math><semantics><msub><mi>S</mi><mi>f</mi></msub><annotation encoding="application/x-tex">S_f</annotation></semantics></math> es la suma de los <math><semantics><msub><mi>n</mi><mi>f</mi></msub><annotation encoding="application/x-tex">n_f</annotation></semantics></math> conteos de la franja <math><semantics><mi>f</mi><annotation encoding="application/x-tex">f</annotation></semantics></math>. Si <math><semantics><msup><mi>X</mi><mn class="tml-med-pad">2</mn></msup><annotation encoding="application/x-tex">X^2</annotation></semantics></math> no supera el crítico, todas las franjas son <b>normales</b>. Si lo supera, una franja es <b>pico</b> o <b>valle</b> cuando <math><semantics><mrow><mi>|</mi><msub><mi>z</mi><mi>f</mi></msub><mi>|</mi><mo>&gt;</mo><msub><mi>z</mi><mrow><mn>1</mn><mo>−</mo><mi>α</mi><mi>/</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>2</mn><mi>m</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow></msub></mrow><annotation encoding="application/x-tex">|z_f|&gt;z_{1-\alpha/(2m)}</annotation></semantics></math> (corrección de Bonferroni). Resultado: en la mañana no hay diferencias (p = 0,12). En la tarde, 16:00–16:30 es valle (<math><semantics><mrow><mi>z</mi><mo>=</mo><mo form="prefix" stretchy="false">−</mo><mn>2,50</mn></mrow><annotation encoding="application/x-tex">z=-2{,}50</annotation></semantics></math>, crítico 2,39).</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/analisisLlegadas.py">analisisLlegadas.py</a> · <code>clasificarFranjas</code></footer>
+</section>
+
+<h2 id="aleatorios">Números aleatorios</h2>
+<p>El generador es el de Python, <b>Mersenne Twister</b> (período <math><semantics><mrow><msup><mn>2</mn><mn>19937</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^{19937}-1</annotation></semantics></math>). Coss Bu enseña los congruenciales <span class="libro">§2.1 · p. 20</span> y exige probar los números antes de usarlos <span class="libro">cap. 3</span>. Por eso cada corrida pasa la prueba KS. La <b>semilla</b> es la que escribe el usuario o, si queda vacía, el reloj del servidor en milisegundos. Siempre se muestra, para poder repetir el resultado.</p>
+
+<section class="formula" id="ks">
+  <header><b>Prueba de Kolmogórov-Smirnov</b><span class="libro">§3.5 · ec. 3.11–3.12 · pp. 40–42</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mtable displaystyle="true" class="tml-jot"><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>D</mi><mi>n</mi></msub><mo>=</mo><munder><mi>max</mi><mrow><mn>1</mn><mo>≤</mo><mi>i</mi><mo>≤</mo><mi>n</mi></mrow></munder><mo>⁡</mo><mrow><mo fence="true" form="prefix" stretchy="true">{</mo><mfrac><mi>i</mi><mi>n</mi></mfrac><mo>−</mo><msub><mi>u</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>i</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>u</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>i</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></msub><mo>−</mo><mfrac><mrow><mi>i</mi><mo>−</mo><mn>1</mn></mrow><mi>n</mi></mfrac><mo fence="true" form="postfix" stretchy="true">}</mo></mrow></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>F</mi><mi>n</mi></msub><mrow style="margin-left:-0.1667em;"></mrow><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msub><mi>u</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>i</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></msub><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mo>=</mo><mfrac><mi>i</mi><mi>n</mi></mfrac><mo separator="true">,</mo><mspace width="2em"></mspace><msub><mi>D</mi><mi>n</mi></msub><mo>&lt;</mo><msub><mi>d</mi><mrow><mi>α</mi><mo separator="true">,</mo><mi>n</mi></mrow></msub><mo>≈</mo><mfrac><mn>1,36</mn><msqrt><mrow><mi>n</mi><mspace width="0pt" height="0.5em"></mspace></mrow></msqrt></mfrac></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}D_n=\max_{1\le i\le n}\left\{\frac{i}{n}-u_{(i)},\ u_{(i)}-\frac{i-1}{n}\right\} \\[6pt] F_n\!\left(u_{(i)}\right)=\frac{i}{n},\qquad D_n&lt;d_{\alpha,n}\approx\frac{1{,}36}{\sqrt{n}}\end{gathered}</annotation></semantics></math></div>
+  <div class="texto">
+    <p><math><semantics><msub><mi>u</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>i</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></msub><annotation encoding="application/x-tex">u_{(i)}</annotation></semantics></math> son los aleatorios ordenados de menor a mayor. Las dos diferencias miden la escalera <math><semantics><msub><mi>F</mi><mi>n</mi></msub><annotation encoding="application/x-tex">F_n</annotation></semantics></math> por arriba y por abajo de la diagonal. El crítico es la fórmula de la Tabla 3.5 para <math><semantics><mrow><mi>n</mi><mo>&gt;</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">n&gt;100</annotation></semantics></math> (1,22, 1,36 y 1,63 con α = 0,10, 0,05 y 0,01).</p>
+    <p>En cada corrida se prueban por separado los aleatorios de <b>llegadas</b> y los de <b>servicio</b>. Si alguna falla, la corrida se descarta y se repite. Corrida 1 con semilla 12345: <math><semantics><mrow><mi>n</mi><mo>=</mo><mn>404</mn></mrow><annotation encoding="application/x-tex">n=404</annotation></semantics></math>, <math><semantics><mrow><mi>D</mi><mo>=</mo><mn>0,0508</mn><mo>&lt;</mo><mn>0,0676</mn></mrow><annotation encoding="application/x-tex">D=0{,}0508&lt;0{,}0676</annotation></semantics></math>. Pasa.</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/pruebaKS.py">pruebaKS.py</a> · <a href="../../simulador2/iniciador.py">iniciador.py</a> · <code>simularCorridas</code></footer>
+</section>
+
+<h2 id="variables" data-corto="Transformada inversa">Variables aleatorias: transformada inversa</h2>
+
+<section class="formula" id="inversa">
+  <header><b>Método de la transformada inversa</b><span class="libro">§4.1 · ec. 4.1 · p. 49</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mrow><mi>F</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>x</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>=</mo><mi>R</mi><mtext> </mtext><mo stretchy="false">⟹</mo><mtext> </mtext><mi>x</mi><mo>=</mo><msup><mi>F</mi><mrow class="tml-med-pad"><mo form="prefix" stretchy="false" lspace="0em" rspace="0em">−</mo><mn>1</mn></mrow></msup><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>R</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo separator="true">,</mo><mspace width="2em"></mspace><mi>R</mi><mo>∼</mo><mi>U</mi><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>0,1</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">F(x)=R\ \Longrightarrow\ x=F^{-1}(R),\qquad R\sim U(0,1)</annotation></semantics></math></div>
+</section>
+
+<section class="formula" id="exponencial">
+  <header><b>Tiempo entre llegadas: exponencial</b><span class="libro">ec. 4.3 · p. 50</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mrow><mi>x</mi><mo>=</mo><mo form="prefix" stretchy="false">−</mo><mfrac><mn>1</mn><mi>r</mi></mfrac><mspace width="0.1667em"></mspace><mrow><mspace width="0.1667em"></mspace><mi>ln</mi><mo>⁡</mo></mrow><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>R</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo separator="true">,</mo><mspace width="2em"></mspace><mi>r</mi><mo>=</mo><mfrac><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover><mrow><mi mathvariant="normal">Δ</mi><mspace></mspace></mrow></mfrac><mtext> </mtext><mtext>clientes por minuto</mtext></mrow><annotation encoding="application/x-tex">x=-\frac{1}{r}\,\ln(1-R),\qquad r=\frac{\hat{\lambda}}{\Delta}\ \text{clientes por minuto}</annotation></semantics></math></div>
+  <div class="texto">
+    <p>Si los conteos son Poisson, el tiempo entre llegadas es exponencial <span class="libro">ej. 4.11 · p. 62</span>. El libro escribe <math><semantics><mrow><mrow><mi>ln</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">\ln R</annotation></semantics></math> porque <math><semantics><mrow><mn>1</mn><mo>−</mo><mi>R</mi></mrow><annotation encoding="application/x-tex">1-R</annotation></semantics></math> también es uniforme. El código usa <math><semantics><mrow><mrow><mi>ln</mi><mo>⁡</mo></mrow><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>R</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">\ln(1-R)</annotation></semantics></math> porque Python puede dar <math><semantics><mrow><mi>R</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">R=0</annotation></semantics></math>, y <math><semantics><mrow><mrow><mi>ln</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mn>0</mn></mrow><annotation encoding="application/x-tex">\ln 0</annotation></semantics></math> no existe. Mañana: <math><semantics><mrow><mn>1</mn><mi>/</mi><mi>r</mi><mo>=</mo><mn>5</mn><mi>/</mi><mn>5,42</mn><mo>=</mo><mn>0,92</mn></mrow><annotation encoding="application/x-tex">1/r=5/5{,}42=0{,}92</annotation></semantics></math> min entre llegadas, en promedio.</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/iniciador.py">iniciador.py</a> · <code>generarExponencial</code>, <code>generarLlegadas</code></footer>
+</section>
+
+<section class="formula" id="uniforme">
+  <header><b>Tiempo de atención: uniforme</b><span class="libro">ec. 4.5 · p. 51</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mrow><mi>S</mi><mo>=</mo><mi>a</mi><mo>+</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>b</mi><mo>−</mo><mi>a</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mspace width="0.1667em"></mspace><mi>R</mi><mo separator="true">,</mo><mspace width="2em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow><mo>=</mo><mfrac><mrow><mi>a</mi><mo>+</mo><mi>b</mi></mrow><mn>2</mn></mfrac><mo>=</mo><mfrac><mrow><mn>1</mn><mo>+</mo><mn>25</mn></mrow><mn>2</mn></mfrac><mo>=</mo><mn>13</mn><mtext> </mtext><mtext>min</mtext></mrow><annotation encoding="application/x-tex">S=a+(b-a)\,R,\qquad E[S]=\frac{a+b}{2}=\frac{1+25}{2}=13\ \text{min}</annotation></semantics></math></div>
+  <div class="texto"><p>También se puede elegir exponencial con media <math><semantics><mi>m</mi><annotation encoding="application/x-tex">m</annotation></semantics></math>: <math><semantics><mrow><mi>S</mi><mo>=</mo><mo form="prefix" stretchy="false">−</mo><mi>m</mi><mrow><mspace width="0.1667em"></mspace><mi>ln</mi><mo>⁡</mo></mrow><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>R</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">S=-m\ln(1-R)</annotation></semantics></math>.</p></div>
+  <footer>Código: <a href="../../simulador2/iniciador.py">iniciador.py</a> · <code>generarUniforme</code></footer>
+</section>
+
+<section class="formula" id="prioridad">
+  <header><b>¿El cliente es prioritario? Bernoulli</b><span class="libro">ej. 4.10 · p. 62</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mrow><mtext>prioritario</mtext><mspace width="0.2778em"></mspace><mo stretchy="false">⟺</mo><mspace width="0.2778em"></mspace><mi>R</mi><mo>&lt;</mo><mi>p</mi><mo separator="true">,</mo><mspace width="2em"></mspace><mi>p</mi><mo>=</mo><mn>0,05</mn></mrow><annotation encoding="application/x-tex">\text{prioritario}\iff R&lt;p,\qquad p=0{,}05</annotation></semantics></math></div>
+</section>
+
+<h2 id="motor">Motor de eventos discretos</h2>
+<p>Es la misma tabla de simulación manual del ejemplo del almacén <span class="libro">ej. 5.6 · pp. 89–93</span>, con varias cajas y prioridad. Para cada cliente <math><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>, con llegada <math><semantics><msub><mi>A</mi><mi>i</mi></msub><annotation encoding="application/x-tex">A_i</annotation></semantics></math> y atención <math><semantics><msub><mi>S</mi><mi>i</mi></msub><annotation encoding="application/x-tex">S_i</annotation></semantics></math>:</p>
+<section class="formula" id="eventos">
+  <header><b>Inicio, salida y espera de cada cliente</b><span class="libro">ej. 5.6 · pp. 89–93</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mtable displaystyle="true" class="tml-jot"><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>=</mo><mrow><mi>max</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mrow style="margin-left:-0.1667em;"></mrow><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><mtext> </mtext><munder><mi>min</mi><mi>j</mi></munder><mo>⁡</mo><mspace width="0.1667em"></mspace><msub><mi>ℓ</mi><mi>j</mi></msub><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mo separator="true">,</mo><mspace width="2em"></mspace><msub><mi>D</mi><mi>i</mi></msub><mo>=</mo><msub><mi>B</mi><mi>i</mi></msub><mo>+</mo><msub><mi>S</mi><mi>i</mi></msub></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>W</mi><mrow><mi>q</mi><mo separator="true">,</mo><mi>i</mi></mrow></msub><mo>=</mo><msub><mi>B</mi><mi>i</mi></msub><mo>−</mo><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><mspace width="2em"></mspace><msub><mi>W</mi><mi>i</mi></msub><mo>=</mo><msub><mi>D</mi><mi>i</mi></msub><mo>−</mo><msub><mi>A</mi><mi>i</mi></msub></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}B_i=\max\!\left(A_i,\ \min_{j}\ell_j\right),\qquad D_i=B_i+S_i \\[6pt] W_{q,i}=B_i-A_i,\qquad W_i=D_i-A_i\end{gathered}</annotation></semantics></math></div>
+  <div class="texto">
+    <ul>
+      <li><math><semantics><msub><mi>ℓ</mi><mi>j</mi></msub><annotation encoding="application/x-tex">\ell_j</annotation></semantics></math>: momento en que la caja <math><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math> queda libre. El cliente pasa a la que se libera primero.</li>
+      <li><b>Prioridad sin interrupción:</b> cuando una caja se libera, pasa primero el prioritario que ya esté esperando. Nunca se interrumpe una atención.</li>
+      <li><b>Cierre de la puerta:</b> no se generan llegadas después del cierre, pero se atiende a todos los que están adentro.</li>
+      <li>Cada jornada empieza con el banco vacío.</li>
+    </ul>
+    <p>Hay un ejemplo resuelto a mano en la <a href="defensa.html#ejemplo">guía de defensa</a>.</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/iniciador.py">iniciador.py</a> · <code>atender</code>, <code>siguienteEnFila</code>, <code>elegirCaja</code></footer>
+</section>
+
+<h2 id="medidas">Medidas de efectividad</h2>
+<section class="formula" id="formulas-medidas">
+  <header><b>Esperas, longitudes y ocupación de una jornada</b><span class="libro">ec. 6.9 · p. 112</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mtable displaystyle="true" class="tml-jot"><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover></mrow><msub><mi>W</mi><mrow><mi>q</mi><mo separator="true">,</mo><mi>i</mi></mrow></msub><mo separator="true">,</mo><mspace width="2em"></mspace><mi>W</mi><mo>=</mo><mfrac><mn>1</mn><mi>N</mi></mfrac><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover></mrow><msub><mi>W</mi><mi>i</mi></msub></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>L</mi><mi>q</mi></msub><mo>=</mo><mfrac><mn>1</mn><mi>T</mi></mfrac><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover></mrow><msub><mi>W</mi><mrow><mi>q</mi><mo separator="true">,</mo><mi>i</mi></mrow></msub><mo separator="true">,</mo><mspace width="2em"></mspace><mi>L</mi><mo>=</mo><mfrac><mn>1</mn><mi>T</mi></mfrac><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover></mrow><msub><mi>W</mi><mi>i</mi></msub></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><mi>U</mi><mo>=</mo><mfrac><mn>1</mn><mrow><mi>c</mi><mspace width="0.1667em"></mspace><mi>T</mi></mrow></mfrac><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mi>N</mi></munderover></mrow><msub><mi>S</mi><mi>i</mi></msub></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}W_q=\frac{1}{N}\sum_{i=1}^{N}W_{q,i},\qquad W=\frac{1}{N}\sum_{i=1}^{N}W_i \\[6pt] L_q=\frac{1}{T}\sum_{i=1}^{N}W_{q,i},\qquad L=\frac{1}{T}\sum_{i=1}^{N}W_i \\[6pt] U=\frac{1}{c\,T}\sum_{i=1}^{N}S_i\end{gathered}</annotation></semantics></math></div>
+  <div class="texto">
+    <p><math><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> es el número de clientes atendidos, <math><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math> el de cajas y <math><semantics><mi>T</mi><annotation encoding="application/x-tex">T</annotation></semantics></math> el tiempo observado: el mayor entre la duración de la jornada y la salida del último cliente. Como <math><semantics><mrow><mi>L</mi><mo>=</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>N</mi><mi>/</mi><mi>T</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mspace width="0.1667em"></mspace><mi>W</mi></mrow><annotation encoding="application/x-tex">L=(N/T)\,W</annotation></semantics></math>, se cumple la <b>ley de Little</b> <math><semantics><mrow><mi>L</mi><mo>=</mo><mi>λ</mi><mi>W</mi></mrow><annotation encoding="application/x-tex">L=\lambda W</annotation></semantics></math> en cada corrida.</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/medidas.py">medidas.py</a> · <code>calcularMedidas</code></footer>
+</section>
+
+<section class="formula" id="carga">
+  <header><b>Carga de las cajas</b><span class="libro">teoría de colas</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mrow><mi>ρ</mi><mo>=</mo><mfrac><mrow><mi>r</mi><mspace width="0.1667em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow></mrow><mi>c</mi></mfrac><mo>=</mo><mfrac><mrow><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>5,42</mn><mi>/</mi><mn>5</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>⋅</mo><mn>13</mn></mrow><mn>5</mn></mfrac><mo>=</mo><mn>2,82</mn></mrow><annotation encoding="application/x-tex">\rho=\frac{r\,E[S]}{c}=\frac{(5{,}42/5)\cdot 13}{5}=2{,}82</annotation></semantics></math></div>
+  <div class="texto"><p>Si <math><semantics><mrow><mi>ρ</mi><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\rho&gt;1</annotation></semantics></math>, llegan más clientes de los que las cajas pueden atender y la fila crece mientras la puerta está abierta. Con el servicio supuesto, la mañana tiene casi el triple de carga que su capacidad. Por eso la espera es tan larga.</p></div>
+</section>
+
+<h2 id="resultados" data-corto="Análisis de resultados">Análisis de resultados</h2>
+<section class="formula" id="ic">
+  <header><b>Intervalo de confianza del 95 % entre réplicas</b><span class="libro">§6.1 · ec. 6.5–6.7 · p. 109</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mtable displaystyle="true" class="tml-jot"><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><mover><mi>Y</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">‾</mo></mover><mo>±</mo><msub><mi>t</mi><mrow><mi>R</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mspace width="0.1667em"></mspace><mi>α</mi><mi>/</mi><mn>2</mn></mrow></msub><mspace width="0.1667em"></mspace><mfrac><mi>S</mi><msqrt><mi>R</mi></msqrt></mfrac></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msup><mi>S</mi><mn class="tml-med-pad">2</mn></msup><mo>=</mo><mfrac><mn>1</mn><mrow><mi>R</mi><mo>−</mo><mn>1</mn></mrow></mfrac><mrow><munderover><mo movablelimits="false">∑</mo><mrow><mi>r</mi><mo>=</mo><mn>1</mn></mrow><mi>R</mi></munderover></mrow><msup><mrow><mo fence="true" form="prefix" stretchy="true">(</mo><msub><mi>Y</mi><mi>r</mi></msub><mo>−</mo><mover><mi>Y</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">‾</mo></mover><mo fence="true" form="postfix" stretchy="true">)</mo></mrow><mn>2</mn></msup></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}\bar{Y}\pm t_{R-1,\,\alpha/2}\,\frac{S}{\sqrt{R}} \\[6pt] S^2=\frac{1}{R-1}\sum_{r=1}^{R}\left(Y_r-\bar{Y}\right)^2\end{gathered}</annotation></semantics></math></div>
+  <div class="texto">
+    <p><math><semantics><msub><mi>Y</mi><mi>r</mi></msub><annotation encoding="application/x-tex">Y_r</annotation></semantics></math> es la medida (por ejemplo <math><semantics><msub><mi>W</mi><mi>q</mi></msub><annotation encoding="application/x-tex">W_q</annotation></semantics></math>) de la réplica <math><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>, y <math><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math> es el número de réplicas (30, con <math><semantics><mrow><msub><mi>t</mi><mrow><mn>29</mn><mo separator="true">;</mo><mspace width="0.1667em"></mspace><mn>0,025</mn></mrow></msub><mo>=</mo><mn>2,045</mn></mrow><annotation encoding="application/x-tex">t_{29;\,0{,}025}=2{,}045</annotation></semantics></math>). Mañana normal: <math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>=</mo><mn>210,0</mn></mrow><annotation encoding="application/x-tex">W_q=210{,}0</annotation></semantics></math> min, IC de 200,7 a 219,2.</p>
+    <p><b>¿Por qué las réplicas son independientes?</b> Cada día simulado usa números aleatorios distintos, y cada jornada empieza vacía y termina vacía. Es una simulación <b>terminante</b>: no necesita período de calentamiento, que es un problema del estado estable <span class="libro">§1.3.3 · p. 15</span>. Cada jornada es como un ciclo regenerativo, que empieza con el sistema vacío <span class="libro">§6.2 · pp. 112–113</span>.</p>
+  </div>
+  <footer>Código: <a href="../../simulador2/medidas.py">medidas.py</a> · <code>promedioConIntervalo</code></footer>
+</section>
+
+<section class="formula" id="muestra">
+  <header><b>Tamaño de la muestra</b><span class="libro">§1.3.4 · p. 16 · ec. 6.8 · p. 109</span></header>
+  <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mrow><mtext>ancho</mtext><mo>=</mo><mfrac><mrow><mn>2</mn><mspace width="0.1667em"></mspace><mi>S</mi><mspace width="0.1667em"></mspace><msub><mi>t</mi><mrow><mi>R</mi><mo>−</mo><mn>1</mn><mo separator="true">,</mo><mspace width="0.1667em"></mspace><mi>α</mi><mi>/</mi><mn>2</mn></mrow></msub></mrow><msqrt><mi>R</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\text{ancho}=\frac{2\,S\,t_{R-1,\,\alpha/2}}{\sqrt{R}}</annotation></semantics></math></div>
+  <div class="texto"><p>El número de corridas se ajusta durante la operación del modelo, con el intervalo de confianza. Para reducir el ancho a la mitad hay que <b>cuadruplicar</b> las corridas (p. 108).</p></div>
+</section>
+
+<h2 id="experimentos" data-corto="Diseño de experimentos">Diseño de experimentos</h2>
+<p>Coss Bu nombra tres análisis <span class="libro">§1.3.5 · p. 16</span>. El simulador hace los tres:</p>
+<div class="tabla"><table>
+  <thead><tr><th>Análisis del libro</th><th>En el simulador</th></tr></thead>
+  <tbody>
+    <tr><td>Comparar medias de alternativas</td><td>Día normal contra quincena. Comparación con Ciw (t de Welch).</td></tr>
+    <tr><td>Efecto de las variables</td><td>Sensibilidad del tiempo de atención (tabla abajo).</td></tr>
+    <tr><td>Búsqueda de valores óptimos</td><td><b>¿Cuántas cajas?</b>: prueba 1, 2, 3… cajas, con la misma semilla para que la comparación sea justa, hasta que <math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>≤</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">W_q\le10</annotation></semantics></math> min en todas las jornadas.</td></tr>
+  </tbody>
+</table></div>
+<div class="tabla"><table>
+  <thead><tr><th>Atención (min)</th><th class="num">Media</th><th class="num">W<sub>q</sub> mañana</th><th class="num">Sale el último</th></tr></thead>
+  <tbody>
+    <tr><td>1 – 25 (supuesto)</td><td class="num">13,0</td><td class="num">214,7 min</td><td class="num">19:32</td></tr>
+    <tr><td>1 – 15</td><td class="num">8,0</td><td class="num">87,7 min</td><td class="num">15:07</td></tr>
+    <tr><td>1 – 10</td><td class="num">5,5</td><td class="num">25,4 min</td><td class="num">12:56</td></tr>
+    <tr><td>1 – 8</td><td class="num">4,5</td><td class="num">6,2 min</td><td class="num">12:14</td></tr>
+    <tr><td>1 – 7</td><td class="num">4,0</td><td class="num">2,3 min</td><td class="num">12:06</td></tr>
+  </tbody>
+</table></div>
+<p class="tenue"><small>Mañana, día normal, 5 cajas, 30 corridas por fila con semilla 12345 (levantamiento de requerimientos §1.6).</small></p>
+
+<h2 id="visita">Planifica tu visita</h2>
+<ul>
+  <li><b>Quincena:</b> días 1 a 4, 12 a 18 y los últimos 4 del mes. Solo multiplica las llegadas por <math><semantics><mrow><mi>g</mi><mo>=</mo><mn>1,3</mn></mrow><annotation encoding="application/x-tex">g=1{,}3</annotation></semantics></math>.</li>
+  <li><b>Publicación:</b> se simula un escenario por cada horario distinto y tipo de día (regular o quincena), con 30 réplicas. Los resultados se guardan con una huella de la configuración: si algo cambia, se vuelven a simular.</li>
+  <li><b>Espera por franja:</b> cada jornada se simula completa (la fila pasa de una franja a la siguiente) y después los clientes se agrupan por la franja en que llegaron. La espera de la franja es el promedio entre réplicas.</li>
+  <li><b>Recomendación:</b> la franja con menor <math><semantics><msub><mi>W</mi><mi>q</mi></msub><annotation encoding="application/x-tex">W_q</annotation></semantics></math> promedio.</li>
+</ul>
+<p>Código: <a href="../../simulador2/calendario.py">calendario.py</a> · <a href="../../simulador2/planificacion.py">planificacion.py</a></p>
+
+<h2 id="simbolos">Símbolos</h2>
+<div class="tabla"><table>
+  <thead><tr><th>Símbolo</th><th>Significado</th><th>Unidad</th></tr></thead>
+  <tbody>
+    <tr><td><math><semantics><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover><annotation encoding="application/x-tex">\hat{\lambda}</annotation></semantics></math></td><td>Llegadas promedio por intervalo</td><td>personas / 5 min</td></tr>
+    <tr><td><math><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math></td><td>Tasa de llegadas, <math><semantics><mrow><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover><mi>/</mi><mrow><mi mathvariant="normal">Δ</mi><mspace></mspace></mrow></mrow><annotation encoding="application/x-tex">\hat{\lambda}/\Delta</annotation></semantics></math></td><td>personas / min</td></tr>
+    <tr><td><math><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math></td><td>Número aleatorio uniforme entre 0 y 1</td><td>—</td></tr>
+    <tr><td><math><semantics><mrow><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>B</mi><mi>i</mi></msub><mo separator="true">,</mo><mtext> </mtext><msub><mi>D</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">A_i,\ B_i,\ D_i</annotation></semantics></math></td><td>Llegada, inicio de atención y salida del cliente <math><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></td><td>min</td></tr>
+    <tr><td><math><semantics><msub><mi>S</mi><mi>i</mi></msub><annotation encoding="application/x-tex">S_i</annotation></semantics></math></td><td>Tiempo de atención del cliente <math><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math></td><td>min</td></tr>
+    <tr><td><math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo separator="true">,</mo><mtext> </mtext><mi>W</mi></mrow><annotation encoding="application/x-tex">W_q,\ W</annotation></semantics></math></td><td>Espera en la fila · tiempo en el banco</td><td>min</td></tr>
+    <tr><td><math><semantics><mrow><msub><mi>L</mi><mi>q</mi></msub><mo separator="true">,</mo><mtext> </mtext><mi>L</mi></mrow><annotation encoding="application/x-tex">L_q,\ L</annotation></semantics></math></td><td>Personas en la fila · en el banco</td><td>personas</td></tr>
+    <tr><td><math><semantics><mrow><mi>U</mi><mo separator="true">,</mo><mtext> </mtext><mi>ρ</mi></mrow><annotation encoding="application/x-tex">U,\ \rho</annotation></semantics></math></td><td>Ocupación medida · carga ofrecida</td><td>—</td></tr>
+    <tr><td><math><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></td><td>Número de cajas</td><td>cajas</td></tr>
+    <tr><td><math><semantics><mi>R</mi><annotation encoding="application/x-tex">R</annotation></semantics></math> (réplicas), <math><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math></td><td>Número de corridas · nivel de significancia</td><td>—</td></tr>
+  </tbody>
+</table></div>
+<footer class="pie">Coss Bu, Raúl. <i>Simulación: un enfoque práctico</i>. Limusa. · Modelo 2.1 · <a href="/">Volver al simulador</a></footer>
+</main>
+</div>
+</body>
+</html>

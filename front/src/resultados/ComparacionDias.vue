@@ -92,7 +92,7 @@ const nombreCategoria = computed(() => (categoria.value === "todas" ? "todas las
 </template>
 
 <style scoped>
-form.campos { align-items: end; }
+form.campos { align-items: start; }
 .comparar { align-self: end; }
 .resumen { margin: 0.5rem 0; padding-left: 1.2rem; font-size: 0.92rem; }
 </style>

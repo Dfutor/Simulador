@@ -1,1039 +1,205 @@
 <!doctype html>
 <html lang="es">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Banco de defensa · Simulador de la fila del banco</title><link rel="stylesheet" href="documento.css"><script defer src="indice.js"></script></head>
-<body><main>
-<nav aria-label="Entregables"><a href="manual.html">Manual</a><a href="matematicas.html">Anexo matemático</a><a href="pruebas.html">Anexo de pruebas</a><a href="matriz.html">Matriz</a><a href="defensa.html" aria-current="page">Defensa</a><a href="hallazgos.html">Hallazgos</a></nav>
-<header><p class="meta">Entregable E · Modelo 2.1</p><h1>Banco de defensa académica</h1><p class="bajada">100 preguntas en 16 áreas, con evidencia, formulación y repregunta. Incluye niveles de dificultad básicos, intermedios, avanzados, críticos y de investigación.</p></header>
-<nav class="indice" aria-label="Áreas de defensa"><h2>Índice</h2><ol id="indice-auto"></ol></nav>
-<section><h2 id="area-1">1. Fundamentos de simulación</h2>
-<article id="pregunta-1" class="ficha">
-<h3>Pregunta 1. ¿Qué estimando principal responde a la pregunta de alguien que llega al banco?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Wq es el promedio de minutos desde la llegada hasta que comienza la atención. En el asistente se calcula por jornada y luego se promedia entre réplicas.</p>
-<p><b>Justificación matemática.</b> Wq=(Σ(Bᵢ−Aᵢ))/N para una réplica, y el resumen da igual peso a cada réplica elegible.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code> · <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>resumirFranja</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿La predicción se aplica al tiempo total de una visita?</p>
-<p><b>Respuesta a la objeción.</b> El tiempo total W suma servicio y espera. El cliente puede ver ambos conceptos explicados, pero la franja se recomienda por Wq.</p>
-</article>
-<article id="pregunta-2" class="ficha">
-<h3>Pregunta 2. ¿Por qué el modelo es discreto si las horas son números reales?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> La variable reloj es continua y el estado cambia en llegadas, inicios y terminaciones puntuales.</p>
-<p><b>Justificación matemática.</b> Entre tⱼ y tⱼ₊₁, N(t)=N(tⱼ después de los eventos). El área suma N(tⱼ)·(tⱼ₊₁−tⱼ).</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>recorrerLineaDeTiempo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b2">B2 · Caballero</a>.</p>
-<p><b>Posible repregunta.</b> ¿Hay incremento fijo de un minuto?</p>
-<p><b>Respuesta a la objeción.</b> No. El minuto es unidad de medida, no paso de integración.</p>
-</article>
-<article id="pregunta-3" class="ficha">
-<h3>Pregunta 3. ¿Qué hace a la simulación terminante?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> El reloj arranca al abrir y la réplica sigue hasta terminar la jornada y vaciar el sistema.</p>
-<p><b>Justificación matemática.</b> C es cierre de admisión y T=max(C,Dmáx). Cambiar C cambia el experimento y su estimando.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>modelo</code> · <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Se descarta la apertura como calentamiento?</p>
-<p><b>Respuesta a la objeción.</b> La apertura vacía forma parte del caso definido. Descartarla estimaría otra ventana.</p>
-</article>
-<article id="pregunta-4" class="ficha">
-<h3>Pregunta 4. ¿Qué componentes son deterministas y cuáles estocásticos?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Horario, cajas, reglas de atención y parámetros son fijos dado el escenario. Las llegadas, prioridades y duraciones se muestrean.</p>
-<p><b>Justificación matemática.</b> Aᵢ acumula intervalos exponenciales. B de prioridad es Bernoulli(p), y S tiene la ley elegida.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>armarJornadas, modelo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Si fijo semilla el modelo se convierte en físicamente determinista?</p>
-<p><b>Respuesta a la objeción.</b> La ejecución se vuelve reproducible; el análisis sigue siendo estocástico sobre el conjunto de realizaciones posibles.</p>
-</article>
-<article id="pregunta-5" class="ficha">
-<h3>Pregunta 5. ¿Cuándo sería mejor un cálculo analítico que simular este banco?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Con una cola estacionaria M/M/c, FCFS, sin prioridades y ρ&lt;1, Erlang C da referencias sin error Monte Carlo.</p>
-<p><b>Justificación matemática.</b> Para revisión, ρ=r/(cμ). El caso base matutino da ρ≈2,817 y U de servicio, fuera de esas condiciones.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>armarJornadas</code> · <a href="manual.html#c1">Manual · c1 y c14</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b8">B8 · Little</a>.</p>
-<p><b>Posible repregunta.</b> ¿Eso vuelve inútil la teoría de colas?</p>
-<p><b>Respuesta a la objeción.</b> Sirve como control en un submodelo y aporta identidades de trayectoria e interpretación de cargas.</p>
-</article>
-<article id="pregunta-6" class="ficha">
-<h3>Pregunta 6. ¿El banco mide un día completo o jornadas separadas?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Una réplica del asistente incluye todas las jornadas configuradas, cada una con cajas libres al comenzar. Se agregan ambas muestras de R para KS.</p>
-<p><b>Justificación matemática.</b> Las medidas Mᵣ,ⱼ conservan el índice de jornada, mientras los uniformes U de todos los clientes de la réplica se reúnen por proceso.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>simularCorridas</code> · <a href="../../simulador2/medidas.py">medidas.py</a> <code>resumirCorridas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puedo tratar mañana y tarde como dos días observados?</p>
-<p><b>Respuesta a la objeción.</b> No. Las dos secuencias reales tienen un mismo día y son partes de una observación.</p>
-</article>
-</section>
-<section><h2 id="area-2">2. Construcción del modelo</h2>
-<article id="pregunta-7" class="ficha">
-<h3>Pregunta 7. ¿Qué representa un servidor y qué no representa?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Una caja operativa atiende una persona a la vez. El modelo de base define c cajas homogéneas por jornada.</p>
-<p><b>Justificación matemática.</b> El vector libreⱼ tiene c componentes. El servicio de i ocupa [Bᵢ,Dᵢ) en exactamente una.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>atender</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede una caja especial atender solo a prioritarios?</p>
-<p><b>Respuesta a la objeción.</b> La implementación usa una sola cola y cualquier caja. Una caja dedicada sería una regla nueva.</p>
-</article>
-<article id="pregunta-8" class="ficha">
-<h3>Pregunta 8. ¿Cómo se modela la prioridad sin interrupción?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Cuando se libera una caja, se elige el primer prioritario ya llegado, y si no hay, el primer pendiente.</p>
-<p><b>Justificación matemática.</b> En el instante t de disponibilidad se consideran Aᵢ≤t para prioridades. Dᵢ ya asignada no cambia por nuevas llegadas.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>siguienteEnFila, atender</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Un prioritario futuro bloquea una caja libre?</p>
-<p><b>Respuesta a la objeción.</b> No; si no hay persona elegible, se programa para el primer pendiente conforme a su llegada.</p>
-</article>
-<article id="pregunta-9" class="ficha">
-<h3>Pregunta 9. ¿Qué sucede tras una llegada exactamente en el cierre?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> El motor admite la igualdad con el cierre final. La asignación a la última franja también incluye ese punto.</p>
-<p><b>Justificación matemática.</b> Admisión A≤C. Franjas internas [d,h); la última añade A=C por excepción.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarLlegadas</code> · <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>simularEscenario</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Y exactamente al cambiar de tramo?</p>
-<p><b>Respuesta a la objeción.</b> Internamente A=h queda fuera del tramo anterior. Puede pertenecer al siguiente si su generación da el borde.</p>
-</article>
-<article id="pregunta-10" class="ficha">
-<h3>Pregunta 10. ¿Qué supuestos se hacen acerca de la capacidad de la fila?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Se admite a toda persona generada hasta la puerta de cierre, con una cola conceptualmente ilimitada.</p>
-<p><b>Justificación matemática.</b> Número de abandonos y rechazos por cola K no forma parte del balance. Al final Nentradas=Nsalidas.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>modelo, atender</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Una cola excesiva debe interpretarse como clientes que seguirían esperando en la vida real?</p>
-<p><b>Respuesta a la objeción.</b> Solo bajo esa hipótesis. Abandono o cambio de sede necesitarían medidas y reglas nuevas.</p>
-</article>
-<article id="pregunta-11" class="ficha">
-<h3>Pregunta 11. ¿Cómo se conecta la primera jornada con la segunda?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> El programa reinicia el estado al comienzo de cada jornada configurada. La cola sí continúa entre franjas de una misma jornada.</p>
-<p><b>Justificación matemática.</b> El vector de liberación se reinicia a cero por j aunque Dmáx de la anterior supere la apertura siguiente.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>modelo</code> · <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>simularEscenario</code> · <a href="hallazgos.html#h01">Hallazgos · h01</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede pasar bajo los parámetros de fábrica?</p>
-<p><b>Respuesta a la objeción.</b> Sí; el cierre de atención matutino medio fue cerca de 19:21 mientras tarde abre a las 14:00.</p>
-</article>
-<article id="pregunta-12" class="ficha">
-<h3>Pregunta 12. ¿Dónde aparecen tiempos ociosos y pausas?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Ocio de caja es su horizonte efectivo menos servicio ocupado. Un cierre entre jornadas se muestra como pausa, con corridas separadas.</p>
-<p><b>Justificación matemática.</b> Oⱼ=T−ΣSᵢ de caja j. El ocio registrado por cliente solo mide el hueco previo a asignarlo.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code> · <a href="../../front/src/vistas/PlanificaVisita.vue">PlanificaVisita.vue</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿El ocio total suma descanso del mediodía?</p>
-<p><b>Respuesta a la objeción.</b> No cuando las jornadas separadas usan sus propios horizontes. No hay calendario de actividad de personas concretas.</p>
-</article>
-<article id="pregunta-13" class="ficha">
-<h3>Pregunta 13. ¿Puede cambiar el número de cajas a mitad de la jornada?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> El número c se aplica a todas las jornadas de una entrada. El modo por franja solo cambia la intensidad de llegadas.</p>
-<p><b>Justificación matemática.</b> Tramos contienen límites e intensidad, mientras c es un escalar externo a la lista de tramos.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/api.py">api.py</a> <code>Entrada</code> · <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>jornadasDelEscenario</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Podría separar franjas como jornadas para usar varios c?</p>
-<p><b>Respuesta a la objeción.</b> La API no acepta un c por jornada dentro de la misma entrada, y partir jornadas reiniciaría estado.</p>
-</article>
-</section>
-<section><h2 id="area-3">3. Datos de entrada</h2>
-<article id="pregunta-14" class="ficha">
-<h3>Pregunta 14. ¿Qué se observó directamente en el estudio?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Entradas de personas contadas desde afuera en tomas de cinco minutos, dos tramos del mismo día.</p>
-<p><b>Justificación matemática.</b> Mañana Σ=130 y n=24; tarde Σ=135 y n=30. Total 265 ingresos y 54 tomas.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../Levantamiento_de_requrimientos_Cap1COSBUS.md">Levantamiento_de_requrimientos_Cap1COSBUS.md</a> <code>Levantamiento §1.3</code> · <a href="../../simulador2/api.py">api.py</a> <code>CONTEOS_MANANA y CONTEOS_TARDE</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Se conoce el uso efectivo de cada visitante?</p>
-<p><b>Respuesta a la objeción.</b> No se documentó visita individual a caja. La proporción p lo representa como parámetro.</p>
-</article>
-<article id="pregunta-15" class="ficha">
-<h3>Pregunta 15. ¿Se puede afirmar que las horas de apertura matutina están medidas?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> El conteo abarca 09:40–11:40 y la jornada modelada 08:00–12:00, de modo que la cobertura es parcial.</p>
-<p><b>Justificación matemática.</b> 120/240=50 %. La tasa general asigna x̄ a bloques con distinta cobertura; a las 08:00 no hay toma.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../Levantamiento_de_requrimientos_Cap1COSBUS.md">Levantamiento_de_requrimientos_Cap1COSBUS.md</a> <code>Levantamiento §1.3</code> · <a href="../../simulador2/analisisLlegadas.py">analisisLlegadas.py</a> <code>ubicarConteos</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Una franja normal implica cobertura completa?</p>
-<p><b>Respuesta a la objeción.</b> No. Normal se determina con las tomas disponibles y puede tener solo parte de la hora observada.</p>
-</article>
-<article id="pregunta-16" class="ficha">
-<h3>Pregunta 16. ¿De dónde sale el factor 1,3 y qué prueba lo respalda?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Es un supuesto de escenario del equipo. No hay un segundo día de quincena registrado.</p>
-<p><b>Justificación matemática.</b> g multiplica λ, llevando 5,4167 a 7,0417 por toma en la mañana. No hay estimador con intervalo de g.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/api.py">api.py</a> <code>Establecimiento</code> · <a href="../../Levantamiento_de_requrimientos_Cap1COSBUS.md">Levantamiento_de_requrimientos_Cap1COSBUS.md</a> <code>Levantamiento §§1.3 y 1.7</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede probarse con las 54 tomas disponibles?</p>
-<p><b>Respuesta a la objeción.</b> No se observó el estrato quincena, por lo que falta una muestra comparable.</p>
-</article>
-<article id="pregunta-17" class="ficha">
-<h3>Pregunta 17. ¿Qué sería necesario para estimar proporción que va a caja?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Medir personas que entran y personas que formalmente se unen a caja en mismas ventanas y fechas.</p>
-<p><b>Justificación matemática.</b> Una estimación agrupada sería Ncola/Npuerta con incertidumbre que contemple bloques o días.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>armarJornadas</code> · <a href="../../Levantamiento_de_requrimientos_Cap1COSBUS.md">Levantamiento_de_requrimientos_Cap1COSBUS.md</a> <code>Levantamiento §1.2</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿La aplicación simula a cada visitante y descarta algunos?</p>
-<p><b>Respuesta a la objeción.</b> Aplica p a la tasa. Es equivalente en ley de llegadas bajo adelgazamiento Poisson independiente.</p>
-</article>
-<article id="pregunta-18" class="ficha">
-<h3>Pregunta 18. ¿Qué justifica cinco minutos y treinta corridas?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Cinco minutos es la granularidad tabulada; treinta es la opción base, sin justificación de potencia o tamaño en los archivos.</p>
-<p><b>Justificación matemática.</b> Tamaño de observación y número de réplicas tienen unidades distintas. Para EE Monte Carlo interviene 1/√R.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/api.py">api.py</a> <code>Entrada</code> · <a href="../../Levantamiento_de_requrimientos_Cap1COSBUS.md">Levantamiento_de_requrimientos_Cap1COSBUS.md</a> <code>Levantamiento §§1.3 y 1.7</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Treinta alcanza para la muestra de banco?</p>
-<p><b>Respuesta a la objeción.</b> No aumenta n histórico. El ajuste de entradas requiere días medidos.</p>
-</article>
-<article id="pregunta-19" class="ficha">
-<h3>Pregunta 19. ¿Cómo se estableció el tiempo de servicio de 1–25?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Se definió por acuerdo. No hay tiempos de inicio y fin observados para estimar mínimos, máximos o forma.</p>
-<p><b>Justificación matemática.</b> Bajo U(1,25), E[S]=13 y Var(S)=48 min². Indican un supuesto, no un intervalo de observación.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../Levantamiento_de_requrimientos_Cap1COSBUS.md">Levantamiento_de_requrimientos_Cap1COSBUS.md</a> <code>Levantamiento §1.3</code> · <a href="../../simulador2/api.py">api.py</a> <code>Jornada</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿El análisis de sensibilidad prueba una media real de 4–5 min?</p>
-<p><b>Respuesta a la objeción.</b> Muestra qué pasaría con otra media, sin estimarla de datos reales.</p>
-</article>
-<article id="pregunta-20" class="ficha">
-<h3>Pregunta 20. ¿Cómo mejoraría el diseño de observación para evaluar la visita?</h3>
-<p class="nivel">Investigación</p>
-<p><b>Respuesta técnica.</b> Registraría días completos por tipo, día semanal y carga, además de entradas a fila, comienzos, salidas y cajas activas.</p>
-<p><b>Justificación matemática.</b> Tasas por exposición ΣX/ΣΔ y errores por unidad día. Guardar fechas fuera de muestra para calibrar espera por franja.</p>
-<p><b>Evidencia del proyecto.</b> <a href="manual.html#c5">Manual · c5 y c18</a> · <a href="hallazgos.html#h09">Hallazgos · h09</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b9">B9 · Sargent</a>.</p>
-<p><b>Posible repregunta.</b> ¿Hace falta nombre o identificación personal para medir Wq?</p>
-<p><b>Respuesta a la objeción.</b> Se requiere emparejar eventos y respetar una política de manejo de datos. Un identificador de recorrido anonimizado puede bastar.</p>
-</article>
-</section>
-<section><h2 id="area-4">4. Estadística descriptiva</h2>
-<article id="pregunta-21" class="ficha">
-<h3>Pregunta 21. ¿Cuál es la media observada por jornada y para qué se usa?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Mañana 130/24=5,4167, tarde 135/30=4,50 personas por toma. Armar jornadas escala estas medias.</p>
-<p><b>Justificación matemática.</b> Si Δ=5, 5,4167/5=1,0833 personas/min en mañana regular para p=1.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>armarJornadas</code> · <a href="pruebas.html#datos">Anexo C · datos</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Se usó la misma media para todo el día?</p>
-<p><b>Respuesta a la objeción.</b> El caso base conserva media por jornada. La media general solo se usa como respaldo del perfil publicado.</p>
-</article>
-<article id="pregunta-22" class="ficha">
-<h3>Pregunta 22. ¿Aporta algo calcular varianza aunque Poisson use una sola media?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Describe dispersión y facilita detectar mezcla de tasas o desajuste esperable. No parametriza aquí el generador.</p>
-<p><b>Justificación matemática.</b> S² divide por n−1. Con mañanas S²≈6,949 y media≈5,417, cociente≈1,283.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/pruebaPoisson.py">pruebaPoisson.py</a> <code>pruebaChiCuadradaPoisson</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b6">B6 · NIST y SciPy</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Una varianza 28 % mayor demuestra sobredispersión?</p>
-<p><b>Respuesta a la objeción.</b> El cociente es muestral. Su incertidumbre y la estructura temporal requieren evaluación adicional.</p>
-</article>
-<article id="pregunta-23" class="ficha">
-<h3>Pregunta 23. ¿Cómo reconstruye el primer promedio móvil simple?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Usa las tres primeras tomas completas y fecha el resultado en la tercera.</p>
-<p><b>Justificación matemática.</b> PMS=(7+9+8)/3=8. Las dos posiciones anteriores se representan con null.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/analisisLlegadas.py">analisisLlegadas.py</a> <code>promedioMovilSimple</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué sucede si pido más puntos que los observados?</p>
-<p><b>Respuesta a la objeción.</b> No hay una ventana completa, así que los promedios son nulos y los conteos originales permanecen.</p>
-</article>
-<article id="pregunta-24" class="ficha">
-<h3>Pregunta 24. ¿Por qué el ponderado cambia frente al simple?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Asigna mayor peso al último dato. En la segunda ventana el conteo 6 pesa 3 y reduce el valor frente al simple.</p>
-<p><b>Justificación matemática.</b> PMP=(9+2·8+3·6)/6=7,1667 frente a 7,6667.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/analisisLlegadas.py">analisisLlegadas.py</a> <code>promedioMovilPonderado</code> · <a href="manual.html#c11">Manual · c11</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Se usa PMP para alterar λ de la siguiente franja?</p>
-<p><b>Respuesta a la objeción.</b> No; ambos son descriptivos. Las tasas usan medias de conteos por reglas separadas.</p>
-</article>
-<article id="pregunta-25" class="ficha">
-<h3>Pregunta 25. ¿En qué unidad se construye la distribución de longitudes?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> La masa de estado n es fracción de tiempo dentro de una corrida, luego promediada entre corridas.</p>
-<p><b>Justificación matemática.</b> Pᵣ(n)=Tᵣ,ₙ/Tᵣ. La media de Pᵣ da el mismo peso a cada réplica.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>promediarDistribucion</code> · <a href="../../front/src/graficas.js">graficas.js</a> <code>opcionLongitudes</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Serviría acumular minutos globalmente antes de dividir?</p>
-<p><b>Respuesta a la objeción.</b> Sí para un estimando ponderado por duración, que puede dar otra curva si Tᵣ varía.</p>
-</article>
-</section>
-<section><h2 id="area-5">5. Números pseudoaleatorios</h2>
-<article id="pregunta-26" class="ficha">
-<h3>Pregunta 26. ¿Qué generador utiliza realmente el motor?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> MT19937 a través de random.random de CPython. El código del proyecto no implementa un generador congruencial.</p>
-<p><b>Justificación matemática.</b> La recurrencia opera sobre palabras de 32 bits con XOR, período 2¹⁹⁹³⁷−1, y el resultado está en la cuadrícula de 53 bits.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarExponencial</code> · <a href="matematicas.html#rng">Anexo A · rng</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b3">B3 · Matsumoto y Nishimura</a> · <a href="manual.html#b4">B4 · CPython</a>.</p>
-<p><b>Posible repregunta.</b> ¿Cuál es el papel de la semilla?</p>
-<p><b>Respuesta a la objeción.</b> Inicializa el estado que determina la secuencia de salidas.</p>
-</article>
-<article id="pregunta-27" class="ficha">
-<h3>Pregunta 27. ¿Cómo se obtiene 0,41661987254534116 con semilla 12345?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Dos primeras palabras temperadas 1789368711 y 3146859322 se recortan y se ensamblan como en CPython.</p>
-<p><b>Justificación matemática.</b> ((55917772·2²⁶)+49169676)/2⁵³. La reproducción con getrandbits se ofrece en A.1.</p>
-<p><b>Evidencia del proyecto.</b> <a href="matematicas.html#rng">Anexo A · rng</a> · <a href="evidencia/resultados.json">uniformes</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b3">B3 · Matsumoto y Nishimura</a> · <a href="manual.html#b4">B4 · CPython</a>.</p>
-<p><b>Posible repregunta.</b> ¿Ese número es el primer tiempo de llegada?</p>
-<p><b>Respuesta a la objeción.</b> Es un uniforme sin unidades; después se transforma según la media en minutos.</p>
-</article>
-<article id="pregunta-28" class="ficha">
-<h3>Pregunta 28. ¿El reloj pertenece al navegador o al servidor?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Al servidor. La interfaz manda null si el campo no tiene valor manual.</p>
-<p><b>Justificación matemática.</b> s=floor(ns/10⁶). Una semilla controlada de 1.797.000.000.123.456.789 ns da 1.797.000.000.123 ms.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../front/src/estado.js">estado.js</a> <code>entradaParaEnviar</code> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>resolverSemilla</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b4">B4 · CPython</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Dos solicitudes siempre reciben valores distintos?</p>
-<p><b>Respuesta a la objeción.</b> Pueden compartir milisegundo. La resolución no garantiza unicidad.</p>
-</article>
-<article id="pregunta-29" class="ficha">
-<h3>Pregunta 29. ¿Qué representan los 53 bits del valor uniforme?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Una cuadrícula ideal de múltiplos de 2⁻⁵³, construida de dos palabras. El modelo matemático usa aproximación continua.</p>
-<p><b>Justificación matemática.</b> Mínimo 0, máximo 1−2⁻⁵³. El extremo 1 queda excluido.</p>
-<p><b>Evidencia del proyecto.</b> <a href="matematicas.html#rng">Anexo A · rng</a> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarUniforme</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b3">B3 · Matsumoto y Nishimura</a> · <a href="manual.html#b4">B4 · CPython</a>.</p>
-<p><b>Posible repregunta.</b> ¿El máximo de una uniforme en minutos es siempre estrictamente menor que b en el programa?</p>
-<p><b>Respuesta a la objeción.</b> Matemáticamente si U&lt;1. La aritmética de coma flotante puede redondear al extremo para algunos valores.</p>
-</article>
-<article id="pregunta-30" class="ficha">
-<h3>Pregunta 30. ¿Cuántos flujos usa el simulador administrativo?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Llegadas, marca prioritaria y tiempo de servicio consumen un único generador global; los intentos descartados también avanzan estado.</p>
-<p><b>Justificación matemática.</b> El índice del U siguiente depende de cantidad de clientes y del resultado de KS. Números de réplicas son etiquetas, no semillas.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>modelo, simularCorridas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b3">B3 · Matsumoto y Nishimura</a> · <a href="manual.html#b4">B4 · CPython</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Ciw usa un estado completamente aislado?</p>
-<p><b>Respuesta a la objeción.</b> La ruta auditada no llama ciw.seed por muestra; varias extracciones siguen el estado del mismo módulo random.</p>
-</article>
-<article id="pregunta-31" class="ficha">
-<h3>Pregunta 31. ¿Cómo se independiza el orden de publicación de escenarios?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Se llama random.seed con la cadena de raíz, tipo y horario antes de cada escenario.</p>
-<p><b>Justificación matemática.</b> s(j)=«raíz ∣ tipo ∣ horario» se convierte por el algoritmo de semilla de texto de CPython; no se garantiza subflujo no solapado por diseño.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>publicar, claveEscenario</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b3">B3 · Matsumoto y Nishimura</a> · <a href="manual.html#b4">B4 · CPython</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿La fecha aparece siempre en esa cadena?</p>
-<p><b>Respuesta a la objeción.</b> No. Fechas con misma llave de horario y tipo consultan la misma realización resumida.</p>
-</article>
-<article id="pregunta-32" class="ficha">
-<h3>Pregunta 32. ¿Por qué el reloj en milisegundos no garantiza calidad del PRNG?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> La semilla cambia el punto inicial, sin cambiar la recurrencia ni sus propiedades.</p>
-<p><b>Justificación matemática.</b> Dada la semilla y número de llamadas, Uₜ es función determinista. Cambiar la semilla por t mod 1 ms no introduce independencia física.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>resolverSemilla</code> · <a href="matematicas.html#rng">Anexo A · rng</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b3">B3 · Matsumoto y Nishimura</a> · <a href="manual.html#b4">B4 · CPython</a>.</p>
-<p><b>Posible repregunta.</b> ¿Es una buena semilla para reproducir?</p>
-<p><b>Respuesta a la objeción.</b> Sí si se registra, junto con parámetros y versión. La fuente temporal sola no hace única cada corrida.</p>
-</article>
-<article id="pregunta-33" class="ficha">
-<h3>Pregunta 33. ¿Enviar 9007199254740993 desde la interfaz siempre lo conserva?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Un campo numérico en JavaScript pasa por Number; ese entero no tiene representación exacta. Python puede recibirlo si se conserva en cliente o se usa API correctamente.</p>
-<p><b>Justificación matemática.</b> 2⁵³+1 se aproxima a 2⁵³ en doble precisión. Puede colisionar antes de serializar.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../front/src/estado.js">estado.js</a> <code>entradaParaEnviar</code> · <a href="hallazgos.html#h14">Hallazgos · h14</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b4">B4 · CPython</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Afecta a las marcas de reloj del año auditado?</p>
-<p><b>Respuesta a la objeción.</b> Esas marcas rondan 10¹² ms, por debajo del umbral de exactitud.</p>
-</article>
-</section>
-<section><h2 id="area-6">6. Pruebas estadísticas</h2>
-<article id="pregunta-34" class="ficha">
-<h3>Pregunta 34. ¿Por qué se utiliza Kolmogórov–Smirnov si se aplica chi-cuadrado?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Pearson contrasta la ley Poisson de conteos del estudio. KS examina dos grupos de uniformes generados y registrados. También se usa un Pearson distinto para homogeneidad de franjas.</p>
-<p><b>Justificación matemática.</b> X²=Σ(O−E)²/E en clases discretas; D=sup de la discrepancia entre CDF empírica y F₀=x en datos continuos.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/pruebaPoisson.py">pruebaPoisson.py</a> <code>pruebaChiCuadradaPoisson</code> · <a href="../../simulador2/pruebaKS.py">pruebaKS.py</a> <code>pruebaKS</code> · <a href="../../simulador2/analisisLlegadas.py">analisisLlegadas.py</a> <code>clasificarFranjas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿Pasar ambos permite validar el banco?</p>
-<p><b>Respuesta a la objeción.</b> No. Siguen faltando observaciones de tiempos y supuestos de dependencia, servicio y estructura.</p>
-</article>
-<article id="pregunta-35" class="ficha">
-<h3>Pregunta 35. ¿Por qué el KS bilateral mide dos diferencias?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Considera los valores límite a izquierda y derecha del salto empírico. Así capta excesos y déficits respecto a la diagonal.</p>
-<p><b>Justificación matemática.</b> D⁺=max(i/n−uᵢ), D⁻=max(uᵢ−(i−1)/n). Para [0,14;0,30;0,44;0,80], D=0,31.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/pruebaKS.py">pruebaKS.py</a> <code>pruebaKS</code> · <a href="matematicas.html#bateria">Anexo A · bateria</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b5">B5 · Stephens</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿Es suficiente calcular solo i/n y valor absoluto?</p>
-<p><b>Respuesta a la objeción.</b> Puede subestimar la diferencia antes del salto. Comparar ambos lados recupera el supremo.</p>
-</article>
-<article id="pregunta-36" class="ficha">
-<h3>Pregunta 36. ¿La fórmula crítica de Coss Bu empieza en 36?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> La tabla de la copia examinada declara n&gt;100. El código cambia su aproximación al pasar de 35 a 36.</p>
-<p><b>Justificación matemática.</b> Para α=0,05 el salto del programa es 0,22431 a 0,22635. El exacto a n=36 es 0,22119.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/pruebaKS.py">pruebaKS.py</a> <code>valorCriticoKS</code> · <a href="hallazgos.html#h03">Hallazgos · h03</a> · <a href="pruebas.html#casos">Anexo C · casos</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b5">B5 · Stephens</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿Tiene consecuencia en n=1?</p>
-<p><b>Respuesta a la objeción.</b> A α=0,05 el crítico supera uno, por lo que cualquier valor individual pasa.</p>
-</article>
-<article id="pregunta-37" class="ficha">
-<h3>Pregunta 37. ¿El subconjunto de uniformes que se somete a KS es iid U(0,1)?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> El uniforme de una candidata que cruza cierre o borde no se registra. El umbral de permanencia depende de U; las muestras no son la secuencia fija de extracciones crudas.</p>
-<p><b>Justificación matemática.</b> Admisión desde a exige U≤1−exp(−(C−a)/m). F₀ conocida no corrige censura de la muestra.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarLlegadas, generarLlegadasPorTramos</code> · <a href="hallazgos.html#h02">Hallazgos · h02</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿Sucede lo mismo por definición a cada uniforme de servicio?</p>
-<p><b>Respuesta a la objeción.</b> Se registra uno por admitido. La selección de la corrida tras comparar KS también condiciona los resultados finales.</p>
-</article>
-<article id="pregunta-38" class="ficha">
-<h3>Pregunta 38. ¿Qué efecto tiene volver a simular si KS no pasa?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Produce una muestra condicional. Con una jornada sintética de 5 min, el grupo aceptado tuvo menor Wq que todos los intentos no vacíos en el experimento realizado.</p>
-<p><b>Justificación matemática.</b> E[Y condicionado a pasar] puede diferir de E[Y]. En T06, 0,6605 vs 0,7911 min.</p>
-<p><b>Evidencia del proyecto.</b> <a href="pruebas.html#experimentos">Anexo C · experimentos</a> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>simularCorridas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b6">B6 · NIST y SciPy</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Siempre produce sesgo de signo negativo?</p>
-<p><b>Respuesta a la objeción.</b> No se generaliza ese signo. La correlación entre medida y criterio de aceptación cambia por escenario.</p>
-</article>
-<article id="pregunta-39" class="ficha">
-<h3>Pregunta 39. ¿Por qué se restan dos grados de libertad en Pearson Poisson?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Uno por el total fijo de clases y uno por λ estimado. Es la aproximación codificada.</p>
-<p><b>Justificación matemática.</b> En la mañana k=3, ν=3−2=1. En tarde k=5, ν=3.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/pruebaPoisson.py">pruebaPoisson.py</a> <code>pruebaChiCuadradaPoisson</code> · <a href="matematicas.html#pearson">Anexo A · pearson</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b6">B6 · NIST y SciPy</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Cuándo falla la formulación estándar?</p>
-<p><b>Respuesta a la objeción.</b> Clases adaptadas, parámetros desde conteos no agrupados, observaciones dependientes y grupos pequeños pueden alterar la referencia.</p>
-</article>
-<article id="pregunta-40" class="ficha">
-<h3>Pregunta 40. ¿Cómo se elige la última clase de Pearson?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Se incluye toda probabilidad de Poisson por encima del máximo observado y luego se fusionan clases hasta la capacidad esperada.</p>
-<p><b>Justificación matemática.</b> Para máximo M, E última=N·P(X≥M). Toda la suma E debe ser N. La agrupación residual se agrega a la clase previa.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/pruebaPoisson.py">pruebaPoisson.py</a> <code>agruparClases, pruebaChiCuadradaPoisson</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b6">B6 · NIST y SciPy</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué ocurre con ν=0?</p>
-<p><b>Respuesta a la objeción.</b> El código devuelve veredicto nulo. Es falta de resolución para este contraste, no evidencia de ajuste.</p>
-</article>
-<article id="pregunta-41" class="ficha">
-<h3>Pregunta 41. ¿Qué contraste agregaría para buscar dependencia serial?</h3>
-<p class="nivel">Investigación</p>
-<p><b>Respuesta técnica.</b> Usaría autocorrelaciones prefijadas y rachas o pares como diagnósticos complementarios. El flujo original debe recolectarse antes del filtro.</p>
-<p><b>Justificación matemática.</b> La correlación a lag h usa pares (Uₜ,Uₜ₊ₕ); las series evalúan celdas de su CDF conjunta.</p>
-<p><b>Evidencia del proyecto.</b> <a href="matematicas.html#bateria">Anexo A · bateria</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b3">B3 · Matsumoto y Nishimura</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puedo tratar pares superpuestos como independientes para Pearson?</p>
-<p><b>Respuesta a la objeción.</b> Esa dependencia requiere calibrar. Parejas disjuntas ofrecen una alternativa simple.</p>
-</article>
-<article id="pregunta-42" class="ficha">
-<h3>Pregunta 42. ¿Cuándo es inapropiado KS clásico para variables observadas?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Cuando la ley nula es discreta o se estima con la misma muestra sin usar su referencia modificada.</p>
-<p><b>Justificación matemática.</b> La distribución nula de D depende entonces de la ley discreta o del proceso de estimación. Los cuantiles continuos conocidos no corresponden.</p>
-<p><b>Evidencia del proyecto.</b> <a href="matematicas.html#bateria">Anexo A · bateria</a> · <a href="../../simulador2/pruebaKS.py">pruebaKS.py</a> <code>pruebaKS</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b5">B5 · Stephens</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿Podría contrastar duraciones de servicio cuando se midan?</p>
-<p><b>Respuesta a la objeción.</b> Sí con hipótesis explícita, ajuste apropiado de parámetros y una calibración por re-muestreo o referencia válida.</p>
-</article>
-</section>
-<section><h2 id="area-7">7. Distribuciones</h2>
-<article id="pregunta-43" class="ficha">
-<h3>Pregunta 43. ¿Qué diferencia hay entre un conteo Poisson y un intervalo exponencial?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> El conteo entero mide llegadas durante un tiempo fijo. El intervalo continuo mide cuánto se espera hasta la llegada siguiente.</p>
-<p><b>Justificación matemática.</b> Si la intensidad es r, N(Δ)∼Poisson(rΔ) y X tiene P(X&gt;t)=exp(−rt).</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarExponencial</code> · <a href="../../simulador2/pruebaPoisson.py">pruebaPoisson.py</a> <code>pruebaChiCuadradaPoisson</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿La unidad de λ es siempre por minuto?</p>
-<p><b>Respuesta a la objeción.</b> En la entrada es personas por intervalo. Se divide por Δ para obtener la intensidad por minuto.</p>
-</article>
-<article id="pregunta-44" class="ficha">
-<h3>Pregunta 44. ¿Cómo se relacionan igual media y varianza con la ley Poisson?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Son una propiedad de Poisson, no una condición suficiente para identificar la distribución.</p>
-<p><b>Justificación matemática.</b> E[X]=Var(X)=λ. Hay otras leyes con momentos coincidentes, además de fluctuación muestral.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/pruebaPoisson.py">pruebaPoisson.py</a> <code>pruebaChiCuadradaPoisson</code> · <a href="matematicas.html#pearson">Anexo A · pearson</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b6">B6 · NIST y SciPy</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué informa una razón de dispersión grande?</p>
-<p><b>Respuesta a la objeción.</b> Que bajo el modelo conviene estudiar heterogeneidad, dependencia y observaciones atípicas; no identifica cuál causa opera.</p>
-</article>
-<article id="pregunta-45" class="ficha">
-<h3>Pregunta 45. ¿La falta de memoria significa que el pasado no puede afectar a la fila?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Se refiere al intervalo exponencial dentro de tasa fija. El estado de la cola conserva lo ocurrido.</p>
-<p><b>Justificación matemática.</b> P(X&gt;s+t condicionado a X&gt;s)=P(X&gt;t) para X exponencial. Wq depende de clientes pendientes.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarLlegadasPorTramos, atender</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b2">B2 · Caballero</a>.</p>
-<p><b>Posible repregunta.</b> ¿Y al cambiar intensidad?</p>
-<p><b>Respuesta a la objeción.</b> El siguiente tramo tiene otra ley de incremento; se regenera desde el borde y se conserva la cola.</p>
-</article>
-<article id="pregunta-46" class="ficha">
-<h3>Pregunta 46. ¿Qué distribución se usa para el servicio y cómo se cambia?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Uniforme por defecto; en el paso Servicio se puede elegir exponencial con la media por jornada.</p>
-<p><b>Justificación matemática.</b> U(1,25) tiene media 13, varianza 48. Exp de media 13 tendría varianza 169 min².</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generadorDeServicio</code> · <a href="../../simulador2/api.py">api.py</a> <code>Jornada y Entrada</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Son intercambiables si comparten la media?</p>
-<p><b>Respuesta a la objeción.</b> No. Tienen distinta variabilidad, soporte y cola, lo cual afecta las esperas.</p>
-</article>
-<article id="pregunta-47" class="ficha">
-<h3>Pregunta 47. ¿Cuándo es válida la mezcla de procesos por prioridad en Ciw?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Si las marcas Bernoulli son iid e independientes de un flujo homogéneo de Poisson, cada clase obtiene un proceso Poisson independiente.</p>
-<p><b>Justificación matemática.</b> r_prioritario=rp y r_regular=r(1−p); el proceso superpuesto recupera r.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/validacionCiw.py">validacionCiw.py</a> <code>simularJornadaConCiw</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b11">B11 · Ciw</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué pasa cuando p=1?</p>
-<p><b>Respuesta a la objeción.</b> Por teoría la clase regular queda vacía. El código actual intenta una exponencial con tasa 0 y falla.</p>
-</article>
-<article id="pregunta-48" class="ficha">
-<h3>Pregunta 48. ¿Qué modelo toleraría variabilidad diaria de tasa?</h3>
-<p class="nivel">Investigación</p>
-<p><b>Respuesta técnica.</b> Un modelo jerárquico de tasas por día, un Poisson no homogéneo validado o un modelo sobredisperso para conteos.</p>
-<p><b>Justificación matemática.</b> Para λ variable, Var(X)=E[λ]+Var(λ) bajo mezcla Poisson. Permite separar dispersión interna y entre días.</p>
-<p><b>Evidencia del proyecto.</b> <a href="manual.html#c10">Manual · c10 y c18</a> · <a href="hallazgos.html#h04">Hallazgos · h04</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b9">B9 · Sargent</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede estimarse una mezcla diaria de este caso?</p>
-<p><b>Respuesta a la objeción.</b> La serie de un día no identifica esa componente. Primero se necesitan múltiples días con exposición clara.</p>
-</article>
-</section>
-<section><h2 id="area-8">8. Transformación de variables</h2>
-<article id="pregunta-49" class="ficha">
-<h3>Pregunta 49. ¿Cómo obtiene el primer tiempo de la corrida pequeña?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Aplica la inversa de la acumulada exponencial al primer R de semilla 1 con media dos.</p>
-<p><b>Justificación matemática.</b> −2ln(1−0,134364244)=0,288582128 min.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarExponencial</code> · <a href="pruebas.html#trazas">Anexo C · trazas</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué lo convierte en una hora civil?</p>
-<p><b>Respuesta a la objeción.</b> Se suma ese desplazamiento a 08:00 solo al presentar; la traza conserva minutos desde apertura.</p>
-</article>
-<article id="pregunta-50" class="ficha">
-<h3>Pregunta 50. ¿Por qué el libro escribe ln(U) y el código ln(1−U)?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Ambas transformaciones producen la misma ley con un uniforme continuo. Usar 1−U evita problema con U=0 en CPython.</p>
-<p><b>Justificación matemática.</b> Si U∼U(0,1), 1−U tiene idéntica distribución. Para U=0,25, las realizaciones numéricas no son iguales.</p>
-<p><b>Evidencia del proyecto.</b> <a href="matematicas.html#distribuciones">Anexo A · distribuciones</a> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarExponencial</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b4">B4 · CPython</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puedo usar la misma semilla y esperar la misma traza si cambio la fórmula?</p>
-<p><b>Respuesta a la objeción.</b> No. La equivalencia es distributiva y no de realizaciones.</p>
-</article>
-<article id="pregunta-51" class="ficha">
-<h3>Pregunta 51. ¿Cómo se transforma un uniforme en una marca prioritaria?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Se toma una extracción separada y se compara estrictamente con la proporción configurada.</p>
-<p><b>Justificación matemática.</b> B=1 si U&lt;p, de modo que P(B=1)=p bajo el modelo continuo. En p=0 no hay prioritarios, en p=1 todos.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarLlegadas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿U=p se registra como prioritario?</p>
-<p><b>Respuesta a la objeción.</b> No, el comparador es estricto.</p>
-</article>
-<article id="pregunta-52" class="ficha">
-<h3>Pregunta 52. ¿Qué problema numérico evita log1p en una implementación futura?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Calcula ln(1+x) con precisión cerca de cero. La resta 1−U puede perder bits antes del logaritmo.</p>
-<p><b>Justificación matemática.</b> Para U pequeño, −ln(1−U)≈U; el error relativo de la resta directa puede ser significativo respecto a U.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarExponencial</code> · <a href="matematicas.html#distribuciones">Anexo A · distribuciones</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b4">B4 · CPython</a>.</p>
-<p><b>Posible repregunta.</b> ¿Cambiarlo es transparente para la reproducción bit a bit?</p>
-<p><b>Respuesta a la objeción.</b> No necesariamente. Debe quedar asociado a una versión del modelo.</p>
-</article>
-<article id="pregunta-53" class="ficha">
-<h3>Pregunta 53. ¿Por qué no se usa el método de rechazo de Coss Bu para el servicio?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> La uniforme y la exponencial tienen inversas explícitas. El método de rechazo requiere una envolvente y puede consumir más extracciones.</p>
-<p><b>Justificación matemática.</b> Con envolvente f≤Mg, probabilidad media de aceptar es 1/M. La inversa necesita un U por realización.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarUniforme, generarExponencial</code> · <a href="matematicas.html#distribuciones">Anexo A · distribuciones</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a>.</p>
-<p><b>Posible repregunta.</b> ¿Repetir una corrida KS es ese método de rechazo?</p>
-<p><b>Respuesta a la objeción.</b> No: discrimina trayectorias de salida por una regla diagnóstica, sin definir una muestra de una densidad objetivo f mediante envolvente.</p>
-</article>
-</section>
-<section><h2 id="area-9">9. Eventos discretos</h2>
-<article id="pregunta-54" class="ficha">
-<h3>Pregunta 54. ¿Cómo se programa una salida?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Al asignar un cliente a una caja, se obtiene servicio y se suma al instante de inicio.</p>
-<p><b>Justificación matemática.</b> Bᵢ=max(Aᵢ,libreⱼ); Dᵢ=Bᵢ+Sᵢ. El elemento libreⱼ se reemplaza por Dᵢ.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>atender</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b2">B2 · Caballero</a>.</p>
-<p><b>Posible repregunta.</b> ¿Antes de calcular la espera se necesita tener el tiempo de servicio de esa persona?</p>
-<p><b>Respuesta a la objeción.</b> La espera depende del instante de inicio, fijado antes del servicio propio.</p>
-</article>
-<article id="pregunta-55" class="ficha">
-<h3>Pregunta 55. ¿Dónde guarda el programa su calendario interno de eventos?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> En tiempos de disponibilidad de cajas y lista de llegadas como agenda implícita; luego reconstruye la secuencia para medidas.</p>
-<p><b>Justificación matemática.</b> Seleccionar argmin libreⱼ equivale a procesar la próxima disponibilidad sin una cola de prioridad genérica.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>elegirCaja, atender</code> · <a href="../../simulador2/medidas.py">medidas.py</a> <code>recorrerLineaDeTiempo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Es lo mismo que el calendario por fecha del usuario?</p>
-<p><b>Respuesta a la objeción.</b> No. Aquel usa fechas civiles de disponibilidad, no eventos de una simulación.</p>
-</article>
-<article id="pregunta-56" class="ficha">
-<h3>Pregunta 56. ¿Qué ocurre si dos cajas se liberan simultáneamente?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> El recorrido conserva el menor índice entre las empatadas por usar comparación estricta. El turno se asigna según pendientes elegibles.</p>
-<p><b>Justificación matemática.</b> argmin con orden estable por índice. Las asignaciones pueden variar aun con mismo tiempo inicial.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>elegirCaja</code> · <a href="../../simulador2/test_iniciador.py">test_iniciador.py</a> <code>test_otrosCasos y test_casosDelVideo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿El resultado por caja siempre coincide con otro simulador?</p>
-<p><b>Respuesta a la objeción.</b> No. Depende de política de asignación y desempate, aun si el Wq agregado concuerda.</p>
-</article>
-<article id="pregunta-57" class="ficha">
-<h3>Pregunta 57. ¿Cómo trata el barrido varios eventos en el mismo minuto?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Los ordena de manera estable y registra cada transición; los intermedios sin duración no aportan tiempo.</p>
-<p><b>Justificación matemática.</b> Δt=0 elimina cualquier contribución de área. P(n) solo contabiliza duraciones positivas.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>recorrerLineaDeTiempo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b8">B8 · Little</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede diferir la animación de la tabla de longitudes máximas?</p>
-<p><b>Respuesta a la objeción.</b> Puede representar instantáneos y redondeos distintos, mientras el máximo temporal se calcula con estados persistentes.</p>
-</article>
-<article id="pregunta-58" class="ficha">
-<h3>Pregunta 58. ¿Qué ocurre si el modelo no genera ningún cliente en una jornada?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Lanza JornadaSinClientes y la API responde 422. Ese control se ejecuta antes de aplicar KS.</p>
-<p><b>Justificación matemática.</b> En Poisson homogénea, P(N=0)=exp(−rC)&gt;0 incluso con λ positiva.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>JornadaSinClientes</code> · <a href="../../simulador2/api.py">api.py</a> <code>simularBanco</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Eliminar esta probabilidad es un requisito de una simulación terminante?</p>
-<p><b>Respuesta a la objeción.</b> No. Una réplica vacía tiene métricas temporales definibles y Wq no evaluable.</p>
-</article>
-<article id="pregunta-59" class="ficha">
-<h3>Pregunta 59. ¿Cómo cambia la generación al atravesar 10:00 exactamente?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Para un cambio de tasa, la candidata del tramo anterior que alcanza el límite interno se descarta; se empieza con intensidad nueva desde el borde.</p>
-<p><b>Justificación matemática.</b> Interno desde≤A&lt;hasta; final A≤C. El tiempo entre llegadas guardado es diferencia de A reales.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>generarLlegadasPorTramos</code> · <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>unirTramosIguales</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Se deben volver a construir las cajas en el borde?</p>
-<p><b>Respuesta a la objeción.</b> No. La asignación procesa toda la jornada con un solo vector.</p>
-</article>
-<article id="pregunta-60" class="ficha">
-<h3>Pregunta 60. ¿Cómo comprueba que no hay más gente en servicio que cajas?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Compara ocupación temporal con capacidad, y verifica por cada servidor ausencia de intervalos superpuestos.</p>
-<p><b>Justificación matemática.</b> N_s(t)−N_q(t)≤c y D de un cliente ≤B del siguiente en la misma caja, para cada tiempo positivo.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/test_iniciador.py">test_iniciador.py</a> <code>test_unaSolaCaja_nadieEmpiezaAntesDeQueSalgaElAnterior</code> · <a href="../../simulador2/test_planificacion.py">test_planificacion.py</a> <code>test_nuncaHayMasClientesEnCajaQueCajas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Se cuenta como cola alguien que entra y se atiende inmediatamente?</p>
-<p><b>Respuesta a la objeción.</b> No. El barrido solo añade al estado de cola a quien tiene Q&gt;0.</p>
-</article>
-<article id="pregunta-61" class="ficha">
-<h3>Pregunta 61. ¿Por qué la atención calculada puede durar más allá de medianoche?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Tras cierre se drena toda persona admitida. No hay una segunda restricción sobre hora de salida.</p>
-<p><b>Justificación matemática.</b> Si Dmáx&gt;C se usa Dmáx en T. La función de pantalla suma desplazamiento y puede representar 25:00.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code> · <a href="../../front/src/formato.js">formato.js</a> <code>horaReloj</code> · <a href="hallazgos.html#h13">Hallazgos · h13</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿La fecha de siguiente apertura incorpora ese exceso?</p>
-<p><b>Respuesta a la objeción.</b> El calendario horario no consume resultados de drenaje; consulta la configuración civil separada.</p>
-</article>
-</section>
-<section><h2 id="area-10">10. Teoría de colas</h2>
-<article id="pregunta-62" class="ficha">
-<h3>Pregunta 62. ¿Cómo se clasifica la cola según Kendall?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> En un tramo base con servicio uniforme: M/U/c, con prioridad no expropiativa adicional y horizonte finito.</p>
-<p><b>Justificación matemática.</b> M indica llegadas Poisson homogéneas. U describe tiempos por caja. La estabilidad requiere ρ&lt;1 solo para la interpretación estacionaria.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>armarJornadas, generadorDeServicio</code> · <a href="manual.html#c14">Manual · c14</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puedo llamarla M/M/1 con los valores de fábrica?</p>
-<p><b>Respuesta a la objeción.</b> No: hay cinco cajas y servicio uniforme. Uno y exponencial serían configuraciones distintas.</p>
-</article>
-<article id="pregunta-63" class="ficha">
-<h3>Pregunta 63. ¿Por qué pueden coexistir ρ&gt;1 y una utilización menor que 100 %?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> ρ mide carga ofrecida con puerta abierta; utilización divide servicio por duración efectiva con inicio, drenaje y ocio.</p>
-<p><b>Justificación matemática.</b> ρ=rE[S]/c; Ū=ΣS/(cT). Los denominadores y el significado difieren.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code> · <a href="manual.html#c11">Manual · c11</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b8">B8 · Little</a>.</p>
-<p><b>Posible repregunta.</b> ¿Una utilización alta valida la tasa estimada?</p>
-<p><b>Respuesta a la objeción.</b> No. Es respuesta condicionada al modelo, que puede sobrecargar por parámetros asumidos.</p>
-</article>
-<article id="pregunta-64" class="ficha">
-<h3>Pregunta 64. ¿Cómo prueba una ley de Little finita?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Integra el número en sistema o cola y suma duraciones de clientes completamente observados.</p>
-<p><b>Justificación matemática.</b> ∫N(t)dt=ΣVᵢ; L=(N/T)W. Con N=4, T=10, W=5,75 da L=2,30.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code> · <a href="pruebas.html#trazas">Anexo C · trazas</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b8">B8 · Little</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Se puede usar λ nominal en lugar de N/T?</p>
-<p><b>Respuesta a la objeción.</b> No en esta identidad, porque la duración efectiva y los conteos realizados pueden diferir.</p>
-</article>
-<article id="pregunta-65" class="ficha">
-<h3>Pregunta 65. ¿Por qué Wq prioritario suele ser menor que Wq de los demás?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> La política coloca prioritarios presentes al frente en la siguiente asignación. No interrumpe a quien ya está en caja.</p>
-<p><b>Justificación matemática.</b> Wq por clase = ΣQ/n_clase. Si no hay miembros, la métrica de esa clase es nula.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>siguienteEnFila</code> · <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Siempre espera menos cada prioritario individual?</p>
-<p><b>Respuesta a la objeción.</b> No frente a cualquier regular que quizá llegó con caja libre. La regla compara pendientes elegibles.</p>
-</article>
-<article id="pregunta-66" class="ficha">
-<h3>Pregunta 66. ¿La media P(n) de cola equivale a lo que ven clientes al llegar?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> P(n) pondera por tiempo, y personasAlLlegar pondera por llegadas. La jornada finita y los cambios de intensidad impiden igualarlas automáticamente.</p>
-<p><b>Justificación matemática.</b> P(n)=Tₙ/T; media en llegada=ΣN(Aᵢ−)/N bajo la definición de la lista.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>atender</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b8">B8 · Little</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede invocarse PASTA directamente?</p>
-<p><b>Respuesta a la objeción.</b> Se deben verificar procesos y horizontes comparables. La salida actual agrega drenaje y puede usar intensidad no homogénea.</p>
-</article>
-<article id="pregunta-67" class="ficha">
-<h3>Pregunta 67. ¿Qué métricas auxiliares se pueden calcular desde el CSV?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Clientes pendientes al cierre, fracción de esperas positivas y percentiles individuales si se conserva la distribución.</p>
-<p><b>Justificación matemática.</b> Pendientes al cierre = Σ1[Dᵢ&gt;C]; espera positiva = Σ1[Qᵢ&gt;0]/N.</p>
-<p><b>Evidencia del proyecto.</b> <a href="evidencia/traza-semilla-12345.csv">traza-semilla-12345.csv</a> · <a href="../../simulador2/medidas.py">medidas.py</a> <code>calcularMedidas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿La tabla actual ya publica esos tres indicadores?</p>
-<p><b>Respuesta a la objeción.</b> Contiene datos para derivarlos, pero el resumen no ofrece esos tres agregados.</p>
-</article>
-</section>
-<section><h2 id="area-11">11. Diseño experimental</h2>
-<article id="pregunta-68" class="ficha">
-<h3>Pregunta 68. ¿Cómo fijaría el tamaño de réplica para una meta de precisión?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Haría un piloto en el escenario de interés, estimaría variabilidad entre días y fijaría R para semiancho tolerable.</p>
-<p><b>Justificación matemática.</b> ε≈t·s/√R; R≈(t·s/ε)². Usar un lote de confirmación evita depender de una parada ad hoc.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>promedioConIntervalo</code> · <a href="manual.html#c16">Manual · c16</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Menor dispersión de Wq por corrida implica mejor calibración del banco?</p>
-<p><b>Respuesta a la objeción.</b> No. Estrecha el error Monte Carlo, no el error de estructura y parámetros reales.</p>
-</article>
-<article id="pregunta-69" class="ficha">
-<h3>Pregunta 69. ¿Qué logra usar la misma semilla para todas las cantidades de cajas?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Sincroniza el inicio de la secuencia de cada configuración. No asegura mantener uniformes por cliente y por proceso perfectamente alineados.</p>
-<p><b>Justificación matemática.</b> Los distintos órdenes de atención alteran asignación de U a clientes; los reintentos y clases pueden cambiar el flujo útil. Para un contraste pareado conviene instrumentar subflujos explícitos.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>buscarCajasNecesarias</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b3">B3 · Matsumoto y Nishimura</a> · <a href="manual.html#b4">B4 · CPython</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede el emparejamiento reducir varianza?</p>
-<p><b>Respuesta a la objeción.</b> Puede, si induce covarianza positiva entre medidas comparadas. Debe comprobarse con diferencias pareadas.</p>
-</article>
-<article id="pregunta-70" class="ficha">
-<h3>Pregunta 70. ¿Por qué el 95 % del resultado no cambia al ajustar α de KS?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> La t del resumen siempre usa el cuantil 0,975. α del formulario controla KS, Poisson, clasificación y Welch según la ruta.</p>
-<p><b>Justificación matemática.</b> IC fijo usa 1−0,025. Cambiar α influye indirectamente en qué corridas se aceptan, no en el nivel nominal del IC.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>valorT95</code> · <a href="../../simulador2/api.py">api.py</a> <code>Entrada</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Es válido comparar precisiones si cambié α entre escenarios?</p>
-<p><b>Respuesta a la objeción.</b> Los estimandos pueden cambiar por selección. Mantenga el protocolo fijo o estudie el efecto explícitamente.</p>
-</article>
-<article id="pregunta-71" class="ficha">
-<h3>Pregunta 71. ¿Qué experimento separaría efecto de demanda, servicio y cajas?</h3>
-<p class="nivel">Investigación</p>
-<p><b>Respuesta técnica.</b> Diseñaría factores en niveles preacordados y evaluaría interacciones, usando semillas planificadas y salida Wq, utilización y drenaje.</p>
-<p><b>Justificación matemática.</b> Un factorial g×E[S]×c permite efectos principales e interacción g:c, con análisis por réplica y control de objetivos múltiples.</p>
-<p><b>Evidencia del proyecto.</b> <a href="manual.html#c16">Manual · c16</a> · <a href="pruebas.html#experimentos">Anexo C · experimentos</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Ya se ejecutó ese factorial?</p>
-<p><b>Respuesta a la objeción.</b> Se ejecutaron sensibilidad unifactorial, búsquedas y escenarios de quincena. El factorial es una recomendación.</p>
-</article>
-<article id="pregunta-72" class="ficha">
-<h3>Pregunta 72. ¿Qué peligro hay al elegir el primer c cuya media queda debajo de 10?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Con estimación ruidosa, una media favorable puede subestimar el c necesario. Multiplicidad aumenta al recorrer alternativas.</p>
-<p><b>Justificación matemática.</b> Si Wq estimado en cada c fluctúa, seleccionar min{c:ȳ≤10} produce una selección dependiente de muestra.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>buscarCajasNecesarias</code> · <a href="hallazgos.html#h10">Hallazgos · h10</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿La aplicación comprueba el límite superior del IC?</p>
-<p><b>Respuesta a la objeción.</b> No. La regla compara medias puntuales en todas las jornadas, no límites de confianza.</p>
-</article>
-<article id="pregunta-73" class="ficha">
-<h3>Pregunta 73. ¿Por qué no usar estimación regenerativa para todo el modelo?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> El caso tiene jornadas finitas con cierre y horarios externos. Un retorno a vacío de un tramo no restablece necesariamente la misma ley de demanda.</p>
-<p><b>Justificación matemática.</b> En regeneración la razón de ciclos sería E[coste]/E[clientes]. Aquí el objetivo usa réplicas terminantes de calendario fijo.</p>
-<p><b>Evidencia del proyecto.</b> <a href="matematicas.html#inferencias">Anexo A · inferencias</a> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>simularCorridas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Pueden analizarse ciclos con una configuración estacionaria especial?</p>
-<p><b>Respuesta a la objeción.</b> Sí, como otro objetivo y previa prueba de regeneración y estabilidad para ese modelo.</p>
-</article>
-</section>
-<section><h2 id="area-12">12. Verificación</h2>
-<article id="pregunta-74" class="ficha">
-<h3>Pregunta 74. ¿Qué verifica la traza con semilla 1?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> La ruta de llegadas, asignación, prioridad y medición usando valores reproducibles. El cliente 5 precede al 4 en servicio.</p>
-<p><b>Justificación matemática.</b> Orden 1,2,3,5,4. N=5 y ΣQ=6,2174294 producen Wq=1,2434859.</p>
-<p><b>Evidencia del proyecto.</b> <a href="pruebas.html#trazas">Anexo C · trazas</a> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>modelo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Por qué también usar tiempos inyectados?</p>
-<p><b>Respuesta a la objeción.</b> Permite detectar un error de cola aun si cambia la secuencia aleatoria.</p>
-</article>
-<article id="pregunta-75" class="ficha">
-<h3>Pregunta 75. ¿Qué verifica comparar D con scipy.stats.kstest?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Que la implementación bilateral calcula el mismo supremo en las muestras ensayadas.</p>
-<p><b>Justificación matemática.</b> La muestra didáctica produce D=0,31 y p exacto de referencia 0,73925608.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/test_iniciador.py">test_iniciador.py</a> <code>test_mismaDQueScipy</code> · <a href="../../simulador2/pruebaKS.py">pruebaKS.py</a> <code>pruebaKS</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b5">B5 · Stephens</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿Se verifica así el nivel real de la prueba sobre llegadas?</p>
-<p><b>Respuesta a la objeción.</b> La equivalencia de D no prueba independencia, distribución de censura ni uso de los críticos.</p>
-</article>
-<article id="pregunta-76" class="ficha">
-<h3>Pregunta 76. ¿Cómo se comprueba conservación de frecuencias de estado?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> El horizonte se divide en segmentos de ocupación incluyendo el tiempo vacío, y cada segmento aporta una sola duración a cada distribución.</p>
-<p><b>Justificación matemática.</b> ΣₙTₙ=T; ΣₙP(n)=1 y ΣₙnP(n)=L. El mismo vale para Lq.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>recorrerLineaDeTiempo</code> · <a href="../../simulador2/test_iniciador.py">test_iniciador.py</a> <code>test_LCoincideConLaTablaDeLongitudes</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b8">B8 · Little</a>.</p>
-<p><b>Posible repregunta.</b> ¿Influye el instante exacto de empate en esas sumas?</p>
-<p><b>Respuesta a la objeción.</b> Instantáneas de duración cero no cambian áreas, aunque cambian instantáneos de depuración.</p>
-</article>
-<article id="pregunta-77" class="ficha">
-<h3>Pregunta 77. ¿Qué falla aunque pasen 104 pruebas?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> El caso permitido de tramo valle con tasa cero rompe la publicación, y Ciw falla con p=1.</p>
-<p><b>Justificación matemática.</b> Si λ_tramo=0, Δ/λ es división por cero. Para Ciw r_regular=r(1−p)=0.</p>
-<p><b>Evidencia del proyecto.</b> <a href="pruebas.html#casos">Anexo C · casos</a> · <a href="hallazgos.html#h05">Hallazgos · h05 y h06</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b11">B11 · Ciw</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Eso invalida cualquier resultado verificado de base?</p>
-<p><b>Respuesta a la objeción.</b> No. Limita el dominio demostrado y exige regresiones antes de usar esos extremos.</p>
-</article>
-<article id="pregunta-78" class="ficha">
-<h3>Pregunta 78. ¿Qué verifica repetir con el mismo JSON y semilla?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Determinismo del conjunto de funciones y ambiente auditados. La primera salida de referencia se compara con otra completa.</p>
-<p><b>Justificación matemática.</b> T07 verifica igualdad estructural de resultados base. Huella de publicación incluye configuración y versión.</p>
-<p><b>Evidencia del proyecto.</b> <a href="pruebas.html#ambiente">Anexo C · ambiente</a> · <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>huellaDe</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b4">B4 · CPython</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Dos publicaciones tendrán idéntico timestamp?</p>
-<p><b>Respuesta a la objeción.</b> La marca temporal cambia aunque esperas, semilla y escenarios coincidan.</p>
-</article>
-</section>
-<section><h2 id="area-13">13. Validación</h2>
-<article id="pregunta-79" class="ficha">
-<h3>Pregunta 79. ¿La concordancia con Ciw valida el banco real?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Compara implementaciones bajo una estructura e insumos equivalentes. Usa el mismo cálculo de medidas y no hay salida real independiente.</p>
-<p><b>Justificación matemática.</b> Welch contrasta μ₁−μ₂=0 de dos simuladores. La hipótesis no contiene datos del banco.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/validacionCiw.py">validacionCiw.py</a> <code>compararConCiw</code> · <a href="manual.html#c18">Manual · c18</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b7">B7 · Welch</a> · <a href="manual.html#b9">B9 · Sargent</a> · <a href="manual.html#b11">B11 · Ciw</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué evidencia operacional falta?</p>
-<p><b>Respuesta a la objeción.</b> Esperas, atención, horarios de servicio y condiciones reales en fechas no usadas para parametrizar.</p>
-</article>
-<article id="pregunta-80" class="ficha">
-<h3>Pregunta 80. ¿Por qué p&gt;0,05 no prueba equivalencia entre simuladores?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> La prueba bilateral está diseñada para detectar diferencia, y un resultado no significativo puede deberse a baja potencia.</p>
-<p><b>Justificación matemática.</b> Equivalencia exige tolerancia δ explícita y control de que μ₁−μ₂ quede dentro de −δ a δ bajo procedimiento adecuado.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/validacionCiw.py">validacionCiw.py</a> <code>compararMedida</code> · <a href="matematicas.html#inferencias">Anexo A · inferencias</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b7">B7 · Welch</a> · <a href="manual.html#b9">B9 · Sargent</a>.</p>
-<p><b>Posible repregunta.</b> ¿Un p=0,297845 en Wq es cero diferencia?</p>
-<p><b>Respuesta a la objeción.</b> No. Es un resultado de contraste de medias para determinado diseño y muestra.</p>
-</article>
-<article id="pregunta-81" class="ficha">
-<h3>Pregunta 81. ¿Qué evidencia apoya la validación conceptual del cierre?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> El levantamiento afirma que se deja de admitir al cierre y se atienden pendientes; el motor reproduce esa regla para cada jornada.</p>
-<p><b>Justificación matemática.</b> Conservación N_admitidos=N_servidos y T=max(C,Dmáx). La transferencia entre jornadas exige otra evidencia.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../Levantamiento_de_requrimientos_Cap1COSBUS.md">Levantamiento_de_requrimientos_Cap1COSBUS.md</a> <code>Levantamiento §1.2f</code> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>modelo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b9">B9 · Sargent</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Por qué distinguir regla conceptual y horario real?</p>
-<p><b>Respuesta a la objeción.</b> Una regla escrita puede ser coherente y aún requerir medición de la operación concreta.</p>
-</article>
-<article id="pregunta-82" class="ficha">
-<h3>Pregunta 82. ¿Qué contradicción muestra la salida a las 19:21?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Con parámetros de fábrica, la jornada de mañana todavía está en curso cuando el modelo inicia la tarde con cajas vacías.</p>
-<p><b>Justificación matemática.</b> Dmáx promedio de mañana 680,80 min tras apertura 08:00, superior a los 360 min hasta las 14:00.</p>
-<p><b>Evidencia del proyecto.</b> <a href="pruebas.html#experimentos">Anexo C · experimentos</a> · <a href="hallazgos.html#h01">Hallazgos · h01</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b9">B9 · Sargent</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede atribuirla exclusivamente al servicio uniforme?</p>
-<p><b>Respuesta a la objeción.</b> No. Servicio, proporción hacia caja, capacidad y regla entre jornadas son hipótesis conjuntas.</p>
-</article>
-<article id="pregunta-83" class="ficha">
-<h3>Pregunta 83. ¿Cómo probaría la capacidad predictiva de «Planifica tu visita»?</h3>
-<p class="nivel">Investigación</p>
-<p><b>Respuesta técnica.</b> Recolectaría historiales fechados y compararía pronósticos con esperas individuales o medias por franja fuera de muestra.</p>
-<p><b>Justificación matemática.</b> Calcularía MAE=Σ∣observado−pronóstico∣/n, y cobertura para un intervalo predictivo predefinido.</p>
-<p><b>Evidencia del proyecto.</b> <a href="manual.html#c18">Manual · c18 y c19</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b9">B9 · Sargent</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puedo entrenar y evaluar con los mismos días?</p>
-<p><b>Respuesta a la objeción.</b> No para una estimación externa defendible. Se requieren días retenidos o validación temporal.</p>
-</article>
-<article id="pregunta-84" class="ficha">
-<h3>Pregunta 84. ¿Cómo separa variación de clientes e incertidumbre de parámetros?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Con parámetros fijos estime la distribución de salidas; luego propague la incertidumbre de estimarlos desde días reales. Deben presentarse por separado o mediante descomposición explícita.</p>
-<p><b>Justificación matemática.</b> Var(Y)=E[Var(Y condicionado a θ)]+Var(E[Y condicionado a θ]). La t actual cubre solo parte Monte Carlo.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/medidas.py">medidas.py</a> <code>promedioConIntervalo</code> · <a href="manual.html#c18">Manual · c18</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b9">B9 · Sargent</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Más corridas reducen el término de parámetros?</p>
-<p><b>Respuesta a la objeción.</b> No si los mismos datos y supuestos alimentan cada corrida.</p>
-</article>
-</section>
-<section><h2 id="area-14">14. Interpretación de gráficas</h2>
-<article id="pregunta-85" class="ficha">
-<h3>Pregunta 85. ¿Qué representa una barra observada del Poisson agrupado?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> El número de intervalos cuya cantidad de personas cae en esa clase.</p>
-<p><b>Justificación matemática.</b> Para un grupo 0–3, la barra mañana vale 7 y la esperada 24·P(X≤3)=5,07175.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../front/src/graficas.js">graficas.js</a> <code>opcionPoisson</code> · <a href="pruebas.html#datos">Anexo C · datos</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b6">B6 · NIST y SciPy</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿La altura cuenta siete personas?</p>
-<p><b>Respuesta a la objeción.</b> Cuenta siete intervalos, con distintos números de personas dentro de la clase.</p>
-</article>
-<article id="pregunta-86" class="ficha">
-<h3>Pregunta 86. ¿Por qué aparecen esperas por corrida fuera de la banda del 95 %?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> La banda es IC de la media de Wq, y cada barra es la media de un día simulado individual.</p>
-<p><b>Justificación matemática.</b> Para n réplicas, el EE divide s por √n. Las réplicas varían con dispersión s.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../front/src/graficas.js">graficas.js</a> <code>opcionEsperaPorCorrida</code> · <a href="../../simulador2/medidas.py">medidas.py</a> <code>promedioConIntervalo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puedo usar la banda como rango que cubre 95 % de clientes?</p>
-<p><b>Respuesta a la objeción.</b> No. Eso requeriría un intervalo predictivo o cuantiles individuales.</p>
-</article>
-<article id="pregunta-87" class="ficha">
-<h3>Pregunta 87. ¿Qué representa D dividido por crítico en la gráfica de KS?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> La razón compara discrepancia con umbral para el n de ese intento. En aceptados aparecen llegadas y servicio; en rechazados se dibuja el más alto.</p>
-<p><b>Justificación matemática.</b> y=D/D_crítico; se aprueba cada prueba si y&lt;1. La altura no es p.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../front/src/graficas.js">graficas.js</a> <code>opcionDPorCorrida</code> · <a href="../../simulador2/pruebaKS.py">pruebaKS.py</a> <code>pruebaKS</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b5">B5 · Stephens</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿Por qué algunos triángulos parecen ocultos?</p>
-<p><b>Respuesta a la objeción.</b> Reintentos de una misma corrida comparten índice X, y pueden superponerse.</p>
-</article>
-<article id="pregunta-88" class="ficha">
-<h3>Pregunta 88. ¿Por qué una captura muestra un límite KS con pendiente distinta de la diagonal?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Los extremos de las guías JS se recortan como puntos, lo que altera la recta. El estadístico tabular usa código separado.</p>
-<p><b>Justificación matemática.</b> Guía superior correcta min(1,x+d), inferior max(0,x−d); tramo oblicuo de pendiente 1 en ambas.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../front/src/graficas.js">graficas.js</a> <code>opcionAcumuladaKS</code> · <a href="hallazgos.html#h10">Hallazgos · h10</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b6">B6 · NIST y SciPy</a>.</p>
-<p><b>Posible repregunta.</b> ¿El resultado numérico depende de la gráfica?</p>
-<p><b>Respuesta a la objeción.</b> No. Vue recibe D, crítico y decisión calculados en Python.</p>
-</article>
-<article id="pregunta-89" class="ficha">
-<h3>Pregunta 89. ¿Cómo se leen barras y rombo en la comparación de fechas?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Barras por escenarios de horas y tipo; rombos representan el único día observado. Cada serie se normaliza por su propio número de intervalos.</p>
-<p><b>Justificación matemática.</b> f_k/N; para regular y quincena de la muestra 2340 cada una, observado 54.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../front/src/graficas.js">graficas.js</a> <code>opcionComparacionDias</code> · <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>distribucionRelativa</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puedo interpretar la diferencia como efecto causal medido de quincena?</p>
-<p><b>Respuesta a la objeción.</b> No; es efecto de un multiplicador y otros supuestos de simulación.</p>
-</article>
-</section>
-<section><h2 id="area-15">15. Arquitectura y algoritmos</h2>
-<article id="pregunta-90" class="ficha">
-<h3>Pregunta 90. ¿Qué recibe y devuelve FastAPI en una simulación simple?</h3>
-<p class="nivel">Básica</p>
-<p><b>Respuesta técnica.</b> Valida Entrada y devuelve semilla, versión, pruebas KS, rechazos, resumen por jornada y primera traza.</p>
-<p><b>Justificación matemática.</b> JSON codifica tasas, métricas y valores nulos. No serializa como dataframe ni persiste la corrida base en disco.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/api.py">api.py</a> <code>simularBanco</code> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>simular</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué produce el gráfico en el navegador?</p>
-<p><b>Respuesta a la objeción.</b> El adaptador construido en graficas.js sobre el JSON recibido.</p>
-</article>
-<article id="pregunta-91" class="ficha">
-<h3>Pregunta 91. ¿Qué recurso compartido limita la concurrencia de simulación?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Estado global del generador y lista global de aceptadas. La API usa un lock por proceso y finally borra el acumulador.</p>
-<p><b>Justificación matemática.</b> Con lock, una sección crítica tiene un único escritor para ese proceso. Procesos distintos tienen estados separados y podrían compartir archivos.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/api.py">api.py</a> <code>candadoSimulacion</code> · <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>simularCorridas</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b4">B4 · CPython</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿El candado hace transaccionales dos JSON?</p>
-<p><b>Respuesta a la objeción.</b> No. Cada reemplazo individual es atómico y el par puede quedar parcialmente actualizado.</p>
-</article>
-<article id="pregunta-92" class="ficha">
-<h3>Pregunta 92. ¿Cómo se decide que un archivo publicado es vigente?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Guarda SHA-256 de configuración y versión, truncado a 16 dígitos hexadecimales, y compara al consultar.</p>
-<p><b>Justificación matemática.</b> 16×4=64 bits de huella. Identifica valores serializados de forma ordenada, no demuestra validación científica.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>huellaDe, resumenPublicacion</code> · <a href="../../simulador2/api.py">api.py</a> <code>estimacionesVigentes</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Cambiar solo semilla vuelve otro el lote?</p>
-<p><b>Respuesta a la objeción.</b> Sí; la semilla manual forma parte de la configuración. La automática se registra en el lote.</p>
-</article>
-<article id="pregunta-93" class="ficha">
-<h3>Pregunta 93. ¿Cuál es el costo dominante del motor para gran volumen?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Escanear pendientes, eliminar elementos y contar personas previas puede ser cuadrático en N por jornada.</p>
-<p><b>Justificación matemática.</b> O(N²+Nc) para el barrido más O(N log N) de ordenar eventos; lista de corridas ocupa memoria proporcional a datos retenidos.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/iniciador.py">iniciador.py</a> <code>atender</code> · <a href="../../simulador2/medidas.py">medidas.py</a> <code>recorrerLineaDeTiempo</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b2">B2 · Caballero</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué alternativa conservaría la política?</p>
-<p><b>Respuesta a la objeción.</b> Montículo de próximas liberaciones y dos colas FIFO con eventos explícitos; requiere reproducir empates.</p>
-</article>
-<article id="pregunta-94" class="ficha">
-<h3>Pregunta 94. ¿Existe autenticación que impida al cliente cambiar el establecimiento?</h3>
-<p class="nivel">Intermedia</p>
-<p><b>Respuesta técnica.</b> Hay separación de pantalla y URL. El servidor no comprueba un rol al ejecutar PUT de establecimiento.</p>
-<p><b>Justificación matemática.</b> Calendario consulta GET y administración usa PUT. Separación de rutas no equivale a una política de acceso.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/api.py">api.py</a> <code>guardarEstablecimiento</code> · <a href="../../front/src/App.vue">App.vue</a> · <a href="hallazgos.html#h11">Hallazgos · h11</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué requisito aparecería al desplegarlo públicamente?</p>
-<p><b>Respuesta a la objeción.</b> Control de cambios autorizado y pruebas de consistencia de la publicación con varias instancias.</p>
-</article>
-<article id="pregunta-95" class="ficha">
-<h3>Pregunta 95. ¿Cuándo un GET de visita vuelve a simular?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Si el archivo de estimaciones no existe o su huella no coincide con la configuración actual, la ruta calcula y guarda escenarios.</p>
-<p><b>Justificación matemática.</b> Se generan 2·q combinaciones de q horarios diferentes. GET de calendario mensual solo devuelve disponibilidad civil.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/api.py">api.py</a> <code>estimacionesVigentes, visitaEnFecha</code> · <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>publicar</code>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede tardar aunque la fecha esté cerrada?</p>
-<p><b>Respuesta a la objeción.</b> Sí, la ruta actual obtiene o publica escenarios antes de evaluar la fecha cerrada.</p>
-</article>
-</section>
-<section><h2 id="area-16">16. Limitaciones metodológicas</h2>
-<article id="pregunta-96" class="ficha">
-<h3>Pregunta 96. ¿Puede el cliente interpretar el sábado 5 como abierto por una regla de quincena?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> No. Las reglas de tipo de día y de apertura son independientes; el sábado de ejemplo está cerrado según la configuración inicial.</p>
-<p><b>Justificación matemática.</b> El día 5 es regular y el weekday 5 se resuelve con horario semanal cerrado, salvo excepción.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/calendario.py">calendario.py</a> <code>esQuincena, horarioDelDia</code> · <a href="manual.html#f19">Manual · f19</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Podría abrirlo excepcionalmente?</p>
-<p><b>Respuesta a la objeción.</b> Sí, con una fecha exacta y jornadas válidas. El cálculo seguiría siendo una proyección.</p>
-</article>
-<article id="pregunta-97" class="ficha">
-<h3>Pregunta 97. ¿Qué significa «parecida» en una franja recomendada?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Que su IC marginal cruza el de la mínima media, una regla de visualización. No es contraste pareado ni equivalencia.</p>
-<p><b>Justificación matemática.</b> Si IC₁∩IC₂ es no vacío se marca. Comparar Yᵣ,₁−Yᵣ,₂ debería aprovechar covarianza de las mismas réplicas.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>intervalosSeCruzan, consultarFecha</code> · <a href="hallazgos.html#h09">Hallazgos · h09</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b7">B7 · Welch</a> · <a href="manual.html#b10">B10 · Alexopoulos</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Qué ocurre si los IC no se cruzan?</p>
-<p><b>Respuesta a la objeción.</b> La interfaz no la marca parecida. Eso no provee por sí solo control de multiplicidad en la selección.</p>
-</article>
-<article id="pregunta-98" class="ficha">
-<h3>Pregunta 98. ¿Por qué un múltiplo entre el ancho de franja y la toma no evita todos los cruces?</h3>
-<p class="nivel">Avanzada</p>
-<p><b>Respuesta técnica.</b> Porque importa el origen de cada rejilla. Un conteo que arranca desfasado puede cruzar el borde de reloj.</p>
-<p><b>Justificación matemática.</b> Ejemplo Δ=5, franja 60, toma 08:58–09:03. La función la asigna por 08:58.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/analisisLlegadas.py">analisisLlegadas.py</a> <code>clasificarFranjas</code> · <a href="../../simulador2/api.py">api.py</a> <code>revisarEstablecimiento</code> · <a href="hallazgos.html#h08">Hallazgos · h08</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Puede partir el conteo arbitrariamente entre franjas?</p>
-<p><b>Respuesta a la objeción.</b> No sin asumir cómo se repartieron los ingresos. Alinear o registrar tiempos individuales evita inventar subconteos.</p>
-</article>
-<article id="pregunta-99" class="ficha">
-<h3>Pregunta 99. ¿Se pueden comparar dos fechas históricas de calendario con los datos actuales?</h3>
-<p class="nivel">Crítica</p>
-<p><b>Respuesta técnica.</b> Pueden compararse dos escenarios disponibles; el único día observado carece de fecha. Esta versión no consulta series históricas por fecha.</p>
-<p><b>Justificación matemática.</b> La llave de estimación es tipo y horario. Si llave A=llave B, estimaciones y masas son idénticas.</p>
-<p><b>Evidencia del proyecto.</b> <a href="../../simulador2/planificacion.py">planificacion.py</a> <code>claveEscenario, compararDias</code> · <a href="pruebas.html#casos">Anexo C · casos</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b9">B9 · Sargent</a> · <a href="manual.html#b12">B12 · Levantamiento y código</a>.</p>
-<p><b>Posible repregunta.</b> ¿Por qué sigue siendo útil un caso regular frente a quincena?</p>
-<p><b>Respuesta a la objeción.</b> Sirve para estudiar qué cambia si aumenta la demanda en el modelo, con sus parámetros declarados.</p>
-</article>
-<article id="pregunta-100" class="ficha">
-<h3>Pregunta 100. ¿Qué afirmación final defendería ante el jurado?</h3>
-<p class="nivel">Investigación</p>
-<p><b>Respuesta técnica.</b> El núcleo y la publicación son reproducibles en los casos probados y ayudan a explorar escenarios; la validación de espera real continúa pendiente.</p>
-<p><b>Justificación matemática.</b> Distinguir el estimando E_modelo(Wq) de E_sucursal(Wq) exige evidencia externa, no solo más precisión en el primero.</p>
-<p><b>Evidencia del proyecto.</b> <a href="matriz.html#dictamen">Matriz · dictamen</a> · <a href="hallazgos.html#prioridad">Hallazgos · prioridad</a>.</p>
-<p><b>Referencia bibliográfica.</b> <a href="manual.html#b1">B1 · Coss Bu</a> · <a href="manual.html#b9">B9 · Sargent</a> · <a href="manual.html#b10">B10 · Alexopoulos</a>.</p>
-<p><b>Posible repregunta.</b> ¿Cómo sabría que una versión futura sí está lista?</p>
-<p><b>Respuesta a la objeción.</b> Probaría fallos de borde y continuidad, mediría la sucursal con protocolo y exigiría error operativo tolerable en fechas de validación.</p>
-</article>
-</section></main></body></html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Guía para la defensa · Manual del simulador</title>
+<meta name="description" content="Argumento, cifras clave, ejemplo a mano y preguntas probables para defender el simulador.">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="tipografia/stix-two-math.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="documento.css">
+<script>try{var t=JSON.parse(localStorage.getItem("ajustesSimuladorBanco")||"{}").tema;if(t==="claro")document.documentElement.dataset.theme="light";else if(t==="oscuro")document.documentElement.dataset.theme="dark"}catch(e){}</script>
+<script defer src="indice.js"></script>
+</head>
+<body>
+<header class="barra">
+<a class="marca" href="/" title="Volver al simulador"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="largo">Simulador de la fila del banco</span><span class="corto">Simulador</span></a>
+<nav aria-label="Partes del manual"><a href="manual.html">Uso</a><a href="fundamentos.html">Fundamentos</a><a href="defensa.html" aria-current="page">Defensa</a></nav>
+</header>
+<div class="marco">
+<aside class="indice" aria-label="Índice de la página"><p>En esta página</p><ol id="indice-auto"></ol></aside>
+<main>
+<details class="indiceMovil"><summary>En esta página</summary><ol id="indice-movil"></ol></details>
+<header class="portada">
+  <p class="etiqueta">Manual · Parte 3 de 3</p>
+  <h1>Guía para la defensa</h1>
+  <p class="bajada">Lo justo para exponer el simulador: el argumento, las cifras, un ejemplo a mano y las respuestas a las preguntas más probables, todo con su página en Coss Bu.</p>
+</header>
+
+<h2 id="minuto" data-corto="El argumento">El argumento en un minuto</h2>
+<ol>
+  <li><b>Problema.</b> ¿Cuánto espera un cliente en la fila del banco y cuántas cajas hacen falta? Hay una fila, 5 cajas, clientes prioritarios y dos jornadas que abren vacías y cierran la puerta.</li>
+  <li><b>Por qué simular.</b> Las fórmulas de colas suponen estado estable, atención en orden de llegada y tiempos exponenciales. Este banco tiene prioridad, apertura y cierre y servicio uniforme. Coss Bu dice que en ese caso el análisis se logra con simulación <span class="libro">p. 91</span>.</li>
+  <li><b>Datos.</b> 54 conteos de 5 minutos. La prueba χ² no rechaza que sean Poisson <span class="libro">ec. 3.3</span>.</li>
+  <li><b>Modelo.</b> Eventos discretos. Llegadas exponenciales y atención uniforme por transformada inversa <span class="libro">§4.1</span>. Los aleatorios se validan con Kolmogórov-Smirnov en cada corrida <span class="libro">§3.5</span>.</li>
+  <li><b>Resultados.</b> 30 réplicas con intervalo de confianza t de Student <span class="libro">§6.1</span>. Con 5 cajas, la espera de la mañana ronda los 210 min. Hacen falta <b>14 cajas</b> (18 en quincena) para esperar 10 min o menos.</li>
+  <li><b>Validación.</b> Una librería independiente (Ciw) da lo mismo. Pero la opinión de expertos <span class="libro">p. 13</span> indica que la atención de 1 a 25 min es demasiado larga: con 5 cajas, el servicio real debería estar entre 4 y 5 min.</li>
+</ol>
+
+<h2 id="cifras">Cifras que hay que saber</h2>
+<div class="cifras">
+  <div class="cifra"><span>Conteos observados</span><b>54</b><small>24 mañana · 30 tarde · un día</small></div>
+  <div class="cifra"><span>Llegadas cada 5 min</span><b>5,42 · 4,50</b><small>mañana · tarde</small></div>
+  <div class="cifra"><span>Atención supuesta</span><b>13 min</b><small>uniforme de 1 a 25</small></div>
+  <div class="cifra alerta"><span>Carga de 5 cajas (mañana)</span><b>ρ = 2,82</b><small>casi el triple de su capacidad</small></div>
+  <div class="cifra alerta"><span>Espera en fila, mañana</span><b>210,0 min</b><small>IC 95 %: 200,7 – 219,2</small></div>
+  <div class="cifra bien"><span>Espera de prioritarios</span><b>2,5 min</b><small>contra 222 min del resto</small></div>
+  <div class="cifra"><span>Cajas para W<sub>q</sub> ≤ 10 min</span><b>14 · 18</b><small>día normal · quincena</small></div>
+  <div class="cifra bien"><span>KS, corrida 1</span><b>D = 0,051</b><small>crítico 0,068 con n = 404: pasa</small></div>
+</div>
+<p class="tenue"><small>Escenario base: 5 cajas, 30 corridas, α = 0,05, semilla 12345, modelo 2.1. Con la misma semilla y los mismos datos sale exactamente lo mismo.</small></p>
+
+<h2 id="ejemplo">Ejemplo resuelto a mano</h2>
+<p>Una caja y cuatro clientes. El cliente 3 es prioritario. Se aplican las fórmulas <math><semantics><mrow><msub><mi>B</mi><mi>i</mi></msub><mo>=</mo><mrow><mi>max</mi><mo>⁡</mo></mrow><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><msub><mi>A</mi><mi>i</mi></msub><mo separator="true">,</mo><mi>ℓ</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">B_i=\max(A_i,\ell)</annotation></semantics></math>, <math><semantics><mrow><msub><mi>D</mi><mi>i</mi></msub><mo>=</mo><msub><mi>B</mi><mi>i</mi></msub><mo>+</mo><msub><mi>S</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">D_i=B_i+S_i</annotation></semantics></math> y <math><semantics><mrow><msub><mi>W</mi><mrow><mi>q</mi><mo separator="true">,</mo><mi>i</mi></mrow></msub><mo>=</mo><msub><mi>B</mi><mi>i</mi></msub><mo>−</mo><msub><mi>A</mi><mi>i</mi></msub></mrow><annotation encoding="application/x-tex">W_{q,i}=B_i-A_i</annotation></semantics></math>.</p>
+<div class="tabla"><table class="ancha">
+  <thead><tr><th>Cliente</th><th class="num">Llega A</th><th class="num">Atención S</th><th class="num">Empieza B</th><th class="num">Sale D</th><th class="num">Espera W<sub>q</sub></th><th>Por qué</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td class="num">0</td><td class="num">4</td><td class="num">0</td><td class="num">4</td><td class="num">0</td><td>La caja está libre.</td></tr>
+    <tr><td>2</td><td class="num">1</td><td class="num">3</td><td class="num">6</td><td class="num">9</td><td class="num">5</td><td>Espera a la caja y le cede el turno al prioritario.</td></tr>
+    <tr><td><b>3 ★</b></td><td class="num">2</td><td class="num">2</td><td class="num">4</td><td class="num">6</td><td class="num">2</td><td>Prioritario: entra en cuanto se libera la caja, a las 4.</td></tr>
+    <tr><td>4</td><td class="num">3</td><td class="num">1</td><td class="num">9</td><td class="num">10</td><td class="num">6</td><td>Espera a que salga el cliente 2.</td></tr>
+  </tbody>
+</table></div>
+<p><math><semantics><mrow><mi>T</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">T=10</annotation></semantics></math> min y <math><semantics><mrow><mi>N</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">N=4</annotation></semantics></math> clientes:</p>
+<div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mtable displaystyle="true" class="tml-jot"><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>=</mo><mfrac><mrow><mn>0</mn><mo>+</mo><mn>5</mn><mo>+</mo><mn>2</mn><mo>+</mo><mn>6</mn></mrow><mn>4</mn></mfrac><mo>=</mo><mn>3,25</mn><mo separator="true">,</mo><mspace width="2em"></mspace><mi>W</mi><mo>=</mo><mfrac><mrow><mn>4</mn><mo>+</mo><mn>8</mn><mo>+</mo><mn>4</mn><mo>+</mo><mn>7</mn></mrow><mn>4</mn></mfrac><mo>=</mo><mn>5,75</mn></mrow></mtd></mtr><mtr><mtd style="padding-left:0em;padding-right:0em;"><mrow><msub><mi>L</mi><mi>q</mi></msub><mo>=</mo><mfrac><mn>13</mn><mn>10</mn></mfrac><mo>=</mo><mn>1,3</mn><mo separator="true">,</mo><mspace width="2em"></mspace><mi>L</mi><mo>=</mo><mfrac><mn>23</mn><mn>10</mn></mfrac><mo>=</mo><mn>2,3</mn><mo separator="true">,</mo><mspace width="2em"></mspace><mi>U</mi><mo>=</mo><mfrac><mn>10</mn><mn>10</mn></mfrac><mo>=</mo><mn>100</mn><mspace width="0.1667em"></mspace><mi>%</mi></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">\begin{gathered}W_q=\frac{0+5+2+6}{4}=3{,}25,\qquad W=\frac{4+8+4+7}{4}=5{,}75 \\[6pt] L_q=\frac{13}{10}=1{,}3,\qquad L=\frac{23}{10}=2{,}3,\qquad U=\frac{10}{10}=100\,\%\end{gathered}</annotation></semantics></math></div>
+<p>Es una de las pruebas automáticas del proyecto: el programa da exactamente estos números.</p>
+
+<h2 id="preguntas" data-corto="Preguntas probables">Preguntas probables</h2>
+<div class="acciones"><span class="tenue">Clic en una pregunta para ver la respuesta.</span><button type="button" class="boton" data-desplegar>Abrir todas</button></div>
+
+<h3>Metodología</h3>
+<div class="preguntas">
+  <details class="pregunta" id="p-simular"><summary>¿Por qué simular y no usar una fórmula de colas como M/M/c?</summary><div class="respuesta">
+    <p>Los modelos analíticos suponen estado estable, primero en llegar es el primero en salir, y llegadas y servicio exponenciales. Coss Bu advierte que esas suposiciones «originan que las decisiones que se toman con base en estos modelos no sean confiables», y que con prioridades o etapas transitorias «el análisis completo del sistema puede ser logrado a través del uso de la técnica de simulación». Este banco tiene prioridad, abre vacío y cierra (transitorio), la atención es uniforme y la carga es ρ = 2,8 > 1, así que no existe estado estable.</p>
+    <p><span class="libro">ej. 5.6 · p. 91</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-etapas"><summary>¿Qué metodología siguieron?</summary><div class="respuesta">
+    <p>Las 8 etapas de Coss Bu: definición del sistema, formulación, colección de datos, implementación, validación, experimentación, interpretación y documentación. La tabla está en <a href="fundamentos.html#etapas">Fundamentos</a>.</p>
+    <p><span class="libro">§1.2 · pp. 12–14</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-terminante"><summary>¿Es una simulación terminante o de estado estable? ¿Por qué no hay calentamiento?</summary><div class="respuesta">
+    <p>Terminante. Cada jornada abre vacía y termina cuando sale el último cliente, igual que el banco real. El período de calentamiento sirve para estudiar el estado estable, que aquí no interesa: el arranque vacío es parte de lo que se mide. Además, cada jornada es un ciclo que empieza con el sistema vacío, la idea de la simulación regenerativa.</p>
+    <p><span class="libro">§1.3.3 · p. 15</span> <span class="libro">§6.2 · pp. 112–113</span></p>
+  </div></details>
+</div>
+
+<h3>Datos</h3>
+<div class="preguntas">
+  <details class="pregunta" id="p-datos"><summary>¿De dónde salen los datos?</summary><div class="respuesta">
+    <p>No se podía medir dentro del banco, así que se contó desde afuera cuántas personas entraban cada 5 minutos, un día: mañana de 9:40 a 11:40 (24 conteos) y tarde de 14:00 a 16:30 (30). Coss Bu acepta registros, experimentación y, si no hay otro remedio, opinión de expertos.</p>
+    <p><span class="libro">§1.2 colección de datos · p. 13</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-poisson"><summary>¿Cómo saben que las llegadas son Poisson?</summary><div class="respuesta">
+    <p>Con la prueba χ² de bondad de ajuste: mañana <math><semantics><mrow><msubsup><mi>X</mi><mn>0</mn><mn class="tml-med-pad">2</mn></msubsup><mo>=</mo><mn>1,94</mn><mo>&lt;</mo><mn>3,84</mn></mrow><annotation encoding="application/x-tex">X_0^2=1{,}94&lt;3{,}84</annotation></semantics></math> (<math><semantics><mrow><mi>ν</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\nu=1</annotation></semantics></math>) y tarde <math><semantics><mrow><mn>5,47</mn><mo>&lt;</mo><mn>7,81</mn></mrow><annotation encoding="application/x-tex">5{,}47&lt;7{,}81</annotation></semantics></math> (<math><semantics><mrow><mi>ν</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\nu=3</annotation></semantics></math>). Además, la varianza es parecida a la media (6,95 contra 5,42 y 5,02 contra 4,50), como en una Poisson. Ojo: «no se rechaza» no es lo mismo que «está demostrado».</p>
+    <p><span class="libro">ec. 3.3 · p. 33</span> <span class="libro">ec. 4.32 · p. 62</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-servicio"><summary>¿Por qué la atención es uniforme entre 1 y 25 minutos?</summary><div class="respuesta">
+    <p>No se pudo medir dentro del banco. Es un acuerdo del equipo, es decir, opinión de expertos. Es el supuesto más débil del modelo, y por eso se hizo el análisis de sensibilidad: con 5 cajas, para que el banco cierre cerca de su hora, la atención media debería ser de 4 a 5 minutos. El simulador permite cambiarla, o usar una exponencial.</p>
+    <p><span class="libro">p. 13</span> <a href="fundamentos.html#experimentos">Tabla de sensibilidad</a></p>
+  </div></details>
+
+  <details class="pregunta" id="p-quincena"><summary>¿De dónde sale el 1,3 de la quincena?</summary><div class="respuesta">
+    <p>Es un dato de experto: no se contó ningún día de quincena. Se usa como un escenario del diseño de experimentos (comparar alternativas) y se puede cambiar en el paso 1 o en Establecimiento. Los días de quincena son del 1 al 4, del 12 al 18 y los últimos 4 del mes.</p>
+    <p><span class="libro">p. 13</span> <span class="libro">§1.3.5 · p. 16</span></p>
+  </div></details>
+</div>
+
+<h3>Números aleatorios y pruebas</h3>
+<div class="preguntas">
+  <details class="pregunta" id="p-generador"><summary>¿Qué generador de números aleatorios usan?</summary><div class="respuesta">
+    <p>El de Python, Mersenne Twister, con período <math><semantics><mrow><msup><mn>2</mn><mn>19937</mn></msup><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">2^{19937}-1</annotation></semantics></math>, mucho mayor que el de un congruencial. Coss Bu enseña los congruenciales y pide probar los números antes de usarlos: por eso cada corrida pasa la prueba KS. La semilla es la que escribe el usuario o el reloj en milisegundos, y siempre se muestra para poder repetir.</p>
+    <p><span class="libro">§2.1 · p. 20</span> <span class="libro">cap. 3 · p. 31</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-ks"><summary>¿Cómo funciona la prueba KS y qué pasa si falla?</summary><div class="respuesta">
+    <p>Se ordenan los <math><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> aleatorios, se compara su acumulada <math><semantics><mrow><msub><mi>F</mi><mi>n</mi></msub><mo>=</mo><mi>i</mi><mi>/</mi><mi>n</mi></mrow><annotation encoding="application/x-tex">F_n=i/n</annotation></semantics></math> con la de la uniforme y se toma la mayor diferencia <math><semantics><msub><mi>D</mi><mi>n</mi></msub><annotation encoding="application/x-tex">D_n</annotation></semantics></math>. Si <math><semantics><mrow><msub><mi>D</mi><mi>n</mi></msub><mo>&lt;</mo><mn>1,36</mn><mi>/</mi><msqrt><mrow><mi>n</mi><mspace width="0pt" height="0.5em"></mspace></mrow></msqrt></mrow><annotation encoding="application/x-tex">D_n&lt;1{,}36/\sqrt{n}</annotation></semantics></math> (α = 0,05, Tabla 3.5), no se rechaza la uniformidad. Se prueban por separado los de llegadas y los de servicio. Si alguna falla, la corrida se descarta y se repite. Si falla más veces que el límite de intentos, la simulación se detiene con un aviso. En la corrida 1: <math><semantics><mrow><mi>n</mi><mo>=</mo><mn>404</mn></mrow><annotation encoding="application/x-tex">n=404</annotation></semantics></math>, <math><semantics><mrow><mi>D</mi><mo>=</mo><mn>0,0508</mn><mo>&lt;</mo><mn>0,0676</mn></mrow><annotation encoding="application/x-tex">D=0{,}0508&lt;0{,}0676</annotation></semantics></math>.</p>
+    <p><span class="libro">§3.5 · ec. 3.11–3.12 · pp. 40–42</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-chi-ks"><summary>¿Por qué χ² para los conteos y KS para los aleatorios?</summary><div class="respuesta">
+    <p>Los conteos son discretos y <math><semantics><mover><mi>λ</mi><mo stretchy="false" class="wbk-acc" style="math-depth:0;">ˆ</mo></mover><annotation encoding="application/x-tex">\hat{\lambda}</annotation></semantics></math> se estima con los mismos datos: χ² con clases agrupadas resta un grado de libertad por eso. KS pide una distribución continua y totalmente conocida, y U(0, 1) lo es.</p>
+    <p><span class="libro">§3.2 · p. 33</span> <span class="libro">§3.5 · p. 40</span></p>
+  </div></details>
+</div>
+
+<h3>Modelo</h3>
+<div class="preguntas">
+  <details class="pregunta" id="p-generacion"><summary>¿Cómo se generan las llegadas y los tiempos de atención?</summary><div class="respuesta">
+    <p>Con la transformada inversa. Tiempo entre llegadas: <math><semantics><mrow><mi>x</mi><mo>=</mo><mo form="prefix" stretchy="false">−</mo><mstyle displaystyle="false" scriptlevel="0"><mfrac><mn>1</mn><mi>r</mi></mfrac></mstyle><mrow><mi>ln</mi><mo>⁡</mo></mrow><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>R</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">x=-\tfrac{1}{r}\ln(1-R)</annotation></semantics></math>, porque conteos Poisson implican tiempos exponenciales. Atención: <math><semantics><mrow><mi>S</mi><mo>=</mo><mi>a</mi><mo>+</mo><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mi>b</mi><mo>−</mo><mi>a</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">S=a+(b-a)R</annotation></semantics></math>. Prioridad: el cliente es prioritario si <math><semantics><mrow><mi>R</mi><mo>&lt;</mo><mn>0,05</mn></mrow><annotation encoding="application/x-tex">R&lt;0{,}05</annotation></semantics></math>. El libro escribe <math><semantics><mrow><mrow><mi>ln</mi><mo>⁡</mo><mspace width="0.1667em"></mspace></mrow><mi>R</mi></mrow><annotation encoding="application/x-tex">\ln R</annotation></semantics></math>. Usamos <math><semantics><mrow><mrow><mi>ln</mi><mo>⁡</mo></mrow><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>1</mn><mo>−</mo><mi>R</mi><mo fence="true" form="postfix" stretchy="false">)</mo></mrow></mrow><annotation encoding="application/x-tex">\ln(1-R)</annotation></semantics></math> porque Python puede devolver 0, y <math><semantics><mrow><mn>1</mn><mo>−</mo><mi>R</mi></mrow><annotation encoding="application/x-tex">1-R</annotation></semantics></math> también es uniforme.</p>
+    <p><span class="libro">ec. 4.1, 4.3 y 4.5 · pp. 49–51</span> <span class="libro">ej. 4.10 y 4.11 · p. 62</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-prioridad"><summary>¿Cómo funciona la prioridad?</summary><div class="respuesta">
+    <p>Sin interrupción: un prioritario nunca saca a nadie de la caja. Cuando una caja se libera, pasa primero el prioritario que esté esperando. Resultado: los prioritarios esperan unos 2,5 min y el resto, 222 min. Lo muestra el <a href="#ejemplo">ejemplo a mano</a>.</p>
+  </div></details>
+
+  <details class="pregunta" id="p-cierre"><summary>¿Qué pasa cuando se cierra la puerta?</summary><div class="respuesta">
+    <p>No se generan más llegadas, pero se atiende a todos los que están adentro. Por eso, con la carga actual, el último cliente de la mañana sale hacia las 19:21. La tarde se simula aparte y empieza vacía a las 14:00: es una limitación que conviene decir.</p>
+  </div></details>
+</div>
+
+<h3>Resultados y validación</h3>
+<div class="preguntas">
+  <details class="pregunta" id="p-corridas"><summary>¿Por qué 30 corridas y qué significa el intervalo de confianza?</summary><div class="respuesta">
+    <p>Cada corrida es un día independiente. Con 30, <math><semantics><mrow><msub><mi>t</mi><mrow><mn>29</mn><mo separator="true">;</mo><mspace width="0.1667em"></mspace><mn>0,025</mn></mrow></msub><mo>=</mo><mn>2,045</mn></mrow><annotation encoding="application/x-tex">t_{29;\,0{,}025}=2{,}045</annotation></semantics></math> y el intervalo de <math><semantics><msub><mi>W</mi><mi>q</mi></msub><annotation encoding="application/x-tex">W_q</annotation></semantics></math> de la mañana queda de 200,7 a 219,2 min: con 95 % de confianza, ahí está el promedio del modelo. Para reducir el ancho a la mitad harían falta 4 veces más corridas. El usuario puede subir el número si quiere más precisión.</p>
+    <p><span class="libro">§1.3.4 · p. 16</span> <span class="libro">ec. 6.4–6.8 · pp. 108–109</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-validacion"><summary>¿Cómo validaron el modelo?</summary><div class="respuesta">
+    <ol>
+      <li><b>Verificación:</b> ejemplos resueltos a mano, más de 100 pruebas automáticas y la KS comparada con <code>scipy.stats.kstest</code>.</li>
+      <li><b>Implementación independiente:</b> la librería Ciw simula el mismo banco y da las mismas medidas (t de Welch, p &gt; 0,05 en todas).</li>
+      <li><b>Opinión de expertos</b>, la primera forma de validar de Coss Bu: con 1 a 25 min de atención, los resultados no son creíbles para un banco real. El programa está bien; el dato de atención es el que falla.</li>
+    </ol>
+    <p><span class="libro">§1.2 validación · p. 13</span></p>
+  </div></details>
+
+  <details class="pregunta" id="p-espera"><summary>¿Una espera de 210 minutos no indica que el simulador está mal?</summary><div class="respuesta">
+    <p>No. Es lo que dicen los datos con ese supuesto: <math><semantics><mrow><mi>ρ</mi><mo>=</mo><mi>r</mi><mspace width="0.1667em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow><mi>/</mi><mi>c</mi><mo>=</mo><mn>1,083</mn><mo>⋅</mo><mn>13</mn><mi>/</mi><mn>5</mn><mo>=</mo><mn>2,82</mn></mrow><annotation encoding="application/x-tex">\rho=r\,E[S]/c=1{,}083\cdot13/5=2{,}82</annotation></semantics></math>. Llegan casi 3 veces más clientes de los que 5 cajas pueden atender, así que la fila crece mientras la puerta está abierta. Ciw da lo mismo. Hacen falta al menos <math><semantics><mrow><mi>c</mi><mo>≈</mo><mi>r</mi><mspace width="0.1667em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow><mo>≈</mo><mn>14</mn></mrow><annotation encoding="application/x-tex">c\approx r\,E[S]\approx14</annotation></semantics></math> cajas, que es lo que encuentra la búsqueda.</p>
+  </div></details>
+
+  <details class="pregunta" id="p-cajas"><summary>¿Cuántas cajas necesita el banco?</summary><div class="respuesta">
+    <p>Con la atención supuesta: 14 cajas en día normal y 18 en quincena para que <math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>≤</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">W_q\le10</annotation></semantics></math> min en las dos jornadas. Se prueban 1, 2, 3… cajas con la misma semilla, para que la comparación sea justa. Es la «búsqueda de valores óptimos» del diseño de experimentos. Si la atención media real fuera de 4,5 min (uniforme de 1 a 8), las 5 cajas actuales bastarían: <math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>=</mo><mn>6,2</mn></mrow><annotation encoding="application/x-tex">W_q=6{,}2</annotation></semantics></math> min en la mañana.</p>
+    <p><span class="libro">§1.3.5 · p. 16</span></p>
+  </div></details>
+</div>
+
+<h3>Planifica tu visita</h3>
+<div class="preguntas">
+  <details class="pregunta" id="p-visita"><summary>¿De dónde salen las esperas que ve el cliente?</summary><div class="respuesta">
+    <p>Del mismo motor. Se simula cada horario en día regular y en quincena (30 réplicas), y los clientes se agrupan por la franja en que llegan. La fila pasa de una franja a la siguiente sin reiniciarse. Se recomienda la franja con menor espera promedio. Son estimaciones del modelo, no datos históricos, y se marcan así.</p>
+  </div></details>
+
+  <details class="pregunta" id="p-pico"><summary>¿Cómo se decide si una franja es pico o valle?</summary><div class="respuesta">
+    <p>Con una prueba χ² de homogeneidad entre franjas. Si se rechaza, cada franja se compara con un estadístico <math><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math> y la corrección de Bonferroni. Con los datos del estudio: en la mañana no hay diferencias (p = 0,12) y en la tarde 16:00–16:30 es valle.</p>
+    <p><a href="fundamentos.html#franjas">Fórmula en Fundamentos</a></p>
+  </div></details>
+</div>
+
+<h2 id="limites" data-corto="Limitaciones">Limitaciones: dilas antes de que te pregunten</h2>
+<ul>
+  <li><b>Un solo día de datos.</b> La quincena (× 1,3) y la atención (1 a 25 min) no se midieron.</li>
+  <li><b>La atención supuesta es demasiado larga</b> para 5 cajas, así que las esperas no describen al banco real. El simulador sirve para comparar escenarios y dimensionar cajas.</li>
+  <li><b>Mañana y tarde son independientes:</b> la tarde empieza vacía aunque la fila de la mañana no haya terminado.</li>
+  <li><b>Repetir las corridas que fallan la KS</b> deja una leve selección. En 900 corridas, <math><semantics><msub><mi>W</mi><mi>q</mi></msub><annotation encoding="application/x-tex">W_q</annotation></semantics></math> cambió menos de 0,3 % (213,5 contra 213,0 min).</li>
+  <li><b>Planifica tu visita</b> da estimaciones del modelo, no una predicción comprobada con datos reales por fecha.</li>
+</ul>
+<p class="aviso clave"><b>Siguiente paso:</b> medir la atención en caja (por ejemplo, preguntando a un cajero o cronometrando) y contar más días, incluida una quincena. Después, volver a simular cambiando solo el paso 2.</p>
+
+<h2 id="evidencia">Evidencia para mostrar</h2>
+<ul>
+  <li><a href="evidencia/resultados.json">resultados.json</a>: todas las cifras de esta guía.</li>
+  <li><a href="evidencia/traza-semilla-12345.csv">traza-semilla-12345.csv</a>: cliente por cliente, la primera corrida.</li>
+  <li><a href="evidencia/unittest.log">unittest.log</a>: salida de las pruebas automáticas.</li>
+  <li><a href="evidencia/reproducir.py">reproducir.py</a>: vuelve a calcular todo.</li>
+</ul>
+<pre><code>cd simulador2 &amp;&amp; ../.venv/bin/python -m unittest</code></pre>
+<footer class="pie">Coss Bu, Raúl. <i>Simulación: un enfoque práctico</i>. Limusa. · Modelo 2.1 · <a href="/">Volver al simulador</a></footer>
+</main>
+</div>
+</body>
+</html>

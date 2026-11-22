@@ -1,17 +1,21 @@
-test_entradaPorDefectoSeSimula (test_iniciador.PruebasAPI.test_entradaPorDefectoSeSimula) ... /home/devduvan/Desktop/simulación/.venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
+test_entradaPorDefectoSeSimula (test_iniciador.PruebasAPI.test_entradaPorDefectoSeSimula) ... .venv/lib/python3.12/site-packages/fastapi/testclient.py:1: StarletteDeprecationWarning: Using `httpx` with `starlette.testclient` is deprecated; install `httpx2` instead.
   from starlette.testclient import TestClient as TestClient  # noqa
 ok
 test_jornadaSinClientesDa422 (test_iniciador.PruebasAPI.test_jornadaSinClientesDa422) ... ok
 test_limiteDeIntentos (test_iniciador.PruebasAPI.test_limiteDeIntentos) ... ok
 test_peticionesSimultaneasNoSeMezclan (test_iniciador.PruebasAPI.test_peticionesSimultaneasNoSeMezclan) ... ok
+test_poissonRechazaConteosNegativos (test_iniciador.PruebasAPI.test_poissonRechazaConteosNegativos) ... ok
 test_rechazaEntradaInvalida (test_iniciador.PruebasAPI.test_rechazaEntradaInvalida) ... ok
 test_valoresPorDefectoComoElDocumento (test_iniciador.PruebasAPI.test_valoresPorDefectoComoElDocumento) ... ok
 test_masCajasMenosEspera (test_iniciador.PruebasCajasNecesarias.test_masCajasMenosEspera) ... ok
 test_ciwYElSimuladorPropioCoinciden (test_iniciador.PruebasCiw.test_ciwYElSimuladorPropioCoinciden) ... ok
+test_medidasSinVariacionNoDanNaN (test_iniciador.PruebasCiw.test_medidasSinVariacionNoDanNaN) ... ok
+test_todosPrioritarios (test_iniciador.PruebasCiw.test_todosPrioritarios) ... ok
 test_welchDetectaUnaDiferenciaReal (test_iniciador.PruebasCiw.test_welchDetectaUnaDiferenciaReal) ... ok
 test_mismaDQueScipy (test_iniciador.PruebasContraSciPy.test_mismaDQueScipy) ... ok
 test_convertirAMinutos (test_iniciador.PruebasConversionHoras.test_convertirAMinutos) ... ok
 test_duracionDeLasJornadas (test_iniciador.PruebasConversionHoras.test_duracionDeLasJornadas) ... ok
+test_tablaYMedidas (test_iniciador.PruebasEjemploDeLaDefensa.test_tablaYMedidas) ... ok
 test_casosDelVideo (test_iniciador.PruebasElegirCaja.test_casosDelVideo) ... ok
 test_ejemploDelTablero (test_iniciador.PruebasElegirCaja.test_ejemploDelTablero) ... ok
 test_miles_de_casos_al_azar_misma_espera (test_iniciador.PruebasElegirCaja.test_miles_de_casos_al_azar_misma_espera) ... ok
@@ -73,6 +77,8 @@ test_unaFranjaAltaDejaALasDemasPorDebajoDeLaMedia (test_planificacion.PruebasCat
 test_valleNormalYPicoEvidentes (test_planificacion.PruebasCategorias.test_valleNormalYPicoEvidentes) ... ok
 test_franjasAlineadasConElReloj (test_planificacion.PruebasFranjas.test_franjasAlineadasConElReloj) ... ok
 test_cadaTramoLlegaASuRitmo (test_planificacion.PruebasLlegadasPorTramos.test_cadaTramoLlegaASuRitmo) ... ok
+test_publicarConUnaFranjaVacia (test_planificacion.PruebasLlegadasPorTramos.test_publicarConUnaFranjaVacia) ... ok
+test_tramoSinLlegadas (test_planificacion.PruebasLlegadasPorTramos.test_tramoSinLlegadas) ... ok
 test_unSoloTramoEsElGeneradorOriginal (test_planificacion.PruebasLlegadasPorTramos.test_unSoloTramoEsElGeneradorOriginal) ... ok
 test_unirTramosIguales (test_planificacion.PruebasLlegadasPorTramos.test_unirTramosIguales) ... ok
 test_conVentanaDeUnoElPonderadoEsElDato (test_planificacion.PruebasPromediosMoviles.test_conVentanaDeUnoElPonderadoEsElDato) ... ok
@@ -106,7 +112,7 @@ test_lasEsperasSalenDelMotor (test_planificacion.PruebasSimulacionPorFranjas.tes
 test_nuncaHayMasClientesEnCajaQueCajas (test_planificacion.PruebasSimulacionPorFranjas.test_nuncaHayMasClientesEnCajaQueCajas) ... ok
 
 ----------------------------------------------------------------------
-Ran 104 tests in 2.576s
+Ran 110 tests in 3.551s
 
 OK
 Corrida 5, intento 1: no pasó la prueba KS (servicio). Se rechaza la uniformidad; se vuelve a simular.

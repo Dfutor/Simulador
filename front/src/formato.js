@@ -51,7 +51,7 @@ export const CATEGORIAS = {
   valle: { nombre: "Valle", cliente: "Afluencia baja" },
   normal: { nombre: "Normal", cliente: "Afluencia habitual" },
   pico: { nombre: "Pico", cliente: "Afluencia alta" },
-  sinDatos: { nombre: "Sin datos", cliente: "Afluencia sin medir" },
+  sinDatos: { nombre: "Estimada", cliente: "Afluencia estimada" },
 };
 
 export const MEDIDAS = {

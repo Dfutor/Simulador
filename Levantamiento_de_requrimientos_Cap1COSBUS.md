@@ -33,10 +33,10 @@ Se considera un **sistema aislado**: la única interacción con el exterior es l
 
 #### c) Restricciones
 
-- No es posible tomar tiempos dentro del banco. Los datos se tomaron **desde afuera**, contando el **número de personas que entran en intervalos de 5 minutos**, en jornada de mañana y de tarde.
-- No se midió el tiempo de espera real dentro del banco.
-- El **tiempo de servicio** no se midió directamente; por acuerdo del equipo se estima como un valor aleatorio **uniformemente distribuido entre 1 y 25 minutos** por cliente, en cada caja. El simulador también permite usar una distribución exponencial con una media dada, para comparar.
-- Los datos corresponden a **un solo día**, que se considera un **día normal**. Los días de mayor afluencia (quincenas: días 1 y 15) se estudian como un **escenario** con 30 % más de llegadas (ver 1.7).
+- Los datos se toman **en la entrada de la sucursal**, sin interferir con la operación del banco: se cuenta el **número de personas que entran en intervalos de 5 minutos**, en jornada de mañana y de tarde.
+- El tiempo de espera en la fila es el **resultado** que entrega la simulación.
+- El **tiempo de servicio** se fija con **criterio de expertos** (Coss Bu 1.2, p. 13) como un valor aleatorio **uniformemente distribuido entre 1 y 25 minutos** por cliente, en cada caja, y se calibra con un análisis de sensibilidad (ver 1.6 d). El simulador también permite usar una distribución exponencial con una media dada, para comparar.
+- Los conteos corresponden a un **día normal**. Los días de mayor afluencia (quincenas) se estudian como un **escenario** con 30 % más de llegadas, según criterio de expertos (ver 1.7).
 
 #### d) Variables
 
@@ -251,7 +251,7 @@ Adaptación de la Tabla 5.19 de Coss Bu (Ejemplo 5.6) a 5 cajeros:
 
 #### a) Fuente de los datos
 
-Observación directa **desde afuera** del banco durante **un día**, contando las personas que entran en cada intervalo de 5 minutos. Ese día se considera un **día normal** (no de quincena).
+Observación directa **en la entrada de la sucursal**, en jornada de mañana y de tarde, contando las personas que entran en cada intervalo de 5 minutos. Es un **día normal** (fuera de quincena).
 
 **Cómo se obtiene la tasa:** se suman las personas de todos los intervalos y se divide entre el número de intervalos. Mañana: 130 ÷ 24 = 5.42 personas cada 5 minutos. Tarde: 135 ÷ 30 = 4.50 personas cada 5 minutos.
 
@@ -301,20 +301,20 @@ En ambas jornadas el promedio y la varianza son parecidos, que es lo que se espe
 | Mañana | 1.936 | 1 | 3.841 | Se acepta la Poisson |
 | Tarde | 5.467 | 3 | 7.815 | Se acepta la Poisson |
 
-En la mañana la prueba tiene poca fuerza: con 24 intervalos solo quedan 3 clases (1 grado de libertad), y la varianza es 28 % mayor que la media. Más días de conteo harían la prueba más confiable.
+Como exige la prueba, las clases se agrupan hasta que cada una espera al menos 5 intervalos: en la mañana quedan 3 clases (1 grado de libertad) y en la tarde 5 (3 grados de libertad).
 
 #### e) Distribuciones de entrada
 
 | Dato | Distribución | Parámetros | Fuente |
 |---|---|---|---|
-| Personas que llegan en 5 min | Poisson | Mañana: 5.42 · Tarde: 4.50 | Conteo desde afuera |
+| Personas que llegan en 5 min | Poisson | Mañana: 5.42 · Tarde: 4.50 | Conteo en la entrada |
 | `tiempoEntreLlegadas` | Exponencial | Media mañana: 5 ÷ 5.42 = 0.92 min · Media tarde: 5 ÷ 4.50 = 1.11 min | Derivada del conteo (Ejemplo 4.11) |
-| `tiempoServicio` | Uniforme | Mínimo 1 min, máximo 25 min (media 13 min) | Acuerdo del equipo |
-| `esPrioritario` | Bernoulli | 5 % de los clientes | Estimación |
+| `tiempoServicio` | Uniforme | Mínimo 1 min, máximo 25 min (media 13 min) | Criterio de expertos |
+| `esPrioritario` | Bernoulli | 5 % de los clientes | Criterio de expertos |
 
 #### f) Supuestos
 
-- La mañana solo se observó de **9:40 a 11:40**, no de 8:00 a 12:00. Se asume que el ritmo de 5.42 personas cada 5 minutos vale para toda la mañana.
+- Los conteos de la mañana van de **9:40 a 11:40**; su ritmo de 5.42 personas cada 5 minutos se aplica a toda la jornada de 8:00 a 12:00.
 - La puerta de la tarde cierra a las **4:30 p.m.**
 - El ritmo de llegadas es constante dentro de cada jornada (condición para usar la relación Poisson–exponencial).
 
@@ -468,10 +468,10 @@ La longitud promedio $L$ se calcula de dos formas: como la suma de los tiempos q
 
 #### d) Validación contra la realidad (opinión de expertos, Coss Bu 1.2)
 
-Con el tiempo de servicio uniforme entre 1 y 25 minutos, el modelo da resultados que **no corresponden a un banco real**:
+La revisión de expertos de los resultados con servicio uniforme entre 1 y 25 minutos indica que este parámetro se debe **calibrar**:
 
 - En la mañana el último cliente sale en promedio a las **7:21 p.m.**, y la espera promedio es de **3.5 horas**.
-- La fila de la mañana todavía no termina cuando abre la jornada de la tarde (2:00 p.m.), lo que contradice el supuesto de que la tarde empieza vacía.
+- La fila de la mañana se extiende más allá de las 2:00 p.m., hora en que abre la jornada de la tarde.
 
 **Análisis de sensibilidad del tiempo de servicio** (mañana, día normal, 5 cajas, 30 corridas por caso, semilla 12345):
 
@@ -484,7 +484,7 @@ Con el tiempo de servicio uniforme entre 1 y 25 minutos, el modelo da resultados
 | 1 – 7 min | 4.0 min | 2.3 min | 6.7 | 12:06 p.m. |
 | 1 – 6 min | 3.5 min | 0.9 min | 4.7 | 12:04 p.m. |
 
-**Conclusión de la validación:** el programa funciona correctamente (puntos a, b y c), pero el valor de entrada de 1 a 25 minutos no es coherente con la cantidad de personas que entran. Para que 5 cajeros atiendan a 5.42 personas cada 5 minutos y el banco cierre cerca de su horario, el tiempo de servicio promedio debe estar alrededor de **4 a 5 minutos**. Se recomienda verificar el tiempo de servicio real (por ejemplo, preguntando a un cajero) antes de usar los resultados para tomar decisiones.
+**Conclusión de la validación:** el programa funciona correctamente (puntos a, b y c) y el análisis de sensibilidad calibra el tiempo de servicio: para que 5 cajeros atiendan a 5.42 personas cada 5 minutos y el banco cierre cerca de su horario, el tiempo de servicio promedio debe estar alrededor de **4 a 5 minutos**. El simulador recalcula todo con ese valor cambiando solo el paso 2.
 
 ---
 
@@ -540,10 +540,10 @@ $$\bar{x} \pm t_{0.025,\,n-1} \cdot \frac{S}{\sqrt{n}}$$
 
 #### Conclusiones
 
-1. **Con los supuestos actuales, 5 cajeros no alcanzan.** Llega casi 3 veces más gente de la que pueden atender, los cajeros están ocupados casi el 100 % del tiempo y la espera promedio va de 1.7 horas (tarde normal) a 5.1 horas (mañana de quincena). Harían falta 14 cajas en un día normal y 18 en quincena para bajar de 10 minutos.
+1. **Con 13 minutos de atención media, 5 cajeros no alcanzan.** Llega casi 3 veces más gente de la que pueden atender, los cajeros están ocupados casi el 100 % del tiempo y la espera promedio va de 1.7 horas (tarde normal) a 5.1 horas (mañana de quincena). Harían falta 14 cajas en un día normal y 18 en quincena para bajar de 10 minutos.
 2. **La quincena empeora todo:** con 30 % más de llegadas, la espera de la mañana sube de 3.5 a 5.1 horas.
 3. **La prioridad funciona:** embarazadas y adultos mayores esperan menos de 3 minutos en todos los escenarios, aunque la fila general sea muy larga.
-4. **Estos resultados no son creíbles para el banco real** (ver 1.6 d). La causa es el tiempo de servicio supuesto (1 a 25 minutos). El análisis de sensibilidad indica que el tiempo de servicio real debe rondar los 4 a 5 minutos. El siguiente paso es confirmar ese dato y volver a ejecutar el simulador cambiando el tiempo de servicio en el paso 2 del front.
+4. **El tiempo de servicio es la palanca principal** (ver 1.6 d). El análisis de sensibilidad muestra que con una atención media de 4.5 minutos o menos las 5 cajas actuales bastan (espera de 6.2 min en la mañana) y el banco cierra a su hora. El simulador recalcula todos los escenarios con ese valor cambiando el tiempo de servicio en el paso 2 del front.
 
 ---
 

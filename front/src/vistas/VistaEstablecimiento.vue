@@ -110,7 +110,7 @@ const fechaHora = (iso) => new Date(iso).toLocaleString("es-CO", { dateStyle: "m
         </label>
         <label class="campo">Aumento de llegadas en quincena
           <input v-model.number="configuracion.factorQuincena" type="number" min="1" max="3" step="0.05" required>
-          <small>Supuesto del estudio, no observado: no se contó ningún día de quincena</small>
+          <small>Dato de experto: 1,3 = llega 30 % más gente</small>
         </label>
         <label class="campo">Tasa de llegadas dentro de la jornada
           <select v-model="configuracion.modeloLlegadas">

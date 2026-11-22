@@ -421,8 +421,8 @@ table.ancha { min-width: 640px; }
 .variables { display: grid; gap: 2px 18px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); margin: 0.4em 0 0.6em; padding: 0; list-style: none; }
 .variables li + li { margin-top: 0; }
 
-/* Etiquetas de capa (dato, supuesto, resultado) */
-.marca-dato, .marca-supuesto {
+/* Etiquetas del origen de cada dato */
+.marca-dato, .marca-experto {
   display: inline-block;
   padding: 0 8px;
   border-radius: 999px;
@@ -431,7 +431,7 @@ table.ancha { min-width: 640px; }
   vertical-align: 1px;
 }
 .marca-dato { background: var(--verdeSuave); color: var(--verde); }
-.marca-supuesto { background: var(--naranjaSuave); color: var(--naranja); }
+.marca-experto { background: var(--resalte); color: var(--acento); }
 
 /* Preguntas de la defensa */
 .acciones { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: space-between; margin: 0.5em 0 1em; }

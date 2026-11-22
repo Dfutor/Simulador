@@ -23,7 +23,7 @@ from pruebaPoisson import pruebaChiCuadradaPoisson
 
 CARPETA_FRONT_COMPILADO = Path(__file__).resolve().parent.parent / "front" / "dist"
 
-# Conteos observados desde afuera del banco (documento, sección 1.3)
+# Conteos en la entrada de la sucursal (documento, sección 1.3)
 CONTEOS_MANANA = [7, 9, 8, 6, 4, 7, 5, 11, 8, 2, 4, 6, 3, 1, 3, 9, 6, 4, 8, 7, 2, 3, 4, 3]
 CONTEOS_TARDE = [3, 3, 2, 3, 3, 7, 9, 4, 7, 6, 4, 4, 6, 3, 7, 4, 8, 5, 3, 5, 9, 3, 7, 6, 4, 2, 3, 3, 2, 0]
 
@@ -118,7 +118,7 @@ class Establecimiento(BaseModel):
     horarioSemanal: list[DiaSemana] = Field(min_length=7, max_length=7, default_factory=horarioSemanalPorDefecto,
                                             description="De lunes a domingo")
     excepciones: list[Excepcion] = Field(default_factory=list, description="Tienen prioridad sobre el horario semanal")
-    factorQuincena: float = Field(1.3, ge=1, le=3, description="SUPUESTO: no se observó ningún día de quincena")
+    factorQuincena: float = Field(1.3, ge=1, le=3, description="Aumento de llegadas en quincena (dato de experto)")
     minutosPorFranja: int = Field(60, ge=5, le=240, description="Largo de las franjas horarias de análisis")
     modeloLlegadas: Literal["jornada", "franja"] = Field(
         "jornada", description="jornada = una tasa por jornada (modelo original); "

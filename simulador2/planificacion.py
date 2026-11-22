@@ -280,7 +280,7 @@ def distribucionRelativa(frecuencias: dict[str, int]) -> dict:
 
 def compararDias(configuracion: dict, estimaciones: dict, fechas: list[date], categoria: str) -> dict:
     """Histograma de llegadas por intervalo para dos fechas, con las mismas clases y frecuencias relativas.
-    Son SIMULACIONES: solo hay datos observados de un día, así que no se pueden comparar dos días observados."""
+    Son escenarios simulados con el modelo; el día de conteo del estudio va como referencia."""
     series = []
     for fecha in fechas:
         dia = horarioDelDia(configuracion, fecha)

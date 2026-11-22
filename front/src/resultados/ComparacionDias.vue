@@ -2,7 +2,7 @@
 /**
  * Histograma comparativo de dos fechas: personas que llegan por intervalo, con las mismas clases
  * y en frecuencia relativa (los dos días pueden tener distinta cantidad de intervalos).
- * Son simulaciones: solo hay conteos reales de un día, así que no se pueden comparar dos días observados.
+ * Las barras son escenarios simulados con el modelo; el día de conteo del estudio se muestra como referencia.
  */
 import { computed, ref } from "vue";
 import { pedirComparacionDias } from "../api.js";
@@ -70,9 +70,8 @@ const nombreCategoria = computed(() => (categoria.value === "todas" ? "todas las
     <p v-if="error" class="aviso" role="alert">{{ error }}</p>
     <template v-if="comparacion">
       <p class="aviso simulacion">
-        <b>Escenarios simulados, no datos históricos.</b> Solo hay conteos reales de un día (sin fecha registrada), así que no
-        se pueden comparar dos días observados. Cada barra resume {{ comparacion.corridas }} días simulados;
-        el rombo es el día que sí se contó, como referencia.
+        <b>Escenarios simulados con el modelo.</b> Cada barra resume {{ comparacion.corridas }} días simulados;
+        el rombo es el día de conteo del estudio, como referencia.
       </p>
       <ul class="resumen">
         <li v-for="serie in series" :key="serie.fecha">

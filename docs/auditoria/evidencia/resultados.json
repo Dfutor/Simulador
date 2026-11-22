@@ -997,7 +997,7 @@
       "sinEstimacion": false,
       "indicador": "Wq",
       "corridas": 30,
-      "publicadoEn": "2026-11-22T01:06:23+00:00",
+      "publicadoEn": "2026-11-22T04:21:11+00:00",
       "vigente": true
     },
     "2026-12-07": {
@@ -1221,7 +1221,7 @@
       "sinEstimacion": false,
       "indicador": "Wq",
       "corridas": 30,
-      "publicadoEn": "2026-11-22T01:06:23+00:00",
+      "publicadoEn": "2026-11-22T04:21:11+00:00",
       "vigente": true
     },
     "2026-12-15": {
@@ -1445,7 +1445,7 @@
       "sinEstimacion": false,
       "indicador": "Wq",
       "corridas": 30,
-      "publicadoEn": "2026-11-22T01:06:23+00:00",
+      "publicadoEn": "2026-11-22T04:21:11+00:00",
       "vigente": true
     }
   },
@@ -3312,20 +3312,3925 @@
           "tasa": 10.0
         }
       ],
-      "excepcion": "ZeroDivisionError",
-      "mensaje": "float division by zero"
+      "salida": {
+        "huella": "9bfde688804684f9",
+        "versionModelo": "2.1",
+        "semilla": 12345,
+        "semillaManual": true,
+        "publicadoEn": "2026-11-22T04:21:32+00:00",
+        "corridas": 2,
+        "modeloLlegadas": "franja",
+        "escenarios": {
+          "regular|08:00-12:00,14:00-16:30": {
+            "jornadas": [
+              {
+                "inicio": "08:00",
+                "fin": "12:00",
+                "tasaLlegada": 5.0,
+                "tasaServicio": 0.38461538461538464,
+                "Wq": {
+                  "promedio": 212.10217963292493,
+                  "minimo": 194.77084556948796,
+                  "maximo": 229.4335136963619,
+                  "limiteInferior": -8.113299328143682,
+                  "limiteSuperior": 432.31765859399354
+                },
+                "utilizacion": {
+                  "promedio": 0.8934665737553362,
+                  "minimo": 0.8879912629303129,
+                  "maximo": 0.8989418845803596,
+                  "limiteInferior": 0.8238961534183961,
+                  "limiteSuperior": 0.9630369940922764
+                },
+                "franjas": [
+                  {
+                    "desde": "08:00",
+                    "hasta": "09:00",
+                    "categoria": "valle",
+                    "tasaLlegada": 0.0,
+                    "Wq": null,
+                    "servicio": null,
+                    "W": null,
+                    "clientes": 0.0,
+                    "corridasConClientes": 0
+                  },
+                  {
+                    "desde": "09:00",
+                    "hasta": "10:00",
+                    "categoria": "pico",
+                    "tasaLlegada": 10.0,
+                    "Wq": {
+                      "promedio": 128.60445626368164,
+                      "minimo": 119.607459097752,
+                      "maximo": 137.60145342961127,
+                      "limiteInferior": 14.286768262596226,
+                      "limiteSuperior": 242.92214426476704
+                    },
+                    "servicio": {
+                      "promedio": 13.15984548829639,
+                      "minimo": 12.943213570433352,
+                      "maximo": 13.376477406159431,
+                      "limiteInferior": 10.407275987538434,
+                      "limiteSuperior": 15.912414989054348
+                    },
+                    "W": {
+                      "promedio": 141.76430175197802,
+                      "minimo": 132.55067266818537,
+                      "maximo": 150.97793083577068,
+                      "limiteInferior": 24.694044250134894,
+                      "limiteSuperior": 258.83455925382117
+                    },
+                    "clientes": 114.5,
+                    "corridasConClientes": 2
+                  },
+                  {
+                    "desde": "10:00",
+                    "hasta": "11:00",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 5.0,
+                    "Wq": {
+                      "promedio": 274.9283754168845,
+                      "minimo": 241.6321813074288,
+                      "maximo": 308.22456952634013,
+                      "limiteInferior": -148.13988387327305,
+                      "limiteSuperior": 697.996634707042
+                    },
+                    "servicio": {
+                      "promedio": 13.779339710981034,
+                      "minimo": 13.50453845692504,
+                      "maximo": 14.054140965037027,
+                      "limiteInferior": 10.287658715188028,
+                      "limiteSuperior": 17.27102070677404
+                    },
+                    "W": {
+                      "promedio": 288.7077151278655,
+                      "minimo": 255.68632227246582,
+                      "maximo": 321.7291079832652,
+                      "limiteInferior": -130.86886316649907,
+                      "limiteSuperior": 708.2842934222301
+                    },
+                    "clientes": 55.0,
+                    "corridasConClientes": 2
+                  },
+                  {
+                    "desde": "11:00",
+                    "hasta": "12:00",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 5.0,
+                    "Wq": {
+                      "promedio": 328.9784661704452,
+                      "minimo": 305.14334252273665,
+                      "maximo": 352.81358981815373,
+                      "limiteInferior": 26.12450519062145,
+                      "limiteSuperior": 631.8324271502689
+                    },
+                    "servicio": {
+                      "promedio": 12.35958875451578,
+                      "minimo": 11.478604761707555,
+                      "maximo": 13.240572747324004,
+                      "limiteInferior": 1.1656257726018247,
+                      "limiteSuperior": 23.553551736429736
+                    },
+                    "W": {
+                      "promedio": 341.33805492496094,
+                      "minimo": 316.62194728444416,
+                      "maximo": 366.05416256547767,
+                      "limiteInferior": 27.29013096322342,
+                      "limiteSuperior": 655.3859788866985
+                    },
+                    "clientes": 52.0,
+                    "corridasConClientes": 2
+                  }
+                ]
+              },
+              {
+                "inicio": "14:00",
+                "fin": "16:30",
+                "tasaLlegada": 5.0,
+                "tasaServicio": 0.38461538461538464,
+                "Wq": {
+                  "promedio": 108.21842799664063,
+                  "minimo": 102.38875062784307,
+                  "maximo": 114.0481053654382,
+                  "limiteInferior": 34.14535380285453,
+                  "limiteSuperior": 182.29150219042674
+                },
+                "utilizacion": {
+                  "promedio": 0.9638178925345302,
+                  "minimo": 0.9626244933068167,
+                  "maximo": 0.9650112917622437,
+                  "limiteInferior": 0.9486543176152097,
+                  "limiteSuperior": 0.9789814674538507
+                },
+                "franjas": [
+                  {
+                    "desde": "14:00",
+                    "hasta": "15:00",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 5.0,
+                    "Wq": {
+                      "promedio": 42.66348045020317,
+                      "minimo": 41.357320707018594,
+                      "maximo": 43.96964019338774,
+                      "limiteInferior": 26.06714733515063,
+                      "limiteSuperior": 59.259813565255705
+                    },
+                    "servicio": {
+                      "promedio": 12.983931053765666,
+                      "minimo": 12.526091186215687,
+                      "maximo": 13.441770921315642,
+                      "limiteInferior": 7.166523960292547,
+                      "limiteSuperior": 18.801338147238784
+                    },
+                    "W": {
+                      "promedio": 55.647411503968826,
+                      "minimo": 53.88341189323428,
+                      "maximo": 57.41141111470338,
+                      "limiteInferior": 33.2336712954432,
+                      "limiteSuperior": 78.06115171249445
+                    },
+                    "clientes": 55.5,
+                    "corridasConClientes": 2
+                  },
+                  {
+                    "desde": "15:00",
+                    "hasta": "16:00",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 5.0,
+                    "Wq": {
+                      "promedio": 132.60577300829755,
+                      "minimo": 120.84329796123153,
+                      "maximo": 144.36824805536358,
+                      "limiteInferior": -16.850643143869462,
+                      "limiteSuperior": 282.0621891604645
+                    },
+                    "servicio": {
+                      "promedio": 13.164100468683596,
+                      "minimo": 12.771019642200008,
+                      "maximo": 13.557181295167183,
+                      "limiteInferior": 8.169535009518372,
+                      "limiteSuperior": 18.158665927848823
+                    },
+                    "W": {
+                      "promedio": 145.76987347698116,
+                      "minimo": 133.61431760343154,
+                      "maximo": 157.92542935053078,
+                      "limiteInferior": -8.681108134351092,
+                      "limiteSuperior": 300.22085508831344
+                    },
+                    "clientes": 62.0,
+                    "corridasConClientes": 2
+                  },
+                  {
+                    "desde": "16:00",
+                    "hasta": "16:30",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 5.0,
+                    "Wq": {
+                      "promedio": 196.9500967167574,
+                      "minimo": 180.15420607314513,
+                      "maximo": 213.74598736036964,
+                      "limiteInferior": -16.46192852738082,
+                      "limiteSuperior": 410.3621219608956
+                    },
+                    "servicio": {
+                      "promedio": 13.414909118480704,
+                      "minimo": 13.056135343534507,
+                      "maximo": 13.773682893426903,
+                      "limiteInferior": 8.856256080044048,
+                      "limiteSuperior": 17.97356215691736
+                    },
+                    "W": {
+                      "promedio": 210.3650058352381,
+                      "minimo": 193.92788896657203,
+                      "maximo": 226.80212270390416,
+                      "limiteInferior": 1.5116336295363908,
+                      "limiteSuperior": 419.2183780409398
+                    },
+                    "clientes": 24.0,
+                    "corridasConClientes": 2
+                  }
+                ]
+              }
+            ],
+            "corridas": 2,
+            "histogramas": {
+              "todas": {
+                "0": 24,
+                "1": 4,
+                "2": 18,
+                "3": 18,
+                "4": 12,
+                "5": 22,
+                "6": 19,
+                "7": 11,
+                "8": 9,
+                "9": 10,
+                "11": 3,
+                "12": 1,
+                "13": 1,
+                "15": 1,
+                "16": 3
+              },
+              "valle": {
+                "0": 24
+              },
+              "normal": {},
+              "pico": {
+                "4": 1,
+                "5": 2,
+                "6": 2,
+                "7": 2,
+                "8": 2,
+                "9": 7,
+                "11": 2,
+                "12": 1,
+                "13": 1,
+                "15": 1,
+                "16": 3
+              },
+              "sinDatos": {
+                "1": 4,
+                "2": 18,
+                "3": 18,
+                "4": 11,
+                "5": 20,
+                "6": 17,
+                "7": 9,
+                "8": 7,
+                "9": 3,
+                "11": 1
+              }
+            }
+          },
+          "quincena|08:00-12:00,14:00-16:30": {
+            "jornadas": [
+              {
+                "inicio": "08:00",
+                "fin": "12:00",
+                "tasaLlegada": 6.5,
+                "tasaServicio": 0.38461538461538464,
+                "Wq": {
+                  "promedio": 323.77707905602915,
+                  "minimo": 304.31973717205364,
+                  "maximo": 343.2344209400047,
+                  "limiteInferior": 76.54810945648885,
+                  "limiteSuperior": 571.0060486555694
+                },
+                "utilizacion": {
+                  "promedio": 0.9202485851498508,
+                  "minimo": 0.9125400012946076,
+                  "maximo": 0.9279571690050941,
+                  "limiteInferior": 0.8223017404591592,
+                  "limiteSuperior": 1.0181954298405425
+                },
+                "franjas": [
+                  {
+                    "desde": "08:00",
+                    "hasta": "09:00",
+                    "categoria": "valle",
+                    "tasaLlegada": 0.0,
+                    "Wq": null,
+                    "servicio": null,
+                    "W": null,
+                    "clientes": 0.0,
+                    "corridasConClientes": 0
+                  },
+                  {
+                    "desde": "09:00",
+                    "hasta": "10:00",
+                    "categoria": "pico",
+                    "tasaLlegada": 13.0,
+                    "Wq": {
+                      "promedio": 180.90047347402742,
+                      "minimo": 174.40587330037874,
+                      "maximo": 187.39507364767607,
+                      "limiteInferior": 98.3787539880518,
+                      "limiteSuperior": 263.42219296000303
+                    },
+                    "servicio": {
+                      "promedio": 12.283257459378786,
+                      "minimo": 12.064938466317297,
+                      "maximo": 12.501576452440275,
+                      "limiteInferior": 9.509251635744004,
+                      "limiteSuperior": 15.057263283013569
+                    },
+                    "W": {
+                      "promedio": 193.1837309334062,
+                      "minimo": 186.47081176669604,
+                      "maximo": 199.89665010011637,
+                      "limiteInferior": 107.88800562379562,
+                      "limiteSuperior": 278.4794562430168
+                    },
+                    "clientes": 167.0,
+                    "corridasConClientes": 2
+                  },
+                  {
+                    "desde": "10:00",
+                    "hasta": "11:00",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 6.5,
+                    "Wq": {
+                      "promedio": 420.73566712750454,
+                      "minimo": 387.9727759958141,
+                      "maximo": 453.49855825919497,
+                      "limiteInferior": 4.44366465924378,
+                      "limiteSuperior": 837.0276695957652
+                    },
+                    "servicio": {
+                      "promedio": 12.572669521351523,
+                      "minimo": 11.85637780834986,
+                      "maximo": 13.288961234353186,
+                      "limiteInferior": 3.4713203651271076,
+                      "limiteSuperior": 21.674018677575937
+                    },
+                    "W": {
+                      "promedio": 433.3083366488561,
+                      "minimo": 399.829153804164,
+                      "maximo": 466.78751949354825,
+                      "limiteInferior": 7.914985024370367,
+                      "limiteSuperior": 858.7016882733418
+                    },
+                    "clientes": 78.0,
+                    "corridasConClientes": 2
+                  },
+                  {
+                    "desde": "11:00",
+                    "hasta": "12:00",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 6.5,
+                    "Wq": {
+                      "promedio": 531.8111546711593,
+                      "minimo": 479.53565137944184,
+                      "maximo": 584.0866579628768,
+                      "limiteInferior": -132.4120928399767,
+                      "limiteSuperior": 1196.0344021822953
+                    },
+                    "servicio": {
+                      "promedio": 12.68320007234075,
+                      "minimo": 12.204623281529024,
+                      "maximo": 13.161776863152477,
+                      "limiteInferior": 6.6023053863055035,
+                      "limiteSuperior": 18.764094758375997
+                    },
+                    "W": {
+                      "promedio": 544.4943547435001,
+                      "minimo": 491.7402746609709,
+                      "maximo": 597.2484348260293,
+                      "limiteInferior": -125.80978745367167,
+                      "limiteSuperior": 1214.798496940672
+                    },
+                    "clientes": 79.0,
+                    "corridasConClientes": 2
+                  }
+                ]
+              },
+              {
+                "inicio": "14:00",
+                "fin": "16:30",
+                "tasaLlegada": 6.5,
+                "tasaServicio": 0.38461538461538464,
+                "Wq": {
+                  "promedio": 181.21331241656264,
+                  "minimo": 176.03120049503374,
+                  "maximo": 186.39542433809154,
+                  "limiteInferior": 115.36833737584479,
+                  "limiteSuperior": 247.0582874572805
+                },
+                "utilizacion": {
+                  "promedio": 0.9825920447793569,
+                  "minimo": 0.9754592675897344,
+                  "maximo": 0.9897248219689794,
+                  "limiteInferior": 0.8919615174704971,
+                  "limiteSuperior": 1.0732225720882167
+                },
+                "franjas": [
+                  {
+                    "desde": "14:00",
+                    "hasta": "15:00",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 6.5,
+                    "Wq": {
+                      "promedio": 81.70890944772434,
+                      "minimo": 74.59588879540894,
+                      "maximo": 88.82193010003974,
+                      "limiteInferior": -8.67058725323399,
+                      "limiteSuperior": 172.08840614868268
+                    },
+                    "servicio": {
+                      "promedio": 12.8267063614794,
+                      "minimo": 11.95756677364075,
+                      "maximo": 13.695845949318052,
+                      "limiteInferior": 1.7832408140870104,
+                      "limiteSuperior": 23.87017190887179
+                    },
+                    "W": {
+                      "promedio": 94.53561580920373,
+                      "minimo": 86.55345556904969,
+                      "maximo": 102.51777604935779,
+                      "limiteInferior": -6.887346439147024,
+                      "limiteSuperior": 195.9585780575545
+                    },
+                    "clientes": 84.0,
+                    "corridasConClientes": 2
+                  },
+                  {
+                    "desde": "15:00",
+                    "hasta": "16:00",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 6.5,
+                    "Wq": {
+                      "promedio": 224.46057346620773,
+                      "minimo": 213.3494776875214,
+                      "maximo": 235.57166924489408,
+                      "limiteInferior": 83.28071565897261,
+                      "limiteSuperior": 365.64043127344286
+                    },
+                    "servicio": {
+                      "promedio": 13.712749447057444,
+                      "minimo": 13.107994746499555,
+                      "maximo": 14.317504147615335,
+                      "limiteInferior": 6.028612406604878,
+                      "limiteSuperior": 21.39688648751001
+                    },
+                    "W": {
+                      "promedio": 238.1733229132652,
+                      "minimo": 226.45747243402096,
+                      "maximo": 249.88917339250943,
+                      "limiteInferior": 89.30932806557752,
+                      "limiteSuperior": 387.0373177609529
+                    },
+                    "clientes": 79.0,
+                    "corridasConClientes": 2
+                  },
+                  {
+                    "desde": "16:00",
+                    "hasta": "16:30",
+                    "categoria": "sinDatos",
+                    "tasaLlegada": 6.5,
+                    "Wq": {
+                      "promedio": 326.6303376946232,
+                      "minimo": 324.6200040133306,
+                      "maximo": 328.64067137591593,
+                      "limiteInferior": 301.08662635209066,
+                      "limiteSuperior": 352.1740490371558
+                    },
+                    "servicio": {
+                      "promedio": 12.680331659076831,
+                      "minimo": 12.610628482014882,
+                      "maximo": 12.750034836138779,
+                      "limiteInferior": 11.794668820565875,
+                      "limiteSuperior": 13.565994497587788
+                    },
+                    "W": {
+                      "promedio": 339.3106693537001,
+                      "minimo": 337.3700388494694,
+                      "maximo": 341.25129985793086,
+                      "limiteInferior": 314.65262084967844,
+                      "limiteSuperior": 363.9687178577218
+                    },
+                    "clientes": 34.0,
+                    "corridasConClientes": 2
+                  }
+                ]
+              }
+            ],
+            "corridas": 2,
+            "histogramas": {
+              "todas": {
+                "0": 24,
+                "1": 3,
+                "2": 5,
+                "3": 7,
+                "4": 7,
+                "5": 18,
+                "6": 18,
+                "7": 10,
+                "8": 15,
+                "9": 11,
+                "10": 10,
+                "11": 10,
+                "12": 2,
+                "13": 4,
+                "14": 2,
+                "15": 1,
+                "16": 2,
+                "17": 2,
+                "18": 2,
+                "20": 2,
+                "22": 1
+              },
+              "valle": {
+                "0": 24
+              },
+              "normal": {},
+              "pico": {
+                "8": 2,
+                "9": 1,
+                "10": 1,
+                "11": 4,
+                "12": 1,
+                "13": 4,
+                "14": 2,
+                "15": 1,
+                "16": 1,
+                "17": 2,
+                "18": 2,
+                "20": 2,
+                "22": 1
+              },
+              "sinDatos": {
+                "1": 3,
+                "2": 5,
+                "3": 7,
+                "4": 7,
+                "5": 18,
+                "6": 18,
+                "7": 10,
+                "8": 13,
+                "9": 10,
+                "10": 9,
+                "11": 6,
+                "12": 1,
+                "16": 1
+              }
+            }
+          }
+        }
+      }
     },
     "ciw_prioridad_total": {
-      "excepcion": "ZeroDivisionError",
-      "mensaje": "float division by zero"
+      "salida": [
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 0.49746118657506216,
+          "inicioServicio": 0.49746118657506216,
+          "tiempoEspera": 0.0,
+          "tiempoServicio": 1.2440600669696407,
+          "terminacionServicio": 1.7415212535447029,
+          "tiempoTotal": 1.2440600669696407,
+          "personasAlLlegar": 0
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 2.53161585666079,
+          "inicioServicio": 2.53161585666079,
+          "tiempoEspera": 0.0,
+          "tiempoServicio": 5.647872377081781,
+          "terminacionServicio": 8.179488233742571,
+          "tiempoTotal": 5.647872377081781,
+          "personasAlLlegar": 1
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 3.302135456982115,
+          "inicioServicio": 3.302135456982115,
+          "tiempoEspera": 0.0,
+          "tiempoServicio": 4.880507774304838,
+          "terminacionServicio": 8.182643231286953,
+          "tiempoTotal": 4.880507774304838,
+          "personasAlLlegar": 2
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 4.186821129048933,
+          "inicioServicio": 4.186821129048933,
+          "tiempoEspera": 0.0,
+          "tiempoServicio": 5.184245457369563,
+          "terminacionServicio": 9.371066586418497,
+          "tiempoTotal": 5.184245457369563,
+          "personasAlLlegar": 4
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 2.1074458524960984,
+          "inicioServicio": 2.1074458524960984,
+          "tiempoEspera": 0.0,
+          "tiempoServicio": 8.167356524790227,
+          "terminacionServicio": 10.274802377286326,
+          "tiempoTotal": 8.167356524790227,
+          "personasAlLlegar": 0
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 4.9305362724137645,
+          "inicioServicio": 8.179488233742571,
+          "tiempoEspera": 3.2489519613288067,
+          "tiempoServicio": 3.191058373041642,
+          "terminacionServicio": 11.370546606784213,
+          "tiempoTotal": 6.440010334370449,
+          "personasAlLlegar": 5
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 8.26282683095777,
+          "inicioServicio": 9.371066586418497,
+          "tiempoEspera": 1.1082397554607262,
+          "tiempoServicio": 4.555508054324541,
+          "terminacionServicio": 13.926574640743038,
+          "tiempoTotal": 5.663747809785267,
+          "personasAlLlegar": 5
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 3.4246221310333995,
+          "inicioServicio": 3.4246221310333995,
+          "tiempoEspera": 0.0,
+          "tiempoServicio": 11.390470432237983,
+          "terminacionServicio": 14.815092563271381,
+          "tiempoTotal": 11.390470432237983,
+          "personasAlLlegar": 3
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 8.753194277958347,
+          "inicioServicio": 10.274802377286326,
+          "tiempoEspera": 1.5216080993279792,
+          "tiempoServicio": 5.559313089323689,
+          "terminacionServicio": 15.834115466610015,
+          "tiempoTotal": 7.0809211886516685,
+          "personasAlLlegar": 6
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 5.335168965772659,
+          "inicioServicio": 8.182643231286953,
+          "tiempoEspera": 2.847474265514294,
+          "tiempoServicio": 24.487359893689842,
+          "terminacionServicio": 32.670003124976795,
+          "tiempoTotal": 27.334834159204135,
+          "personasAlLlegar": 6
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 10.571962954177462,
+          "inicioServicio": 13.926574640743038,
+          "tiempoEspera": 3.354611686565576,
+          "tiempoServicio": 18.868720963384835,
+          "terminacionServicio": 32.79529560412787,
+          "tiempoTotal": 22.22333264995041,
+          "personasAlLlegar": 6
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 14.524989526896878,
+          "inicioServicio": 32.79529560412787,
+          "tiempoEspera": 18.270306077230995,
+          "tiempoServicio": 1.996941324432683,
+          "terminacionServicio": 34.792236928560555,
+          "tiempoTotal": 20.267247401663678,
+          "personasAlLlegar": 8
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 10.979671984115669,
+          "inicioServicio": 15.834115466610015,
+          "tiempoEspera": 4.8544434824943465,
+          "tiempoServicio": 19.50002412440346,
+          "terminacionServicio": 35.334139591013475,
+          "tiempoTotal": 24.354467606897806,
+          "personasAlLlegar": 8
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 9.400316482127485,
+          "inicioServicio": 11.370546606784213,
+          "tiempoEspera": 1.9702301246567284,
+          "tiempoServicio": 24.491162900455766,
+          "terminacionServicio": 35.86170950723998,
+          "tiempoTotal": 26.461393025112493,
+          "personasAlLlegar": 6
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 10.957700669343609,
+          "inicioServicio": 14.815092563271381,
+          "tiempoEspera": 3.8573918939277725,
+          "tiempoServicio": 21.89840725013143,
+          "terminacionServicio": 36.71349981340281,
+          "tiempoTotal": 25.755799144059203,
+          "personasAlLlegar": 7
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 14.528183919236598,
+          "inicioServicio": 34.792236928560555,
+          "tiempoEspera": 20.26405300932396,
+          "tiempoServicio": 4.939318770407439,
+          "terminacionServicio": 39.731555698967995,
+          "tiempoTotal": 25.2033717797314,
+          "personasAlLlegar": 9
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 17.310773562175772,
+          "inicioServicio": 35.86170950723998,
+          "tiempoEspera": 18.550935945064207,
+          "tiempoServicio": 4.6065391835588585,
+          "terminacionServicio": 40.46824869079884,
+          "tiempoTotal": 23.157475128623066,
+          "personasAlLlegar": 9
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 17.901680569946457,
+          "inicioServicio": 39.731555698967995,
+          "tiempoEspera": 21.829875129021538,
+          "tiempoServicio": 2.8855059244812296,
+          "terminacionServicio": 42.617061623449224,
+          "tiempoTotal": 24.715381053502767,
+          "personasAlLlegar": 11
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 17.40751636827124,
+          "inicioServicio": 36.71349981340281,
+          "tiempoEspera": 19.305983445131574,
+          "tiempoServicio": 6.498711290906783,
+          "terminacionServicio": 43.212211104309596,
+          "tiempoTotal": 25.804694736038357,
+          "personasAlLlegar": 10
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 11.362550503690695,
+          "inicioServicio": 32.670003124976795,
+          "tiempoEspera": 21.3074526212861,
+          "tiempoServicio": 13.437745258098012,
+          "terminacionServicio": 46.10774838307481,
+          "tiempoTotal": 34.74519787938411,
+          "personasAlLlegar": 9
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 22.174826487948575,
+          "inicioServicio": 46.10774838307481,
+          "tiempoEspera": 23.93292189512623,
+          "tiempoServicio": 12.538630119892787,
+          "terminacionServicio": 58.64637850296759,
+          "tiempoTotal": 36.471552015019014,
+          "personasAlLlegar": 15
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 17.128855017611432,
+          "inicioServicio": 35.334139591013475,
+          "tiempoEspera": 18.205284573402043,
+          "tiempoServicio": 24.599023675540273,
+          "terminacionServicio": 59.93316326655375,
+          "tiempoTotal": 42.80430824894232,
+          "personasAlLlegar": 8
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 20.699021652207517,
+          "inicioServicio": 42.617061623449224,
+          "tiempoEspera": 21.918039971241708,
+          "tiempoServicio": 19.931892933555098,
+          "terminacionServicio": 62.54895455700432,
+          "tiempoTotal": 41.8499329047968,
+          "personasAlLlegar": 13
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 21.930419163769965,
+          "inicioServicio": 43.212211104309596,
+          "tiempoEspera": 21.28179194053963,
+          "tiempoServicio": 19.53774137121463,
+          "terminacionServicio": 62.749952475524225,
+          "tiempoTotal": 40.819533311754256,
+          "personasAlLlegar": 14
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 19.902448874934333,
+          "inicioServicio": 40.46824869079884,
+          "tiempoEspera": 20.565799815864505,
+          "tiempoServicio": 23.093676122334863,
+          "terminacionServicio": 63.5619248131337,
+          "tiempoTotal": 43.659475938199364,
+          "personasAlLlegar": 12
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 22.859280976035915,
+          "inicioServicio": 58.64637850296759,
+          "tiempoEspera": 35.787097526931674,
+          "tiempoServicio": 6.535420692548556,
+          "terminacionServicio": 65.18179919551615,
+          "tiempoTotal": 42.32251821948023,
+          "personasAlLlegar": 16
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 29.277364868826332,
+          "inicioServicio": 65.18179919551615,
+          "tiempoEspera": 35.90443432668982,
+          "tiempoServicio": 6.838426754284143,
+          "terminacionServicio": 72.02022594980029,
+          "tiempoTotal": 42.74286108097396,
+          "personasAlLlegar": 21
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 27.127120008930504,
+          "inicioServicio": 62.749952475524225,
+          "tiempoEspera": 35.62283246659372,
+          "tiempoServicio": 10.747314941784708,
+          "terminacionServicio": 73.49726741730893,
+          "tiempoTotal": 46.37014740837843,
+          "personasAlLlegar": 19
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 23.999983306681187,
+          "inicioServicio": 59.93316326655375,
+          "tiempoEspera": 35.93317995987256,
+          "tiempoServicio": 13.890892700659464,
+          "terminacionServicio": 73.82405596721321,
+          "tiempoTotal": 49.824072660532025,
+          "personasAlLlegar": 17
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 29.50244020954969,
+          "inicioServicio": 72.02022594980029,
+          "tiempoEspera": 42.5177857402506,
+          "tiempoServicio": 2.624943490697035,
+          "terminacionServicio": 74.64516944049733,
+          "tiempoTotal": 45.14272923094764,
+          "personasAlLlegar": 22
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 31.74445760179965,
+          "inicioServicio": 73.82405596721321,
+          "tiempoEspera": 42.07959836541356,
+          "tiempoServicio": 4.240618025832575,
+          "terminacionServicio": 78.06467399304579,
+          "tiempoTotal": 46.320216391246134,
+          "personasAlLlegar": 24
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 30.996882803463937,
+          "inicioServicio": 73.49726741730893,
+          "tiempoEspera": 42.500384613845,
+          "tiempoServicio": 5.845345631089714,
+          "terminacionServicio": 79.34261304839865,
+          "tiempoTotal": 48.345730244934714,
+          "personasAlLlegar": 23
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 25.60800258060671,
+          "inicioServicio": 62.54895455700432,
+          "tiempoEspera": 36.94095197639761,
+          "tiempoServicio": 20.16311273287738,
+          "terminacionServicio": 82.7120672898817,
+          "tiempoTotal": 57.104064709274994,
+          "personasAlLlegar": 18
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 31.93422751725695,
+          "inicioServicio": 74.64516944049733,
+          "tiempoEspera": 42.71094192324038,
+          "tiempoServicio": 8.926913362955574,
+          "terminacionServicio": 83.5720828034529,
+          "tiempoTotal": 51.63785528619595,
+          "personasAlLlegar": 25
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 27.371150915181225,
+          "inicioServicio": 63.5619248131337,
+          "tiempoEspera": 36.190773897952475,
+          "tiempoServicio": 23.91502865449165,
+          "terminacionServicio": 87.47695346762535,
+          "tiempoTotal": 60.105802552444125,
+          "personasAlLlegar": 20
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 35.69502339530065,
+          "inicioServicio": 79.34261304839865,
+          "tiempoEspera": 43.647589653097995,
+          "tiempoServicio": 9.735046887260012,
+          "terminacionServicio": 89.07765993565866,
+          "tiempoTotal": 53.38263654035801,
+          "personasAlLlegar": 23
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 32.75411390258406,
+          "inicioServicio": 78.06467399304579,
+          "tiempoEspera": 45.31056009046173,
+          "tiempoServicio": 20.161454628563376,
+          "terminacionServicio": 98.22612862160916,
+          "tiempoTotal": 65.47201471902511,
+          "personasAlLlegar": 25
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 38.62322616175128,
+          "inicioServicio": 98.22612862160916,
+          "tiempoEspera": 59.60290245985788,
+          "tiempoServicio": 1.970830277071812,
+          "terminacionServicio": 100.19695889868098,
+          "tiempoTotal": 61.57373273692969,
+          "personasAlLlegar": 26
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 37.34272641297427,
+          "inicioServicio": 82.7120672898817,
+          "tiempoEspera": 45.36934087690743,
+          "tiempoServicio": 18.005533927942636,
+          "terminacionServicio": 100.71760121782434,
+          "tiempoTotal": 63.374874804850066,
+          "personasAlLlegar": 22
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 38.057794622185284,
+          "inicioServicio": 83.5720828034529,
+          "tiempoEspera": 45.51428818126762,
+          "tiempoServicio": 17.461633926990984,
+          "terminacionServicio": 101.03371673044389,
+          "tiempoTotal": 62.9759221082586,
+          "personasAlLlegar": 23
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 44.591674225549546,
+          "inicioServicio": 100.71760121782434,
+          "tiempoEspera": 56.12592699227479,
+          "tiempoServicio": 1.3325467377726028,
+          "terminacionServicio": 102.05014795559694,
+          "tiempoTotal": 57.458473730047395,
+          "personasAlLlegar": 24
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 45.014881024080545,
+          "inicioServicio": 101.03371673044389,
+          "tiempoEspera": 56.01883570636334,
+          "tiempoServicio": 3.727997890419971,
+          "terminacionServicio": 104.76171462086386,
+          "tiempoTotal": 59.74683359678331,
+          "personasAlLlegar": 25
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 39.771233778884906,
+          "inicioServicio": 100.19695889868098,
+          "tiempoEspera": 60.42572511979607,
+          "tiempoServicio": 6.573907554060057,
+          "terminacionServicio": 106.77086645274103,
+          "tiempoTotal": 66.99963267385613,
+          "personasAlLlegar": 26
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 38.21542438964338,
+          "inicioServicio": 87.47695346762535,
+          "tiempoEspera": 49.26152907798197,
+          "tiempoServicio": 23.10380858219297,
+          "terminacionServicio": 110.58076204981832,
+          "tiempoTotal": 72.36533766017493,
+          "personasAlLlegar": 24
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 46.06294184757645,
+          "inicioServicio": 102.05014795559694,
+          "tiempoEspera": 55.987206108020494,
+          "tiempoServicio": 9.184642861867673,
+          "terminacionServicio": 111.23479081746461,
+          "tiempoTotal": 65.17184896988817,
+          "personasAlLlegar": 26
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 38.576539752196894,
+          "inicioServicio": 89.07765993565866,
+          "tiempoEspera": 50.501120183461765,
+          "tiempoServicio": 23.413141503896128,
+          "terminacionServicio": 112.49080143955479,
+          "tiempoTotal": 73.9142616873579,
+          "personasAlLlegar": 25
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 47.38513417423655,
+          "inicioServicio": 104.76171462086386,
+          "tiempoEspera": 57.37658044662731,
+          "tiempoServicio": 9.61344238967645,
+          "terminacionServicio": 114.3751570105403,
+          "tiempoTotal": 66.99002283630375,
+          "personasAlLlegar": 26
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 47.44374873876069,
+          "inicioServicio": 106.77086645274103,
+          "tiempoEspera": 59.32711771398034,
+          "tiempoServicio": 7.818638987185878,
+          "terminacionServicio": 114.58950543992691,
+          "tiempoTotal": 67.14575670116622,
+          "personasAlLlegar": 27
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 50.089233081321865,
+          "inicioServicio": 114.3751570105403,
+          "tiempoEspera": 64.28592392921844,
+          "tiempoServicio": 4.929068647171476,
+          "terminacionServicio": 119.30422565771178,
+          "tiempoTotal": 69.21499257638992,
+          "personasAlLlegar": 31
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 48.715700591699964,
+          "inicioServicio": 111.23479081746461,
+          "tiempoEspera": 62.51909022576465,
+          "tiempoServicio": 10.843270238766365,
+          "terminacionServicio": 122.07806105623098,
+          "tiempoTotal": 73.36236046453101,
+          "personasAlLlegar": 29
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 48.35185100769166,
+          "inicioServicio": 110.58076204981832,
+          "tiempoEspera": 62.22891104212666,
+          "tiempoServicio": 14.187383801496125,
+          "terminacionServicio": 124.76814585131444,
+          "tiempoTotal": 76.41629484362278,
+          "personasAlLlegar": 28
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 52.90247047397844,
+          "inicioServicio": 114.58950543992691,
+          "tiempoEspera": 61.68703496594847,
+          "tiempoServicio": 10.950072307517672,
+          "terminacionServicio": 125.53957774744458,
+          "tiempoTotal": 72.63710727346614,
+          "personasAlLlegar": 32
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 54.46233642677694,
+          "inicioServicio": 122.07806105623098,
+          "tiempoEspera": 67.61572462945404,
+          "tiempoServicio": 4.011043616482809,
+          "terminacionServicio": 126.08910467271379,
+          "tiempoTotal": 71.62676824593684,
+          "personasAlLlegar": 34
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 55.569281451299425,
+          "inicioServicio": 124.76814585131444,
+          "tiempoEspera": 69.19886440001503,
+          "tiempoServicio": 3.3137771394463584,
+          "terminacionServicio": 128.0819229907608,
+          "tiempoTotal": 72.51264153946138,
+          "personasAlLlegar": 35
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 56.56334037966686,
+          "inicioServicio": 128.0819229907608,
+          "tiempoEspera": 71.51858261109393,
+          "tiempoServicio": 2.413388506774197,
+          "terminacionServicio": 130.495311497535,
+          "tiempoTotal": 73.93197111786813,
+          "personasAlLlegar": 38
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 56.31992717668651,
+          "inicioServicio": 125.53957774744458,
+          "tiempoEspera": 69.21965057075806,
+          "tiempoServicio": 5.178738242374692,
+          "terminacionServicio": 130.71831598981927,
+          "tiempoTotal": 74.39838881313275,
+          "personasAlLlegar": 36
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 49.585088548054465,
+          "inicioServicio": 112.49080143955479,
+          "tiempoEspera": 62.90571289150032,
+          "tiempoServicio": 19.667499635217894,
+          "terminacionServicio": 132.15830107477268,
+          "tiempoTotal": 82.57321252671821,
+          "personasAlLlegar": 30
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 53.11029091469794,
+          "inicioServicio": 119.30422565771178,
+          "tiempoEspera": 66.19393474301384,
+          "tiempoServicio": 16.79268460171437,
+          "terminacionServicio": 136.09691025942615,
+          "tiempoTotal": 82.98661934472821,
+          "personasAlLlegar": 33
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 59.72010579652585,
+          "inicioServicio": 130.495311497535,
+          "tiempoEspera": 70.77520570100916,
+          "tiempoServicio": 6.800592064724839,
+          "terminacionServicio": 137.29590356225984,
+          "tiempoTotal": 77.575797765734,
+          "personasAlLlegar": 38
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 56.39694124910431,
+          "inicioServicio": 126.08910467271379,
+          "tiempoEspera": 69.69216342360949,
+          "tiempoServicio": 23.561803290465136,
+          "terminacionServicio": 149.65090796317892,
+          "tiempoTotal": 93.25396671407462,
+          "personasAlLlegar": 37
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 60.875647532583876,
+          "inicioServicio": 136.09691025942615,
+          "tiempoEspera": 75.22126272684227,
+          "tiempoServicio": 14.288655801005717,
+          "terminacionServicio": 150.38556606043187,
+          "tiempoTotal": 89.50991852784799,
+          "personasAlLlegar": 40
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 60.878728185664635,
+          "inicioServicio": 137.29590356225984,
+          "tiempoEspera": 76.4171753765952,
+          "tiempoServicio": 16.356639423467925,
+          "terminacionServicio": 153.65254298572776,
+          "tiempoTotal": 92.77381480006312,
+          "personasAlLlegar": 41
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 60.19888080581145,
+          "inicioServicio": 132.15830107477268,
+          "tiempoEspera": 71.95942026896122,
+          "tiempoServicio": 23.172488542870184,
+          "terminacionServicio": 155.33078961764286,
+          "tiempoTotal": 95.13190881183141,
+          "personasAlLlegar": 39
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 59.88494906045956,
+          "inicioServicio": 130.71831598981927,
+          "tiempoEspera": 70.83336692935971,
+          "tiempoServicio": 24.851707402354464,
+          "terminacionServicio": 155.57002339217374,
+          "tiempoTotal": 95.68507433171418,
+          "personasAlLlegar": 39
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 60.88167284442113,
+          "inicioServicio": 149.65090796317892,
+          "tiempoEspera": 88.76923511875779,
+          "tiempoServicio": 6.407793730080783,
+          "terminacionServicio": 156.0587016932597,
+          "tiempoTotal": 95.17702884883857,
+          "personasAlLlegar": 42
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 62.65924779119143,
+          "inicioServicio": 155.57002339217374,
+          "tiempoEspera": 92.9107756009823,
+          "tiempoServicio": 3.6027261349198625,
+          "terminacionServicio": 159.1727495270936,
+          "tiempoTotal": 96.51350173590217,
+          "personasAlLlegar": 45
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 61.514267557535945,
+          "inicioServicio": 150.38556606043187,
+          "tiempoEspera": 88.87129850289593,
+          "tiempoServicio": 9.88293154254987,
+          "terminacionServicio": 160.26849760298174,
+          "tiempoTotal": 98.7542300454458,
+          "personasAlLlegar": 43
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 61.70293399761308,
+          "inicioServicio": 153.65254298572776,
+          "tiempoEspera": 91.94960898811468,
+          "tiempoServicio": 16.61623956869869,
+          "terminacionServicio": 170.26878255442645,
+          "tiempoTotal": 108.56584855681336,
+          "personasAlLlegar": 44
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 64.75125752372313,
+          "inicioServicio": 159.1727495270936,
+          "tiempoEspera": 94.42149200337047,
+          "tiempoServicio": 11.116219425003095,
+          "terminacionServicio": 170.2889689520967,
+          "tiempoTotal": 105.53771142837357,
+          "personasAlLlegar": 45
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 67.21989871254956,
+          "inicioServicio": 170.2889689520967,
+          "tiempoEspera": 103.06907023954713,
+          "tiempoServicio": 1.5701204788102814,
+          "terminacionServicio": 171.85908943090698,
+          "tiempoTotal": 104.63919071835741,
+          "personasAlLlegar": 47
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 65.24887431972112,
+          "inicioServicio": 160.26849760298174,
+          "tiempoEspera": 95.01962328326061,
+          "tiempoServicio": 14.58870997272848,
+          "terminacionServicio": 174.85720757571022,
+          "tiempoTotal": 109.6083332559891,
+          "personasAlLlegar": 45
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 68.05374023952153,
+          "inicioServicio": 174.85720757571022,
+          "tiempoEspera": 106.80346733618869,
+          "tiempoServicio": 1.6749742735248674,
+          "terminacionServicio": 176.5321818492351,
+          "tiempoTotal": 108.47844160971356,
+          "personasAlLlegar": 49
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 62.5662148016932,
+          "inicioServicio": 155.33078961764286,
+          "tiempoEspera": 92.76457481594966,
+          "tiempoServicio": 22.934932143289046,
+          "terminacionServicio": 178.2657217609319,
+          "tiempoTotal": 115.6995069592387,
+          "personasAlLlegar": 44
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 63.30866499549656,
+          "inicioServicio": 156.0587016932597,
+          "tiempoEspera": 92.75003669776315,
+          "tiempoServicio": 22.846368494192347,
+          "terminacionServicio": 178.90507018745205,
+          "tiempoTotal": 115.5964051919555,
+          "personasAlLlegar": 45
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 68.23465894153877,
+          "inicioServicio": 176.5321818492351,
+          "tiempoEspera": 108.29752290769632,
+          "tiempoServicio": 7.010254841526688,
+          "terminacionServicio": 183.54243669076178,
+          "tiempoTotal": 115.307777749223,
+          "personasAlLlegar": 50
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 67.19437138773627,
+          "inicioServicio": 170.26878255442645,
+          "tiempoEspera": 103.07441116669018,
+          "tiempoServicio": 18.29205780201238,
+          "terminacionServicio": 188.56084035643883,
+          "tiempoTotal": 121.36646896870256,
+          "personasAlLlegar": 46
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 69.2862566075704,
+          "inicioServicio": 178.2657217609319,
+          "tiempoEspera": 108.97946515336152,
+          "tiempoServicio": 14.433046520802293,
+          "terminacionServicio": 192.6987682817342,
+          "tiempoTotal": 123.41251167416381,
+          "personasAlLlegar": 51
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 70.2246882206975,
+          "inicioServicio": 183.54243669076178,
+          "tiempoEspera": 113.31774847006427,
+          "tiempoServicio": 10.637042306239437,
+          "terminacionServicio": 194.1794789970012,
+          "tiempoTotal": 123.95479077630371,
+          "personasAlLlegar": 53
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 67.59021234568883,
+          "inicioServicio": 171.85908943090698,
+          "tiempoEspera": 104.26887708521815,
+          "tiempoServicio": 22.567184448057304,
+          "terminacionServicio": 194.42627387896428,
+          "tiempoTotal": 126.83606153327545,
+          "personasAlLlegar": 48
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 69.96043852078414,
+          "inicioServicio": 178.90507018745205,
+          "tiempoEspera": 108.94463166666792,
+          "tiempoServicio": 19.94199000515377,
+          "terminacionServicio": 198.84706019260582,
+          "tiempoTotal": 128.88662167182167,
+          "personasAlLlegar": 52
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 72.73595756997152,
+          "inicioServicio": 194.42627387896428,
+          "tiempoEspera": 121.69031630899276,
+          "tiempoServicio": 4.80790494072474,
+          "terminacionServicio": 199.23417881968902,
+          "tiempoTotal": 126.4982212497175,
+          "personasAlLlegar": 56
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 72.93625889952024,
+          "inicioServicio": 198.84706019260582,
+          "tiempoEspera": 125.91080129308558,
+          "tiempoServicio": 7.392578422453738,
+          "terminacionServicio": 206.23963861505956,
+          "tiempoTotal": 133.30337971553934,
+          "personasAlLlegar": 57
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 73.83260724385542,
+          "inicioServicio": 199.23417881968902,
+          "tiempoEspera": 125.4015715758336,
+          "tiempoServicio": 10.905352961770177,
+          "terminacionServicio": 210.1395317814592,
+          "tiempoTotal": 136.30692453760378,
+          "personasAlLlegar": 56
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 71.80355069586224,
+          "inicioServicio": 192.6987682817342,
+          "tiempoEspera": 120.89521758587196,
+          "tiempoServicio": 17.84672709987413,
+          "terminacionServicio": 210.54549538160833,
+          "tiempoTotal": 138.7419446857461,
+          "personasAlLlegar": 55
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 70.71683374918749,
+          "inicioServicio": 188.56084035643883,
+          "tiempoEspera": 117.84400660725134,
+          "tiempoServicio": 24.76760255336407,
+          "terminacionServicio": 213.3284429098029,
+          "tiempoTotal": 142.61160916061542,
+          "personasAlLlegar": 54
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 72.16631005368033,
+          "inicioServicio": 194.1794789970012,
+          "tiempoEspera": 122.01316894332088,
+          "tiempoServicio": 23.0040094224681,
+          "terminacionServicio": 217.1834884194693,
+          "tiempoTotal": 145.017178365789,
+          "personasAlLlegar": 55
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 76.22309209529236,
+          "inicioServicio": 210.1395317814592,
+          "tiempoEspera": 133.91643968616683,
+          "tiempoServicio": 10.411925881711255,
+          "terminacionServicio": 220.55145766317045,
+          "tiempoTotal": 144.32836556787808,
+          "personasAlLlegar": 57
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 75.903945257638,
+          "inicioServicio": 206.23963861505956,
+          "tiempoEspera": 130.33569335742158,
+          "tiempoServicio": 22.91968461473772,
+          "terminacionServicio": 229.15932322979728,
+          "tiempoTotal": 153.2553779721593,
+          "personasAlLlegar": 56
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 76.93640075272003,
+          "inicioServicio": 210.54549538160833,
+          "tiempoEspera": 133.6090946288883,
+          "tiempoServicio": 19.41768820853534,
+          "terminacionServicio": 229.96318359014367,
+          "tiempoTotal": 153.02678283742364,
+          "personasAlLlegar": 58
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 78.02761852244527,
+          "inicioServicio": 213.3284429098029,
+          "tiempoEspera": 135.30082438735764,
+          "tiempoServicio": 20.114694514419654,
+          "terminacionServicio": 233.44313742422256,
+          "tiempoTotal": 155.4155189017773,
+          "personasAlLlegar": 59
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 79.05379277475508,
+          "inicioServicio": 217.1834884194693,
+          "tiempoEspera": 138.12969564471422,
+          "tiempoServicio": 24.438122535669265,
+          "terminacionServicio": 241.62161095513858,
+          "tiempoTotal": 162.56781818038348,
+          "personasAlLlegar": 59
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 81.30442727223118,
+          "inicioServicio": 233.44313742422256,
+          "tiempoEspera": 152.13871015199138,
+          "tiempoServicio": 8.452899756439365,
+          "terminacionServicio": 241.89603718066192,
+          "tiempoTotal": 160.59160990843074,
+          "personasAlLlegar": 62
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 79.33165630626412,
+          "inicioServicio": 220.55145766317045,
+          "tiempoEspera": 141.21980135690632,
+          "tiempoServicio": 22.146359100716325,
+          "terminacionServicio": 242.69781676388678,
+          "tiempoTotal": 163.36616045762264,
+          "personasAlLlegar": 60
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 82.28538442574286,
+          "inicioServicio": 241.89603718066192,
+          "tiempoEspera": 159.61065275491904,
+          "tiempoServicio": 2.131890609193391,
+          "terminacionServicio": 244.0279277898553,
+          "tiempoTotal": 161.74254336411244,
+          "personasAlLlegar": 64
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 79.8454899778474,
+          "inicioServicio": 229.15932322979728,
+          "tiempoEspera": 149.3138332519499,
+          "tiempoServicio": 16.65830609886632,
+          "terminacionServicio": 245.8176293286636,
+          "tiempoTotal": 165.9721393508162,
+          "personasAlLlegar": 60
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 80.51665079377734,
+          "inicioServicio": 229.96318359014367,
+          "tiempoEspera": 149.44653279636634,
+          "tiempoServicio": 23.785410752319592,
+          "terminacionServicio": 253.74859434246326,
+          "tiempoTotal": 173.23194354868593,
+          "personasAlLlegar": 61
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 84.48702512342902,
+          "inicioServicio": 253.74859434246326,
+          "tiempoEspera": 169.26156921903424,
+          "tiempoServicio": 6.598684259362585,
+          "terminacionServicio": 260.34727860182585,
+          "tiempoTotal": 175.86025347839683,
+          "personasAlLlegar": 66
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 82.22042464238201,
+          "inicioServicio": 241.62161095513858,
+          "tiempoEspera": 159.40118631275658,
+          "tiempoServicio": 23.227611367425254,
+          "terminacionServicio": 264.84922232256383,
+          "tiempoTotal": 182.62879768018183,
+          "personasAlLlegar": 63
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 84.01273373103972,
+          "inicioServicio": 245.8176293286636,
+          "tiempoEspera": 161.8048955976239,
+          "tiempoServicio": 20.028776420557392,
+          "terminacionServicio": 265.846405749221,
+          "tiempoTotal": 181.8336720181813,
+          "personasAlLlegar": 65
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 82.71366407994154,
+          "inicioServicio": 242.69781676388678,
+          "tiempoEspera": 159.98415268394524,
+          "tiempoServicio": 23.482241755952174,
+          "terminacionServicio": 266.18005851983895,
+          "tiempoTotal": 183.4663944398974,
+          "personasAlLlegar": 64
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 82.74686382758527,
+          "inicioServicio": 244.0279277898553,
+          "tiempoEspera": 161.28106396227003,
+          "tiempoServicio": 22.904485966207858,
+          "terminacionServicio": 266.93241375606317,
+          "tiempoTotal": 184.18554992847788,
+          "personasAlLlegar": 65
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 87.15884186358872,
+          "inicioServicio": 266.18005851983895,
+          "tiempoEspera": 179.02121665625023,
+          "tiempoServicio": 1.8588218946372876,
+          "terminacionServicio": 268.03888041447624,
+          "tiempoTotal": 180.88003855088752,
+          "personasAlLlegar": 70
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 86.55449745694813,
+          "inicioServicio": 265.846405749221,
+          "tiempoEspera": 179.29190829227286,
+          "tiempoServicio": 4.34488970392988,
+          "terminacionServicio": 270.1912954531509,
+          "tiempoTotal": 183.63679799620274,
+          "personasAlLlegar": 69
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 87.86137928812784,
+          "inicioServicio": 270.1912954531509,
+          "tiempoEspera": 182.32991616502304,
+          "tiempoServicio": 1.5916381191934192,
+          "terminacionServicio": 271.7829335723443,
+          "tiempoTotal": 183.92155428421646,
+          "personasAlLlegar": 72
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 87.44320583482116,
+          "inicioServicio": 266.93241375606317,
+          "tiempoEspera": 179.489207921242,
+          "tiempoServicio": 10.071923331804442,
+          "terminacionServicio": 277.0043370878676,
+          "tiempoTotal": 189.56113125304645,
+          "personasAlLlegar": 71
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 87.4707062197797,
+          "inicioServicio": 268.03888041447624,
+          "tiempoEspera": 180.56817419469655,
+          "tiempoServicio": 14.909361854942972,
+          "terminacionServicio": 282.9482422694192,
+          "tiempoTotal": 195.47753604963953,
+          "personasAlLlegar": 72
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 85.03748482474687,
+          "inicioServicio": 260.34727860182585,
+          "tiempoEspera": 175.309793777079,
+          "tiempoServicio": 24.207765944832204,
+          "terminacionServicio": 284.55504454665805,
+          "tiempoTotal": 199.5175597219112,
+          "personasAlLlegar": 67
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 85.32085854478626,
+          "inicioServicio": 264.84922232256383,
+          "tiempoEspera": 179.52836377777757,
+          "tiempoServicio": 20.407926170308315,
+          "terminacionServicio": 285.25714849287215,
+          "tiempoTotal": 199.93628994808589,
+          "personasAlLlegar": 68
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 90.88134024926232,
+          "inicioServicio": 285.25714849287215,
+          "tiempoEspera": 194.3758082436098,
+          "tiempoServicio": 3.5139735978437443,
+          "terminacionServicio": 288.7711220907159,
+          "tiempoTotal": 197.88978184145355,
+          "personasAlLlegar": 76
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 89.80897582571038,
+          "inicioServicio": 277.0043370878676,
+          "tiempoEspera": 187.19536126215723,
+          "tiempoServicio": 17.147200377588433,
+          "terminacionServicio": 294.15153746545604,
+          "tiempoTotal": 204.34256163974567,
+          "personasAlLlegar": 73
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 88.902110787565,
+          "inicioServicio": 271.7829335723443,
+          "tiempoEspera": 182.8808227847793,
+          "tiempoServicio": 23.91090300460047,
+          "terminacionServicio": 295.69383657694476,
+          "tiempoTotal": 206.79172578937977,
+          "personasAlLlegar": 73
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 89.83766792008177,
+          "inicioServicio": 282.9482422694192,
+          "tiempoEspera": 193.11057434933744,
+          "tiempoServicio": 13.400355305246194,
+          "terminacionServicio": 296.3485975746654,
+          "tiempoTotal": 206.51092965458363,
+          "personasAlLlegar": 74
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 91.92984708764315,
+          "inicioServicio": 295.69383657694476,
+          "tiempoEspera": 203.7639894893016,
+          "tiempoServicio": 1.5382687577948104,
+          "terminacionServicio": 297.2321053347396,
+          "tiempoTotal": 205.3022582470964,
+          "personasAlLlegar": 79
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 90.68916088771974,
+          "inicioServicio": 284.55504454665805,
+          "tiempoEspera": 193.86588365893832,
+          "tiempoServicio": 12.806422260984561,
+          "terminacionServicio": 297.3614668076426,
+          "tiempoTotal": 206.67230591992288,
+          "personasAlLlegar": 75
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 95.26111799443021,
+          "inicioServicio": 297.2321053347396,
+          "tiempoEspera": 201.97098734030936,
+          "tiempoServicio": 9.50387289502811,
+          "terminacionServicio": 306.7359782297677,
+          "tiempoTotal": 211.47486023533747,
+          "personasAlLlegar": 81
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 91.34818240673226,
+          "inicioServicio": 288.7711220907159,
+          "tiempoEspera": 197.42293968398363,
+          "tiempoServicio": 18.946695043123327,
+          "terminacionServicio": 307.7178171338392,
+          "tiempoTotal": 216.36963472710696,
+          "personasAlLlegar": 77
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 91.53343630400785,
+          "inicioServicio": 294.15153746545604,
+          "tiempoEspera": 202.61810116144818,
+          "tiempoServicio": 18.796784965268785,
+          "terminacionServicio": 312.94832243072483,
+          "tiempoTotal": 221.41488612671697,
+          "personasAlLlegar": 78
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 97.39256127050578,
+          "inicioServicio": 307.7178171338392,
+          "tiempoEspera": 210.32525586333344,
+          "tiempoServicio": 6.084669046617364,
+          "terminacionServicio": 313.8024861804566,
+          "tiempoTotal": 216.4099249099508,
+          "personasAlLlegar": 84
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 97.06221004644814,
+          "inicioServicio": 306.7359782297677,
+          "tiempoEspera": 209.67376818331954,
+          "tiempoServicio": 9.209618442058911,
+          "terminacionServicio": 315.9455966718266,
+          "tiempoTotal": 218.88338662537845,
+          "personasAlLlegar": 83
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 94.0681226148951,
+          "inicioServicio": 296.3485975746654,
+          "tiempoEspera": 202.2804749597703,
+          "tiempoServicio": 20.367493483545957,
+          "terminacionServicio": 316.71609105821136,
+          "tiempoTotal": 222.64796844331624,
+          "personasAlLlegar": 80
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 99.08087008542395,
+          "inicioServicio": 315.9455966718266,
+          "tiempoEspera": 216.86472658640264,
+          "tiempoServicio": 2.697628438155732,
+          "terminacionServicio": 318.6432251099823,
+          "tiempoTotal": 219.56235502455837,
+          "personasAlLlegar": 86
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 98.8078420368316,
+          "inicioServicio": 312.94832243072483,
+          "tiempoEspera": 214.14048039389323,
+          "tiempoServicio": 5.6997483148884385,
+          "terminacionServicio": 318.64807074561327,
+          "tiempoTotal": 219.84022870878167,
+          "personasAlLlegar": 84
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 96.98976271184664,
+          "inicioServicio": 297.3614668076426,
+          "tiempoEspera": 200.37170409579596,
+          "tiempoServicio": 23.39512551322929,
+          "terminacionServicio": 320.7565923208719,
+          "tiempoTotal": 223.76682960902525,
+          "personasAlLlegar": 82
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 100.65131312020226,
+          "inicioServicio": 316.71609105821136,
+          "tiempoEspera": 216.06477793800912,
+          "tiempoServicio": 4.9000362011121865,
+          "terminacionServicio": 321.61612725932355,
+          "tiempoTotal": 220.9648141391213,
+          "personasAlLlegar": 86
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 99.00203755811971,
+          "inicioServicio": 313.8024861804566,
+          "tiempoEspera": 214.8004486223369,
+          "tiempoServicio": 8.95701415641929,
+          "terminacionServicio": 322.7595003368759,
+          "tiempoTotal": 223.75746277875618,
+          "personasAlLlegar": 85
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 103.66698184967504,
+          "inicioServicio": 322.7595003368759,
+          "tiempoEspera": 219.09251848720083,
+          "tiempoServicio": 1.5906232197896202,
+          "terminacionServicio": 324.3501235566655,
+          "tiempoTotal": 220.68314170699045,
+          "personasAlLlegar": 88
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 103.62851877039137,
+          "inicioServicio": 321.61612725932355,
+          "tiempoEspera": 217.98760848893218,
+          "tiempoServicio": 4.168083557721957,
+          "terminacionServicio": 325.7842108170455,
+          "tiempoTotal": 222.15569204665414,
+          "personasAlLlegar": 87
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 103.76384399618706,
+          "inicioServicio": 324.3501235566655,
+          "tiempoEspera": 220.58627956047843,
+          "tiempoServicio": 4.521348098032661,
+          "terminacionServicio": 328.87147165469815,
+          "tiempoTotal": 225.1076276585111,
+          "personasAlLlegar": 89
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 101.1609940266767,
+          "inicioServicio": 318.6432251099823,
+          "tiempoEspera": 217.48223108330563,
+          "tiempoServicio": 12.340490030794285,
+          "terminacionServicio": 330.9837151407766,
+          "tiempoTotal": 229.82272111409992,
+          "personasAlLlegar": 85
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 101.82702998678496,
+          "inicioServicio": 318.64807074561327,
+          "tiempoEspera": 216.8210407588283,
+          "tiempoServicio": 14.252691418453821,
+          "terminacionServicio": 332.9007621640671,
+          "tiempoTotal": 231.07373217728212,
+          "personasAlLlegar": 86
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 104.1254776815257,
+          "inicioServicio": 328.87147165469815,
+          "tiempoEspera": 224.74599397317246,
+          "tiempoServicio": 4.27220125860083,
+          "terminacionServicio": 333.143672913299,
+          "tiempoTotal": 229.0181952317733,
+          "personasAlLlegar": 91
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 103.27340661257337,
+          "inicioServicio": 320.7565923208719,
+          "tiempoEspera": 217.48318570829855,
+          "tiempoServicio": 14.380748757541312,
+          "terminacionServicio": 335.1373410784132,
+          "tiempoTotal": 231.86393446583986,
+          "personasAlLlegar": 86
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 108.41594173109284,
+          "inicioServicio": 332.9007621640671,
+          "tiempoEspera": 224.48482043297423,
+          "tiempoServicio": 14.331949722955642,
+          "terminacionServicio": 347.23271188702273,
+          "tiempoTotal": 238.81677015592987,
+          "personasAlLlegar": 91
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 103.91225008341993,
+          "inicioServicio": 325.7842108170455,
+          "tiempoEspera": 221.87196073362557,
+          "tiempoServicio": 22.58743064215963,
+          "terminacionServicio": 348.37164145920514,
+          "tiempoTotal": 244.4593913757852,
+          "personasAlLlegar": 90
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 104.90420249128684,
+          "inicioServicio": 330.9837151407766,
+          "tiempoEspera": 226.07951264948977,
+          "tiempoServicio": 17.40789297005381,
+          "terminacionServicio": 348.3916081108304,
+          "tiempoTotal": 243.48740561954358,
+          "personasAlLlegar": 91
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 110.2066047945603,
+          "inicioServicio": 333.143672913299,
+          "tiempoEspera": 222.9370681187387,
+          "tiempoServicio": 15.401741371069875,
+          "terminacionServicio": 348.54541428436886,
+          "tiempoTotal": 238.33880948980857,
+          "personasAlLlegar": 92
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 110.98771389183449,
+          "inicioServicio": 347.23271188702273,
+          "tiempoEspera": 236.24499799518824,
+          "tiempoServicio": 7.1359433453940255,
+          "terminacionServicio": 354.36865523241676,
+          "tiempoTotal": 243.38094134058227,
+          "personasAlLlegar": 93
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 112.81319836659159,
+          "inicioServicio": 348.54541428436886,
+          "tiempoEspera": 235.73221591777727,
+          "tiempoServicio": 9.844923206232636,
+          "terminacionServicio": 358.3903374906015,
+          "tiempoTotal": 245.5771391240099,
+          "personasAlLlegar": 94
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 110.29546230026331,
+          "inicioServicio": 335.1373410784132,
+          "tiempoEspera": 224.84187877814992,
+          "tiempoServicio": 23.485689465688324,
+          "terminacionServicio": 358.62303054410154,
+          "tiempoTotal": 248.32756824383824,
+          "personasAlLlegar": 93
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 112.66143967245479,
+          "inicioServicio": 348.3916081108304,
+          "tiempoEspera": 235.73016843837564,
+          "tiempoServicio": 13.420944374433532,
+          "terminacionServicio": 361.81255248526395,
+          "tiempoTotal": 249.15111281280917,
+          "personasAlLlegar": 93
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 115.73683713352862,
+          "inicioServicio": 358.62303054410154,
+          "tiempoEspera": 242.8861934105729,
+          "tiempoServicio": 3.420031112463903,
+          "terminacionServicio": 362.04306165656544,
+          "tiempoTotal": 246.3062245230368,
+          "personasAlLlegar": 95
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 114.3320325168819,
+          "inicioServicio": 358.3903374906015,
+          "tiempoEspera": 244.0583049737196,
+          "tiempoServicio": 5.8566736060471385,
+          "terminacionServicio": 364.24701109664863,
+          "tiempoTotal": 249.91497857976674,
+          "personasAlLlegar": 96
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 113.51332833648866,
+          "inicioServicio": 354.36865523241676,
+          "tiempoEspera": 240.8553268959281,
+          "tiempoServicio": 10.626300910667567,
+          "terminacionServicio": 364.9949561430843,
+          "tiempoTotal": 251.48162780659567,
+          "personasAlLlegar": 95
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 111.97622614092826,
+          "inicioServicio": 348.37164145920514,
+          "tiempoEspera": 236.3954153182769,
+          "tiempoServicio": 17.86117303412277,
+          "terminacionServicio": 366.2328144933279,
+          "tiempoTotal": 254.25658835239966,
+          "personasAlLlegar": 93
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 118.63198374749544,
+          "inicioServicio": 364.24701109664863,
+          "tiempoEspera": 245.6150273491532,
+          "tiempoServicio": 5.076399170861862,
+          "terminacionServicio": 369.3234102675105,
+          "tiempoTotal": 250.69142652001506,
+          "personasAlLlegar": 98
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 120.59858983337811,
+          "inicioServicio": 366.2328144933279,
+          "tiempoEspera": 245.63422465994978,
+          "tiempoServicio": 5.433413280547995,
+          "terminacionServicio": 371.6662277738759,
+          "tiempoTotal": 251.06763794049778,
+          "personasAlLlegar": 99
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 116.76258966182145,
+          "inicioServicio": 362.04306165656544,
+          "tiempoEspera": 245.280471994744,
+          "tiempoServicio": 16.367675162420483,
+          "terminacionServicio": 378.4107368189859,
+          "tiempoTotal": 261.6481471571645,
+          "personasAlLlegar": 97
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 115.75979973571201,
+          "inicioServicio": 361.81255248526395,
+          "tiempoEspera": 246.05275274955193,
+          "tiempoServicio": 23.112482686457554,
+          "terminacionServicio": 384.9250351717215,
+          "tiempoTotal": 269.1652354360095,
+          "personasAlLlegar": 96
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 119.03465269878126,
+          "inicioServicio": 364.9949561430843,
+          "tiempoEspera": 245.96030344430307,
+          "tiempoServicio": 20.274715453710314,
+          "terminacionServicio": 385.26967159679464,
+          "tiempoTotal": 266.2350188980134,
+          "personasAlLlegar": 99
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 120.61445325659284,
+          "inicioServicio": 369.3234102675105,
+          "tiempoEspera": 248.70895701091766,
+          "tiempoServicio": 16.894294769005228,
+          "terminacionServicio": 386.2177050365157,
+          "tiempoTotal": 265.60325177992286,
+          "personasAlLlegar": 100
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 121.20091280494127,
+          "inicioServicio": 371.6662277738759,
+          "tiempoEspera": 250.46531496893465,
+          "tiempoServicio": 15.079487879705482,
+          "terminacionServicio": 386.7457156535814,
+          "tiempoTotal": 265.54480284864013,
+          "personasAlLlegar": 101
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 121.59097036131128,
+          "inicioServicio": 384.9250351717215,
+          "tiempoEspera": 263.3340648104102,
+          "tiempoServicio": 10.894104209914417,
+          "terminacionServicio": 395.8191393816359,
+          "tiempoTotal": 274.22816902032463,
+          "personasAlLlegar": 103
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 123.90262119030137,
+          "inicioServicio": 386.7457156535814,
+          "tiempoEspera": 262.84309446328,
+          "tiempoServicio": 11.780459219773661,
+          "terminacionServicio": 398.52617487335505,
+          "tiempoTotal": 274.6235536830537,
+          "personasAlLlegar": 105
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 121.24412949490933,
+          "inicioServicio": 378.4107368189859,
+          "tiempoEspera": 257.1666073240766,
+          "tiempoServicio": 20.122633416854796,
+          "terminacionServicio": 398.5333702358407,
+          "tiempoTotal": 277.2892407409314,
+          "personasAlLlegar": 102
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 124.01000994099682,
+          "inicioServicio": 395.8191393816359,
+          "tiempoEspera": 271.8091294406391,
+          "tiempoServicio": 3.9056322701287627,
+          "terminacionServicio": 399.7247716517647,
+          "tiempoTotal": 275.71476171076785,
+          "personasAlLlegar": 106
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 127.15713235585791,
+          "inicioServicio": 398.5333702358407,
+          "tiempoEspera": 271.3762378799828,
+          "tiempoServicio": 4.176361058471571,
+          "terminacionServicio": 402.7097312943123,
+          "tiempoTotal": 275.55259893845437,
+          "personasAlLlegar": 105
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 123.84872192749667,
+          "inicioServicio": 386.2177050365157,
+          "tiempoEspera": 262.36898310901904,
+          "tiempoServicio": 18.258096703071658,
+          "terminacionServicio": 404.4758017395874,
+          "tiempoTotal": 280.6270798120907,
+          "personasAlLlegar": 104
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 126.81614801599821,
+          "inicioServicio": 398.52617487335505,
+          "tiempoEspera": 271.71002685735687,
+          "tiempoServicio": 7.19445519786035,
+          "terminacionServicio": 405.7206300712154,
+          "tiempoTotal": 278.9044820552172,
+          "personasAlLlegar": 104
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 123.07955968117692,
+          "inicioServicio": 385.26967159679464,
+          "tiempoEspera": 262.1901119156177,
+          "tiempoServicio": 23.924992220100307,
+          "terminacionServicio": 409.19466381689494,
+          "tiempoTotal": 286.115104135718,
+          "personasAlLlegar": 103
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 127.38233739458357,
+          "inicioServicio": 399.7247716517647,
+          "tiempoEspera": 272.34243425718114,
+          "tiempoServicio": 13.507899563044134,
+          "terminacionServicio": 413.2326712148088,
+          "tiempoTotal": 285.8503338202253,
+          "personasAlLlegar": 106
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 128.57570041816442,
+          "inicioServicio": 409.19466381689494,
+          "tiempoEspera": 280.61896339873056,
+          "tiempoServicio": 11.244434859864384,
+          "terminacionServicio": 420.43909867675933,
+          "tiempoTotal": 291.86339825859494,
+          "personasAlLlegar": 109
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 129.83760637539103,
+          "inicioServicio": 413.2326712148088,
+          "tiempoEspera": 283.3950648394178,
+          "tiempoServicio": 7.683142228827933,
+          "terminacionServicio": 420.91581344363675,
+          "tiempoTotal": 291.0782070682457,
+          "personasAlLlegar": 110
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 128.3438410311773,
+          "inicioServicio": 405.7206300712154,
+          "tiempoEspera": 277.3767890400381,
+          "tiempoServicio": 16.289795535427913,
+          "terminacionServicio": 422.0104256066433,
+          "tiempoTotal": 293.666584575466,
+          "personasAlLlegar": 108
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 127.47596517338242,
+          "inicioServicio": 402.7097312943123,
+          "tiempoEspera": 275.2337661209299,
+          "tiempoServicio": 20.340504572420627,
+          "terminacionServicio": 423.0502358667329,
+          "tiempoTotal": 295.5742706933505,
+          "personasAlLlegar": 107
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 128.1144288909677,
+          "inicioServicio": 404.4758017395874,
+          "tiempoEspera": 276.3613728486197,
+          "tiempoServicio": 18.81229546838756,
+          "terminacionServicio": 423.28809720797494,
+          "tiempoTotal": 295.17366831700724,
+          "personasAlLlegar": 107
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 137.25776017632737,
+          "inicioServicio": 423.0502358667329,
+          "tiempoEspera": 285.7924756904056,
+          "tiempoServicio": 14.397178940965034,
+          "terminacionServicio": 437.44741480769795,
+          "tiempoTotal": 300.1896546313706,
+          "personasAlLlegar": 110
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 130.81972236590164,
+          "inicioServicio": 420.91581344363675,
+          "tiempoEspera": 290.0960910777351,
+          "tiempoServicio": 17.109085437183353,
+          "terminacionServicio": 438.0248988808201,
+          "tiempoTotal": 307.20517651491843,
+          "personasAlLlegar": 110
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 135.13152552119166,
+          "inicioServicio": 422.0104256066433,
+          "tiempoEspera": 286.8789000854516,
+          "tiempoServicio": 16.926524829168386,
+          "terminacionServicio": 438.9369504358117,
+          "tiempoTotal": 303.80542491462,
+          "personasAlLlegar": 110
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 130.0008919742637,
+          "inicioServicio": 420.43909867675933,
+          "tiempoEspera": 290.4382067024956,
+          "tiempoServicio": 20.293099603604844,
+          "terminacionServicio": 440.7321982803642,
+          "tiempoTotal": 310.73130630610046,
+          "personasAlLlegar": 111
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 139.72381418714414,
+          "inicioServicio": 423.28809720797494,
+          "tiempoEspera": 283.56428302083077,
+          "tiempoServicio": 19.97567601323766,
+          "terminacionServicio": 443.2637732212126,
+          "tiempoTotal": 303.53995903406843,
+          "personasAlLlegar": 110
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 141.100766479005,
+          "inicioServicio": 438.0248988808201,
+          "tiempoEspera": 296.9241324018151,
+          "tiempoServicio": 7.320073046713503,
+          "terminacionServicio": 445.3449719275336,
+          "tiempoTotal": 304.2442054485286,
+          "personasAlLlegar": 112
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 142.84757376626627,
+          "inicioServicio": 438.9369504358117,
+          "tiempoEspera": 296.08937666954546,
+          "tiempoServicio": 9.96496827432668,
+          "terminacionServicio": 448.9019187101384,
+          "tiempoTotal": 306.05434494387214,
+          "personasAlLlegar": 113
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 142.86101095668798,
+          "inicioServicio": 440.7321982803642,
+          "tiempoEspera": 297.87118732367617,
+          "tiempoServicio": 8.433727086527256,
+          "terminacionServicio": 449.16592536689143,
+          "tiempoTotal": 306.3049144102034,
+          "personasAlLlegar": 114
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 143.06114559238313,
+          "inicioServicio": 443.2637732212126,
+          "tiempoEspera": 300.2026276288295,
+          "tiempoServicio": 8.000087196414768,
+          "terminacionServicio": 451.26386041762737,
+          "tiempoTotal": 308.20271482524424,
+          "personasAlLlegar": 115
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 139.88408657254266,
+          "inicioServicio": 437.44741480769795,
+          "tiempoEspera": 297.56332823515527,
+          "tiempoServicio": 15.133059403775519,
+          "terminacionServicio": 452.5804742114735,
+          "tiempoTotal": 312.6963876389308,
+          "personasAlLlegar": 111
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 146.70532676067265,
+          "inicioServicio": 451.26386041762737,
+          "tiempoEspera": 304.55853365695475,
+          "tiempoServicio": 11.821735695326367,
+          "terminacionServicio": 463.08559611295374,
+          "tiempoTotal": 316.3802693522811,
+          "personasAlLlegar": 119
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 146.58490049569025,
+          "inicioServicio": 449.16592536689143,
+          "tiempoEspera": 302.5810248712012,
+          "tiempoServicio": 15.7270397126577,
+          "terminacionServicio": 464.8929650795491,
+          "tiempoTotal": 318.3080645838589,
+          "personasAlLlegar": 118
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 146.98984616665243,
+          "inicioServicio": 452.5804742114735,
+          "tiempoEspera": 305.5906280448211,
+          "tiempoServicio": 12.649290083206495,
+          "terminacionServicio": 465.22976429467997,
+          "tiempoTotal": 318.23991812802757,
+          "personasAlLlegar": 120
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 147.23798302223264,
+          "inicioServicio": 463.08559611295374,
+          "tiempoEspera": 315.8476130907211,
+          "tiempoServicio": 3.5233817352853407,
+          "terminacionServicio": 466.6089778482391,
+          "tiempoTotal": 319.37099482600644,
+          "personasAlLlegar": 121
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 145.8258533173436,
+          "inicioServicio": 448.9019187101384,
+          "tiempoEspera": 303.0760653927948,
+          "tiempoServicio": 18.077387459777583,
+          "terminacionServicio": 466.97930616991596,
+          "tiempoTotal": 321.1534528525724,
+          "personasAlLlegar": 117
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 144.47702332963084,
+          "inicioServicio": 445.3449719275336,
+          "tiempoEspera": 300.8679485979028,
+          "tiempoServicio": 22.562099437503832,
+          "terminacionServicio": 467.90707136503744,
+          "tiempoTotal": 323.4300480354066,
+          "personasAlLlegar": 116
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 152.9591070751876,
+          "inicioServicio": 466.6089778482391,
+          "tiempoEspera": 313.6498707730515,
+          "tiempoServicio": 9.406475098366855,
+          "terminacionServicio": 476.01545294660593,
+          "tiempoTotal": 323.05634587141833,
+          "personasAlLlegar": 122
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 150.8764295439794,
+          "inicioServicio": 464.8929650795491,
+          "tiempoEspera": 314.0165355355697,
+          "tiempoServicio": 12.3892864382492,
+          "terminacionServicio": 477.28225151779833,
+          "tiempoTotal": 326.4058219738189,
+          "personasAlLlegar": 120
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 157.85856977918976,
+          "inicioServicio": 477.28225151779833,
+          "tiempoEspera": 319.4236817386086,
+          "tiempoServicio": 2.8485641306525054,
+          "terminacionServicio": 480.13081564845083,
+          "tiempoTotal": 322.2722458692611,
+          "personasAlLlegar": 122
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 153.7215463658986,
+          "inicioServicio": 466.97930616991596,
+          "tiempoEspera": 313.2577598040174,
+          "tiempoServicio": 13.173583481848596,
+          "terminacionServicio": 480.15288965176455,
+          "tiempoTotal": 326.431343285866,
+          "personasAlLlegar": 122
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 151.95464619866414,
+          "inicioServicio": 465.22976429467997,
+          "tiempoEspera": 313.27511809601583,
+          "tiempoServicio": 15.10762191641993,
+          "terminacionServicio": 480.3373862110999,
+          "tiempoTotal": 328.38274001243576,
+          "personasAlLlegar": 121
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 155.5700328067908,
+          "inicioServicio": 467.90707136503744,
+          "tiempoEspera": 312.3370385582466,
+          "tiempoServicio": 24.98297283985613,
+          "terminacionServicio": 492.89004420489357,
+          "tiempoTotal": 337.32001139810274,
+          "personasAlLlegar": 121
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 155.5982710966935,
+          "inicioServicio": 476.01545294660593,
+          "tiempoEspera": 320.4171818499124,
+          "tiempoServicio": 22.911775246438708,
+          "terminacionServicio": 498.92722819304464,
+          "tiempoTotal": 343.32895709635113,
+          "personasAlLlegar": 122
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 158.7531739283578,
+          "inicioServicio": 480.15288965176455,
+          "tiempoEspera": 321.39971572340676,
+          "tiempoServicio": 20.067539319298646,
+          "terminacionServicio": 500.2204289710632,
+          "tiempoTotal": 341.4672550427054,
+          "personasAlLlegar": 124
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 159.81923231755462,
+          "inicioServicio": 480.3373862110999,
+          "tiempoEspera": 320.5181538935453,
+          "tiempoServicio": 20.49520579499233,
+          "terminacionServicio": 500.8325920060922,
+          "tiempoTotal": 341.0133596885376,
+          "personasAlLlegar": 124
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 158.28210841027158,
+          "inicioServicio": 480.13081564845083,
+          "tiempoEspera": 321.84870723817926,
+          "tiempoServicio": 23.704547581625945,
+          "terminacionServicio": 503.8353632300768,
+          "tiempoTotal": 345.5532548198052,
+          "personasAlLlegar": 123
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 160.52662017202053,
+          "inicioServicio": 500.2204289710632,
+          "tiempoEspera": 339.6938087990427,
+          "tiempoServicio": 4.168450804119743,
+          "terminacionServicio": 504.38887977518294,
+          "tiempoTotal": 343.86225960316244,
+          "personasAlLlegar": 126
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 160.19246345269647,
+          "inicioServicio": 498.92722819304464,
+          "tiempoEspera": 338.73476474034817,
+          "tiempoServicio": 6.007663877743312,
+          "terminacionServicio": 504.93489207078795,
+          "tiempoTotal": 344.7424286180915,
+          "personasAlLlegar": 126
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 165.58277693706816,
+          "inicioServicio": 504.93489207078795,
+          "tiempoEspera": 339.3521151337198,
+          "tiempoServicio": 1.345153077510247,
+          "terminacionServicio": 506.2800451482982,
+          "tiempoTotal": 340.69726821123004,
+          "personasAlLlegar": 130
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 165.13427206281747,
+          "inicioServicio": 504.38887977518294,
+          "tiempoEspera": 339.25460771236544,
+          "tiempoServicio": 3.447512172876145,
+          "terminacionServicio": 507.8363919480591,
+          "tiempoTotal": 342.7021198852416,
+          "personasAlLlegar": 129
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 159.92786865685193,
+          "inicioServicio": 492.89004420489357,
+          "tiempoEspera": 332.9621755480416,
+          "tiempoServicio": 20.310489872930134,
+          "terminacionServicio": 513.2005340778237,
+          "tiempoTotal": 353.27266542097175,
+          "personasAlLlegar": 125
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 160.69996452324915,
+          "inicioServicio": 500.8325920060922,
+          "tiempoEspera": 340.1326274828431,
+          "tiempoServicio": 16.406303346990057,
+          "terminacionServicio": 517.2388953530823,
+          "tiempoTotal": 356.53893082983313,
+          "personasAlLlegar": 127
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 168.77235529774183,
+          "inicioServicio": 513.2005340778237,
+          "tiempoEspera": 344.4281787800819,
+          "tiempoServicio": 7.274543784027969,
+          "terminacionServicio": 520.4750778618517,
+          "tiempoTotal": 351.7027225641099,
+          "personasAlLlegar": 133
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 161.90391903927502,
+          "inicioServicio": 503.8353632300768,
+          "tiempoEspera": 341.93144419080176,
+          "tiempoServicio": 20.869083561991204,
+          "terminacionServicio": 524.704446792068,
+          "tiempoTotal": 362.80052775279296,
+          "personasAlLlegar": 128
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 170.35875984181513,
+          "inicioServicio": 520.4750778618517,
+          "tiempoEspera": 350.11631802003654,
+          "tiempoServicio": 8.16601937237067,
+          "terminacionServicio": 528.6410972342223,
+          "tiempoTotal": 358.2823373924072,
+          "personasAlLlegar": 133
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 174.04510549118172,
+          "inicioServicio": 528.6410972342223,
+          "tiempoEspera": 354.5959917430406,
+          "tiempoServicio": 1.311338391578147,
+          "terminacionServicio": 529.9524356258005,
+          "tiempoTotal": 355.90733013461875,
+          "personasAlLlegar": 134
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 166.3625021972454,
+          "inicioServicio": 506.2800451482982,
+          "tiempoEspera": 339.91754295105284,
+          "tiempoServicio": 23.727496520973546,
+          "terminacionServicio": 530.0075416692717,
+          "tiempoTotal": 363.6450394720264,
+          "personasAlLlegar": 131
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 167.29598988511293,
+          "inicioServicio": 507.8363919480591,
+          "tiempoEspera": 340.54040206294616,
+          "tiempoServicio": 22.84049488163538,
+          "terminacionServicio": 530.6768868296945,
+          "tiempoTotal": 363.38089694458154,
+          "personasAlLlegar": 132
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 175.15982354311376,
+          "inicioServicio": 530.0075416692717,
+          "tiempoEspera": 354.847718126158,
+          "tiempoServicio": 6.394130350075329,
+          "terminacionServicio": 536.4016720193471,
+          "tiempoTotal": 361.2418484762333,
+          "personasAlLlegar": 135
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 175.85170758006404,
+          "inicioServicio": 536.4016720193471,
+          "tiempoEspera": 360.54996443928303,
+          "tiempoServicio": 1.601542773196229,
+          "terminacionServicio": 538.0032147925433,
+          "tiempoTotal": 362.15150721247926,
+          "personasAlLlegar": 137
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 169.68791748856142,
+          "inicioServicio": 517.2388953530823,
+          "tiempoEspera": 347.55097786452086,
+          "tiempoServicio": 20.8971862554165,
+          "terminacionServicio": 538.1360816084988,
+          "tiempoTotal": 368.44816411993736,
+          "personasAlLlegar": 134
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 176.70150825098995,
+          "inicioServicio": 538.1360816084988,
+          "tiempoEspera": 361.43457335750884,
+          "tiempoServicio": 3.3949426965349403,
+          "terminacionServicio": 541.5310243050337,
+          "tiempoTotal": 364.8295160540438,
+          "personasAlLlegar": 138
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 174.2529542157464,
+          "inicioServicio": 529.9524356258005,
+          "tiempoEspera": 355.6994814100541,
+          "tiempoServicio": 15.601368591424944,
+          "terminacionServicio": 545.5538042172254,
+          "tiempoTotal": 371.30085000147903,
+          "personasAlLlegar": 135
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 172.952575126998,
+          "inicioServicio": 524.704446792068,
+          "tiempoEspera": 351.75187166507,
+          "tiempoServicio": 21.196481492723365,
+          "terminacionServicio": 545.9009282847913,
+          "tiempoTotal": 372.94835315779335,
+          "personasAlLlegar": 133
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 175.62782235712845,
+          "inicioServicio": 530.6768868296945,
+          "tiempoEspera": 355.049064472566,
+          "tiempoServicio": 16.260700004066393,
+          "terminacionServicio": 546.9375868337609,
+          "tiempoTotal": 371.3097644766324,
+          "personasAlLlegar": 136
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 178.4263686183601,
+          "inicioServicio": 545.5538042172254,
+          "tiempoEspera": 367.1274355988653,
+          "tiempoServicio": 2.6793307197326612,
+          "terminacionServicio": 548.2331349369581,
+          "tiempoTotal": 369.80676631859797,
+          "personasAlLlegar": 139
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 179.20689288854655,
+          "inicioServicio": 546.9375868337609,
+          "tiempoEspera": 367.7306939452143,
+          "tiempoServicio": 4.743802747342215,
+          "terminacionServicio": 551.6813895811031,
+          "tiempoTotal": 372.4744966925565,
+          "personasAlLlegar": 140
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 178.15924958323652,
+          "inicioServicio": 541.5310243050337,
+          "tiempoEspera": 363.37177472179724,
+          "tiempoServicio": 11.646877403661279,
+          "terminacionServicio": 553.177901708695,
+          "tiempoTotal": 375.0186521254585,
+          "personasAlLlegar": 139
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 176.61213571684434,
+          "inicioServicio": 538.0032147925433,
+          "tiempoEspera": 361.39107907569894,
+          "tiempoServicio": 16.53342009996345,
+          "terminacionServicio": 554.5366348925068,
+          "tiempoTotal": 377.9244991756624,
+          "personasAlLlegar": 137
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 178.441771983937,
+          "inicioServicio": 545.9009282847913,
+          "tiempoEspera": 367.4591563008544,
+          "tiempoServicio": 10.206360569945787,
+          "terminacionServicio": 556.1072888547371,
+          "tiempoTotal": 377.66551687080016,
+          "personasAlLlegar": 140
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 180.62573915183404,
+          "inicioServicio": 548.2331349369581,
+          "tiempoEspera": 367.607395785124,
+          "tiempoServicio": 8.871321256387432,
+          "terminacionServicio": 557.1044561933455,
+          "tiempoTotal": 376.47871704151146,
+          "personasAlLlegar": 141
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 180.99319435617176,
+          "inicioServicio": 551.6813895811031,
+          "tiempoEspera": 370.6881952249313,
+          "tiempoServicio": 12.269456340037209,
+          "terminacionServicio": 563.9508459211403,
+          "tiempoTotal": 382.9576515649685,
+          "personasAlLlegar": 142
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 182.32585088351072,
+          "inicioServicio": 556.1072888547371,
+          "tiempoEspera": 373.7814379712264,
+          "tiempoServicio": 13.564906187405882,
+          "terminacionServicio": 569.672195042143,
+          "tiempoTotal": 387.3463441586323,
+          "personasAlLlegar": 145
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 181.12005215276486,
+          "inicioServicio": 553.177901708695,
+          "tiempoEspera": 372.05784955593015,
+          "tiempoServicio": 16.818734313917616,
+          "terminacionServicio": 569.9966360226126,
+          "tiempoTotal": 388.87658386984776,
+          "personasAlLlegar": 143
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 181.9879910356879,
+          "inicioServicio": 554.5366348925068,
+          "tiempoEspera": 372.54864385681884,
+          "tiempoServicio": 16.206735699696765,
+          "terminacionServicio": 570.7433705922035,
+          "tiempoTotal": 388.7553795565156,
+          "personasAlLlegar": 144
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 183.315610107704,
+          "inicioServicio": 569.672195042143,
+          "tiempoEspera": 386.356584934439,
+          "tiempoServicio": 4.459596770865346,
+          "terminacionServicio": 574.1317918130084,
+          "tiempoTotal": 390.81618170530436,
+          "personasAlLlegar": 148
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 182.8542961649863,
+          "inicioServicio": 563.9508459211403,
+          "tiempoEspera": 381.096549756154,
+          "tiempoServicio": 10.859649572744047,
+          "terminacionServicio": 574.8104954938843,
+          "tiempoTotal": 391.95619932889804,
+          "personasAlLlegar": 147
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 182.63657267256735,
+          "inicioServicio": 557.1044561933455,
+          "tiempoEspera": 374.4678835207782,
+          "tiempoServicio": 21.465981885526844,
+          "terminacionServicio": 578.5704380788724,
+          "tiempoTotal": 395.933865406305,
+          "personasAlLlegar": 146
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 188.85013531359712,
+          "inicioServicio": 578.5704380788724,
+          "tiempoEspera": 389.7203027652753,
+          "tiempoServicio": 1.3323617211073042,
+          "terminacionServicio": 579.9027997999797,
+          "tiempoTotal": 391.0526644863826,
+          "personasAlLlegar": 151
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 185.33352383016194,
+          "inicioServicio": 570.7433705922035,
+          "tiempoEspera": 385.4098467620416,
+          "tiempoServicio": 9.572152025168066,
+          "terminacionServicio": 580.3155226173716,
+          "tiempoTotal": 394.98199878720965,
+          "personasAlLlegar": 149
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 188.06938628775615,
+          "inicioServicio": 574.8104954938843,
+          "tiempoEspera": 386.74110920612816,
+          "tiempoServicio": 10.364535620432662,
+          "terminacionServicio": 585.175031114317,
+          "tiempoTotal": 397.1056448265608,
+          "personasAlLlegar": 151
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 184.37377978173103,
+          "inicioServicio": 569.9966360226126,
+          "tiempoEspera": 385.62285624088156,
+          "tiempoServicio": 17.446755260951818,
+          "terminacionServicio": 587.4433912835644,
+          "tiempoTotal": 403.0696115018334,
+          "personasAlLlegar": 148
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 189.49379954769768,
+          "inicioServicio": 579.9027997999797,
+          "tiempoEspera": 390.409000252282,
+          "tiempoServicio": 9.252520582407328,
+          "terminacionServicio": 589.155320382387,
+          "tiempoTotal": 399.6615208346893,
+          "personasAlLlegar": 152
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 186.53473068919055,
+          "inicioServicio": 574.1317918130084,
+          "tiempoEspera": 387.5970611238178,
+          "tiempoServicio": 23.434476713879008,
+          "terminacionServicio": 597.5662685268874,
+          "tiempoTotal": 411.0315378376968,
+          "personasAlLlegar": 150
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 191.1962476970832,
+          "inicioServicio": 585.175031114317,
+          "tiempoEspera": 393.9787834172338,
+          "tiempoServicio": 12.471679909070872,
+          "terminacionServicio": 597.6467110233879,
+          "tiempoTotal": 406.45046332630466,
+          "personasAlLlegar": 154
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 194.9801308581678,
+          "inicioServicio": 589.155320382387,
+          "tiempoEspera": 394.1751895242192,
+          "tiempoServicio": 9.830971322022492,
+          "terminacionServicio": 598.9862917044095,
+          "tiempoTotal": 404.0061608462417,
+          "personasAlLlegar": 153
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 197.3203128846251,
+          "inicioServicio": 597.6467110233879,
+          "tiempoEspera": 400.3263981387628,
+          "tiempoServicio": 2.822061513546373,
+          "terminacionServicio": 600.4687725369342,
+          "tiempoTotal": 403.14845965230916,
+          "personasAlLlegar": 155
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 199.3049194972401,
+          "inicioServicio": 600.4687725369342,
+          "tiempoEspera": 401.1638530396941,
+          "tiempoServicio": 3.496802745199375,
+          "terminacionServicio": 603.9655752821336,
+          "tiempoTotal": 404.6606557848935,
+          "personasAlLlegar": 155
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 190.2049607935497,
+          "inicioServicio": 580.3155226173716,
+          "tiempoEspera": 390.11056182382185,
+          "tiempoServicio": 24.031544214145356,
+          "terminacionServicio": 604.3470668315169,
+          "tiempoTotal": 414.1421060379672,
+          "personasAlLlegar": 153
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 198.95606799088276,
+          "inicioServicio": 598.9862917044095,
+          "tiempoEspera": 400.03022371352677,
+          "tiempoServicio": 5.859486644205504,
+          "terminacionServicio": 604.845778348615,
+          "tiempoTotal": 405.88971035773227,
+          "personasAlLlegar": 155
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 194.47412028482407,
+          "inicioServicio": 587.4433912835644,
+          "tiempoEspera": 392.9692709987404,
+          "tiempoServicio": 20.748420994661956,
+          "terminacionServicio": 608.1918122782264,
+          "tiempoTotal": 413.71769199340235,
+          "personasAlLlegar": 152
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 199.85457927798217,
+          "inicioServicio": 604.3470668315169,
+          "tiempoEspera": 404.4924875535348,
+          "tiempoServicio": 8.762386379087502,
+          "terminacionServicio": 613.1094532106044,
+          "tiempoTotal": 413.2548739326223,
+          "personasAlLlegar": 157
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 196.1023657675417,
+          "inicioServicio": 597.5662685268874,
+          "tiempoEspera": 401.4639027593457,
+          "tiempoServicio": 15.601997781984437,
+          "terminacionServicio": 613.1682663088718,
+          "tiempoTotal": 417.0659005413301,
+          "personasAlLlegar": 154
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 199.7647820281839,
+          "inicioServicio": 603.9655752821336,
+          "tiempoEspera": 404.2007932539497,
+          "tiempoServicio": 10.660263059565409,
+          "terminacionServicio": 614.625838341699,
+          "tiempoTotal": 414.8610563135151,
+          "personasAlLlegar": 156
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 203.63718417336636,
+          "inicioServicio": 614.625838341699,
+          "tiempoEspera": 410.9886541683327,
+          "tiempoServicio": 1.5900032187633997,
+          "terminacionServicio": 616.2158415604624,
+          "tiempoTotal": 412.5786573870961,
+          "personasAlLlegar": 162
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 200.31049060129942,
+          "inicioServicio": 604.845778348615,
+          "tiempoEspera": 404.5352877473156,
+          "tiempoServicio": 14.387338547908485,
+          "terminacionServicio": 619.2331168965235,
+          "tiempoTotal": 418.92262629522406,
+          "personasAlLlegar": 158
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 202.50127160308992,
+          "inicioServicio": 613.1094532106044,
+          "tiempoEspera": 410.60818160751455,
+          "tiempoServicio": 6.758323445871611,
+          "terminacionServicio": 619.867776656476,
+          "tiempoTotal": 417.36650505338616,
+          "personasAlLlegar": 160
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 204.92092692152386,
+          "inicioServicio": 616.2158415604624,
+          "tiempoEspera": 411.29491463893856,
+          "tiempoServicio": 3.919975430517866,
+          "terminacionServicio": 620.1358169909803,
+          "tiempoTotal": 415.21489006945643,
+          "personasAlLlegar": 163
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 202.7423823222303,
+          "inicioServicio": 613.1682663088718,
+          "tiempoEspera": 410.4258839866415,
+          "tiempoServicio": 7.4357875158023035,
+          "terminacionServicio": 620.6040538246741,
+          "tiempoTotal": 417.8616715024438,
+          "personasAlLlegar": 161
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 201.25969771419292,
+          "inicioServicio": 608.1918122782264,
+          "tiempoEspera": 406.93211456403344,
+          "tiempoServicio": 16.57044652383354,
+          "terminacionServicio": 624.7622588020599,
+          "tiempoTotal": 423.502561087867,
+          "personasAlLlegar": 159
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 205.2513566922268,
+          "inicioServicio": 620.1358169909803,
+          "tiempoEspera": 414.8844602987535,
+          "tiempoServicio": 5.5185524333878675,
+          "terminacionServicio": 625.6543694243682,
+          "tiempoTotal": 420.40301273214135,
+          "personasAlLlegar": 166
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 206.75220177360694,
+          "inicioServicio": 624.7622588020599,
+          "tiempoEspera": 418.010057028453,
+          "tiempoServicio": 1.3077438213679216,
+          "terminacionServicio": 626.0700026234279,
+          "tiempoTotal": 419.3178008498209,
+          "personasAlLlegar": 167
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 205.07696126361395,
+          "inicioServicio": 619.2331168965235,
+          "tiempoEspera": 414.15615563290953,
+          "tiempoServicio": 10.154731673038327,
+          "terminacionServicio": 629.3878485695618,
+          "tiempoTotal": 424.31088730594786,
+          "personasAlLlegar": 164
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 206.3000617415297,
+          "inicioServicio": 620.6040538246741,
+          "tiempoEspera": 414.3039920831444,
+          "tiempoServicio": 10.787258682930997,
+          "terminacionServicio": 631.3913125076051,
+          "tiempoTotal": 425.0912507660754,
+          "personasAlLlegar": 166
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 208.00836797414817,
+          "inicioServicio": 626.0700026234279,
+          "tiempoEspera": 418.06163464927965,
+          "tiempoServicio": 11.099395007325711,
+          "terminacionServicio": 637.1693976307536,
+          "tiempoTotal": 429.16102965660536,
+          "personasAlLlegar": 169
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 208.35920305962313,
+          "inicioServicio": 629.3878485695618,
+          "tiempoEspera": 421.02864550993866,
+          "tiempoServicio": 8.948784094486996,
+          "terminacionServicio": 638.3366326640488,
+          "tiempoTotal": 429.97742960442565,
+          "personasAlLlegar": 170
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 207.09739873825816,
+          "inicioServicio": 625.6543694243682,
+          "tiempoEspera": 418.55697068611,
+          "tiempoServicio": 15.130731543334605,
+          "terminacionServicio": 640.7851009677028,
+          "tiempoTotal": 433.6877022294446,
+          "personasAlLlegar": 168
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 208.39612608617873,
+          "inicioServicio": 631.3913125076051,
+          "tiempoEspera": 422.9951864214264,
+          "tiempoServicio": 10.356083170207853,
+          "terminacionServicio": 641.747395677813,
+          "tiempoTotal": 433.35126959163426,
+          "personasAlLlegar": 171
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 205.09027781192907,
+          "inicioServicio": 619.867776656476,
+          "tiempoEspera": 414.777498844547,
+          "tiempoServicio": 22.58158554594911,
+          "terminacionServicio": 642.4493622024252,
+          "tiempoTotal": 437.3590843904961,
+          "personasAlLlegar": 165
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 208.65589219135313,
+          "inicioServicio": 637.1693976307536,
+          "tiempoEspera": 428.51350543940043,
+          "tiempoServicio": 7.5454958533690615,
+          "terminacionServicio": 644.7148934841226,
+          "tiempoTotal": 436.0590012927695,
+          "personasAlLlegar": 172
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 210.06798542696185,
+          "inicioServicio": 640.7851009677028,
+          "tiempoEspera": 430.7171155407409,
+          "tiempoServicio": 5.4345785360483205,
+          "terminacionServicio": 646.2196795037511,
+          "tiempoTotal": 436.1516940767892,
+          "personasAlLlegar": 174
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 209.50295031198286,
+          "inicioServicio": 638.3366326640488,
+          "tiempoEspera": 428.8336823520659,
+          "tiempoServicio": 10.793973395930038,
+          "terminacionServicio": 649.1306060599788,
+          "tiempoTotal": 439.62765574799596,
+          "personasAlLlegar": 173
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 212.88513043161566,
+          "inicioServicio": 649.1306060599788,
+          "tiempoEspera": 436.2454756283632,
+          "tiempoServicio": 1.279061193623761,
+          "terminacionServicio": 650.4096672536026,
+          "tiempoTotal": 437.52453682198694,
+          "personasAlLlegar": 177
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 212.11080876372674,
+          "inicioServicio": 646.2196795037511,
+          "tiempoEspera": 434.1088707400244,
+          "tiempoServicio": 9.7941859560691,
+          "terminacionServicio": 656.0138654598202,
+          "tiempoTotal": 443.9030566960935,
+          "personasAlLlegar": 176
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 210.461237827945,
+          "inicioServicio": 641.747395677813,
+          "tiempoEspera": 431.28615784986795,
+          "tiempoServicio": 18.10133297141283,
+          "terminacionServicio": 659.8487286492258,
+          "tiempoTotal": 449.3874908212808,
+          "personasAlLlegar": 174
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 210.59737168151167,
+          "inicioServicio": 642.4493622024252,
+          "tiempoEspera": 431.8519905209135,
+          "tiempoServicio": 23.39526080625376,
+          "terminacionServicio": 665.8446230086789,
+          "tiempoTotal": 455.24725132716725,
+          "personasAlLlegar": 174
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 211.029793438787,
+          "inicioServicio": 644.7148934841226,
+          "tiempoEspera": 433.6851000453356,
+          "tiempoServicio": 22.763315396970825,
+          "terminacionServicio": 667.4782088810935,
+          "tiempoTotal": 456.44841544230644,
+          "personasAlLlegar": 175
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 215.14260667746154,
+          "inicioServicio": 656.0138654598202,
+          "tiempoEspera": 440.8712587823586,
+          "tiempoServicio": 12.077102779489564,
+          "terminacionServicio": 668.0909682393097,
+          "tiempoTotal": 452.9483615618482,
+          "personasAlLlegar": 178
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 215.01162538380783,
+          "inicioServicio": 650.4096672536026,
+          "tiempoEspera": 435.3980418697948,
+          "tiempoServicio": 19.45386339107324,
+          "terminacionServicio": 669.8635306446758,
+          "tiempoTotal": 454.851905260868,
+          "personasAlLlegar": 177
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 215.69684910860042,
+          "inicioServicio": 659.8487286492258,
+          "tiempoEspera": 444.1518795406254,
+          "tiempoServicio": 14.08582630488479,
+          "terminacionServicio": 673.9345549541106,
+          "tiempoTotal": 458.23770584551016,
+          "personasAlLlegar": 179
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 218.1389212301712,
+          "inicioServicio": 673.9345549541106,
+          "tiempoEspera": 455.7956337239394,
+          "tiempoServicio": 4.154942435302928,
+          "terminacionServicio": 678.0894973894135,
+          "tiempoTotal": 459.9505761592423,
+          "personasAlLlegar": 183
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 218.76334900892945,
+          "inicioServicio": 678.0894973894135,
+          "tiempoEspera": 459.326148380484,
+          "tiempoServicio": 2.004605666190514,
+          "terminacionServicio": 680.094103055604,
+          "tiempoTotal": 461.33075404667454,
+          "personasAlLlegar": 184
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 217.48380585072871,
+          "inicioServicio": 669.8635306446758,
+          "tiempoEspera": 452.37972479394716,
+          "tiempoServicio": 11.426140869772553,
+          "terminacionServicio": 681.2896715144484,
+          "tiempoTotal": 463.8058656637197,
+          "personasAlLlegar": 182
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 217.24801123585846,
+          "inicioServicio": 668.0909682393097,
+          "tiempoEspera": 450.84295700345126,
+          "tiempoServicio": 13.43063678389558,
+          "terminacionServicio": 681.5216050232053,
+          "tiempoTotal": 464.27359378734684,
+          "personasAlLlegar": 181
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 215.70719601142358,
+          "inicioServicio": 665.8446230086789,
+          "tiempoEspera": 450.1374269972554,
+          "tiempoServicio": 16.73907913636208,
+          "terminacionServicio": 682.583702145041,
+          "tiempoTotal": 466.87650613361745,
+          "personasAlLlegar": 180
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 220.38462250909203,
+          "inicioServicio": 680.094103055604,
+          "tiempoEspera": 459.709480546512,
+          "tiempoServicio": 4.969833280703369,
+          "terminacionServicio": 685.0639363363074,
+          "tiempoTotal": 464.67931382721537,
+          "personasAlLlegar": 185
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 221.21935386799314,
+          "inicioServicio": 681.2896715144484,
+          "tiempoEspera": 460.07031764645524,
+          "tiempoServicio": 4.711979229232725,
+          "terminacionServicio": 686.0016507436811,
+          "tiempoTotal": 464.78229687568796,
+          "personasAlLlegar": 185
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 221.8591806264121,
+          "inicioServicio": 685.0639363363074,
+          "tiempoEspera": 463.20475570989527,
+          "tiempoServicio": 1.658419903775325,
+          "terminacionServicio": 686.7223562400827,
+          "tiempoTotal": 464.8631756136706,
+          "personasAlLlegar": 188
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 217.00584251201687,
+          "inicioServicio": 667.4782088810935,
+          "tiempoEspera": 450.47236636907655,
+          "tiempoServicio": 20.478504734229205,
+          "terminacionServicio": 687.9567136153227,
+          "tiempoTotal": 470.95087110330576,
+          "personasAlLlegar": 181
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 221.9029245400961,
+          "inicioServicio": 686.0016507436811,
+          "tiempoEspera": 464.098726203585,
+          "tiempoServicio": 8.637366448304533,
+          "terminacionServicio": 694.6390171919857,
+          "tiempoTotal": 472.7360926518895,
+          "personasAlLlegar": 189
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 221.66954071010275,
+          "inicioServicio": 682.583702145041,
+          "tiempoEspera": 460.91416143493825,
+          "tiempoServicio": 14.60444690675024,
+          "terminacionServicio": 697.1881490517912,
+          "tiempoTotal": 475.5186083416885,
+          "personasAlLlegar": 187
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 223.0372386179483,
+          "inicioServicio": 686.7223562400827,
+          "tiempoEspera": 463.6851176221344,
+          "tiempoServicio": 10.887605427516064,
+          "terminacionServicio": 697.6099616675988,
+          "tiempoTotal": 474.57272304965045,
+          "personasAlLlegar": 190
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 226.9284725930612,
+          "inicioServicio": 697.6099616675988,
+          "tiempoEspera": 470.6814890745376,
+          "tiempoServicio": 7.3371970597039535,
+          "terminacionServicio": 704.9471587273027,
+          "tiempoTotal": 478.01868613424153,
+          "personasAlLlegar": 194
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 221.5748615703625,
+          "inicioServicio": 681.5216050232053,
+          "tiempoEspera": 459.94674345284284,
+          "tiempoServicio": 23.579224398670476,
+          "terminacionServicio": 705.1008294218758,
+          "tiempoTotal": 483.5259678515133,
+          "personasAlLlegar": 186
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 225.4037016118974,
+          "inicioServicio": 694.6390171919857,
+          "tiempoEspera": 469.23531558008824,
+          "tiempoServicio": 10.918600182787713,
+          "terminacionServicio": 705.5576173747734,
+          "tiempoTotal": 480.15391576287595,
+          "personasAlLlegar": 192
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 227.98300297410702,
+          "inicioServicio": 705.1008294218758,
+          "tiempoEspera": 477.1178264477688,
+          "tiempoServicio": 2.9139328323858535,
+          "terminacionServicio": 708.0147622542617,
+          "tiempoTotal": 480.03175928015463,
+          "personasAlLlegar": 196
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 224.10667095332445,
+          "inicioServicio": 687.9567136153227,
+          "tiempoEspera": 463.8500426619982,
+          "tiempoServicio": 21.027375103859754,
+          "terminacionServicio": 708.9840887191824,
+          "tiempoTotal": 484.87741776585796,
+          "personasAlLlegar": 191
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 226.80504538734016,
+          "inicioServicio": 697.1881490517912,
+          "tiempoEspera": 470.3831036644511,
+          "tiempoServicio": 14.123643962481992,
+          "terminacionServicio": 711.3117930142732,
+          "tiempoTotal": 484.5067476269331,
+          "personasAlLlegar": 193
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 226.9896746284301,
+          "inicioServicio": 704.9471587273027,
+          "tiempoEspera": 477.95748409887267,
+          "tiempoServicio": 8.755428091999988,
+          "terminacionServicio": 713.7025868193027,
+          "tiempoTotal": 486.71291219087266,
+          "personasAlLlegar": 195
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 233.45506744100476,
+          "inicioServicio": 713.7025868193027,
+          "tiempoEspera": 480.24751937829797,
+          "tiempoServicio": 3.135879755940323,
+          "terminacionServicio": 716.838466575243,
+          "tiempoTotal": 483.3833991342383,
+          "personasAlLlegar": 198
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 228.36351360446383,
+          "inicioServicio": 708.0147622542617,
+          "tiempoEspera": 479.6512486497978,
+          "tiempoServicio": 12.735405173648246,
+          "terminacionServicio": 720.7501674279099,
+          "tiempoTotal": 492.38665382344607,
+          "personasAlLlegar": 198
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 233.8042904971221,
+          "inicioServicio": 716.838466575243,
+          "tiempoEspera": 483.03417607812094,
+          "tiempoServicio": 7.452267386406447,
+          "terminacionServicio": 724.2907339616495,
+          "tiempoTotal": 490.4864434645274,
+          "personasAlLlegar": 199
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 227.9840619128339,
+          "inicioServicio": 705.5576173747734,
+          "tiempoEspera": 477.57355546193946,
+          "tiempoServicio": 19.790415569890683,
+          "terminacionServicio": 725.348032944664,
+          "tiempoTotal": 497.36397103183015,
+          "personasAlLlegar": 197
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 230.0638009271891,
+          "inicioServicio": 711.3117930142732,
+          "tiempoEspera": 481.2479920870841,
+          "tiempoServicio": 14.731988645030583,
+          "terminacionServicio": 726.0437816593038,
+          "tiempoTotal": 495.9799807321147,
+          "personasAlLlegar": 198
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 229.1812796117557,
+          "inicioServicio": 708.9840887191824,
+          "tiempoEspera": 479.8028091074267,
+          "tiempoServicio": 18.553443448995722,
+          "terminacionServicio": 727.5375321681781,
+          "tiempoTotal": 498.3562525564224,
+          "personasAlLlegar": 198
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 233.82428138446764,
+          "inicioServicio": 720.7501674279099,
+          "tiempoEspera": 486.92588604344223,
+          "tiempoServicio": 8.684019173147703,
+          "terminacionServicio": 729.4341866010576,
+          "tiempoTotal": 495.60990521658994,
+          "personasAlLlegar": 200
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 234.4756079768315,
+          "inicioServicio": 725.348032944664,
+          "tiempoEspera": 490.87242496783256,
+          "tiempoServicio": 9.315636155428479,
+          "terminacionServicio": 734.6636691000925,
+          "tiempoTotal": 500.18806112326104,
+          "personasAlLlegar": 202
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 233.94339535076412,
+          "inicioServicio": 724.2907339616495,
+          "tiempoEspera": 490.34733861088534,
+          "tiempoServicio": 19.795687046518765,
+          "terminacionServicio": 744.0864210081683,
+          "tiempoTotal": 510.1430256574041,
+          "personasAlLlegar": 201
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 235.7678519458891,
+          "inicioServicio": 729.4341866010576,
+          "tiempoEspera": 493.6663346551685,
+          "tiempoServicio": 17.57814488218594,
+          "terminacionServicio": 747.0123314832435,
+          "tiempoTotal": 511.24447953735444,
+          "personasAlLlegar": 205
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 235.67117672412712,
+          "inicioServicio": 727.5375321681781,
+          "tiempoEspera": 491.866355444051,
+          "tiempoServicio": 20.120451565358053,
+          "terminacionServicio": 747.6579837335362,
+          "tiempoTotal": 511.98680700940906,
+          "personasAlLlegar": 204
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 236.83400933018137,
+          "inicioServicio": 734.6636691000925,
+          "tiempoEspera": 497.82965976991113,
+          "tiempoServicio": 13.758218351558071,
+          "terminacionServicio": 748.4218874516506,
+          "tiempoTotal": 511.5878781214692,
+          "personasAlLlegar": 206
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 235.42308185448326,
+          "inicioServicio": 726.0437816593038,
+          "tiempoEspera": 490.62069980482056,
+          "tiempoServicio": 24.175341168273007,
+          "terminacionServicio": 750.2191228275768,
+          "tiempoTotal": 514.7960409730936,
+          "personasAlLlegar": 203
+        },
+        {
+          "prioritario": true,
+          "servidor": 4,
+          "momentoLlegada": 238.64439804696758,
+          "inicioServicio": 747.6579837335362,
+          "tiempoEspera": 509.0135856865686,
+          "tiempoServicio": 3.4534822925591016,
+          "terminacionServicio": 751.1114660260953,
+          "tiempoTotal": 512.4670679791277,
+          "personasAlLlegar": 209
+        },
+        {
+          "prioritario": true,
+          "servidor": 1,
+          "momentoLlegada": 238.50415629396488,
+          "inicioServicio": 747.0123314832435,
+          "tiempoEspera": 508.50817518927863,
+          "tiempoServicio": 9.129352284900165,
+          "terminacionServicio": 756.1416837681437,
+          "tiempoTotal": 517.6375274741788,
+          "personasAlLlegar": 208
+        },
+        {
+          "prioritario": true,
+          "servidor": 2,
+          "momentoLlegada": 237.86361823640308,
+          "inicioServicio": 744.0864210081683,
+          "tiempoEspera": 506.22280277176515,
+          "tiempoServicio": 17.617074164510655,
+          "terminacionServicio": 761.7034951726789,
+          "tiempoTotal": 523.8398769362758,
+          "personasAlLlegar": 207
+        },
+        {
+          "prioritario": true,
+          "servidor": 3,
+          "momentoLlegada": 239.13492241570586,
+          "inicioServicio": 750.2191228275768,
+          "tiempoEspera": 511.08420041187094,
+          "tiempoServicio": 12.029046915152435,
+          "terminacionServicio": 762.2481697427293,
+          "tiempoTotal": 523.1132473270234,
+          "personasAlLlegar": 211
+        },
+        {
+          "prioritario": true,
+          "servidor": 5,
+          "momentoLlegada": 238.84681942523233,
+          "inicioServicio": 748.4218874516506,
+          "tiempoEspera": 509.5750680264183,
+          "tiempoServicio": 21.598254340944777,
+          "terminacionServicio": 770.0201417925954,
+          "tiempoTotal": 531.1733223673631,
+          "personasAlLlegar": 210
+        }
+      ]
     },
     "welch_constante": {
-      "p": "nan",
-      "coinciden": false
+      "p": "None",
+      "coinciden": true
     },
     "serializar_welch_constante": {
-      "excepcion": "ValueError",
-      "mensaje": "Out of range float values are not JSON compliant: nan"
+      "salida": "{\"valorP\":null,\"coinciden\":true}"
     },
     "poisson_con_negativo": {
       "media": 1.0,

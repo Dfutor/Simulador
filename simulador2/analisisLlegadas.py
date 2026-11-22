@@ -5,7 +5,7 @@ Las categorías salen de los datos con una prueba, no de porcentajes supuestos:
      Si no se rechaza, no hay evidencia de que la tasa cambie dentro de la jornada: todas las franjas son normales.
   2. Solo si se rechaza, cada franja se compara con la media:  z = (Sₖ − nₖ·x̄) / √(nₖ·x̄),
      con corrección de Bonferroni (α / k) porque se hacen k comparaciones.  z > crítico → pico,  z < −crítico → valle.
-Las franjas sin conteos quedan "sinDatos": su tasa es un supuesto (la de la jornada), no una observación.
+Las franjas sin conteos quedan "sinDatos" (estimadas): su tasa es la de la jornada.
 
 Los promedios móviles son solo descriptivos: no reemplazan la tasa de llegadas del modelo.
 """

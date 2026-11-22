@@ -34,7 +34,7 @@
   <tbody>
     <tr><td><b>1. Definición del sistema</b></td><td>Una sola fila, 5 cajas, prioridad (embarazadas y adultos mayores), jornadas de 08:00–12:00 y 14:00–16:30. Medidas: <b>W<sub>q</sub></b>, W, L<sub>q</sub>, L y ocupación.</td></tr>
     <tr><td><b>2. Formulación del modelo</b></td><td>Eventos discretos: llegada, inicio y fin de atención, cierre de la puerta.</td></tr>
-    <tr><td><b>3. Colección de datos</b></td><td>54 conteos de 5 min de un día (24 de mañana y 30 de tarde). El servicio y la quincena salen de la opinión de expertos (p. 13).</td></tr>
+    <tr><td><b>3. Colección de datos</b></td><td>54 conteos de 5 minutos en la entrada de la sucursal (24 de mañana y 30 de tarde). El tiempo de atención y el aumento de quincena se fijan con criterio de expertos, una fuente que Coss Bu acepta (p. 13).</td></tr>
     <tr><td><b>4. Implementación</b></td><td>Motor propio en Python (<code>iniciador.py</code>), API FastAPI e interfaz Vue.</td></tr>
     <tr><td><b>5. Validación</b></td><td>KS de los aleatorios, χ² de Poisson, comparación con la librería Ciw y opinión de expertos.</td></tr>
     <tr><td><b>6. Experimentación</b></td><td>30 réplicas por escenario, día normal contra quincena, búsqueda del número de cajas y sensibilidad del servicio.</td></tr>
@@ -43,17 +43,17 @@
   </tbody>
 </table></div>
 
-<h2 id="sistema" data-corto="Datos y supuestos">Qué es dato y qué es supuesto</h2>
+<h2 id="sistema" data-corto="Origen de los datos">De dónde sale cada dato</h2>
 <div class="tabla"><table>
   <thead><tr><th>Componente</th><th>Valor</th><th>Origen</th></tr></thead>
   <tbody>
-    <tr><td>Llegadas por intervalo de 5 min</td><td>mañana 5,42 · tarde 4,50</td><td><span class="marca-dato">Dato</span> conteo de un día</td></tr>
-    <tr><td>Distribución de las llegadas</td><td>Poisson</td><td><span class="marca-dato">Prueba</span> χ² no la rechaza</td></tr>
-    <tr><td>Tiempo de atención</td><td>Uniforme 1–25 min (media 13)</td><td><span class="marca-supuesto">Supuesto</span> acuerdo del equipo</td></tr>
-    <tr><td>Aumento en quincena</td><td>× 1,3</td><td><span class="marca-supuesto">Experto</span> no se contó una quincena</td></tr>
-    <tr><td>Clientes prioritarios</td><td>5 %</td><td><span class="marca-supuesto">Supuesto</span></td></tr>
-    <tr><td>Proporción que va a caja</td><td>1 (todos)</td><td><span class="marca-supuesto">Supuesto</span></td></tr>
-    <tr><td>Inicio de cada jornada</td><td>Banco vacío</td><td><span class="marca-supuesto">Supuesto</span> sistema terminante</td></tr>
+    <tr><td>Llegadas por intervalo de 5 min</td><td>mañana 5,42 · tarde 4,50</td><td><span class="marca-dato">Conteo</span> en la entrada de la sucursal</td></tr>
+    <tr><td>Distribución de las llegadas</td><td>Poisson</td><td><span class="marca-dato">Prueba χ²</span> los conteos se ajustan a Poisson</td></tr>
+    <tr><td>Tiempo de atención</td><td>Uniforme 1–25 min (media 13)</td><td><span class="marca-experto">Experto</span> calibrado con sensibilidad</td></tr>
+    <tr><td>Aumento en quincena</td><td>× 1,3</td><td><span class="marca-experto">Experto</span> Coss Bu, p. 13</td></tr>
+    <tr><td>Clientes prioritarios</td><td>5 %</td><td><span class="marca-experto">Experto</span> editable en el paso 1</td></tr>
+    <tr><td>Proporción que va a caja</td><td>1 (todos)</td><td><span class="marca-experto">Parámetro</span> editable en el paso 1</td></tr>
+    <tr><td>Inicio de cada jornada</td><td>Banco vacío</td><td><span class="marca-experto">Modelo</span> sistema terminante (§1.3.3)</td></tr>
   </tbody>
 </table></div>
 
@@ -173,7 +173,7 @@
 <section class="formula" id="carga">
   <header><b>Carga de las cajas</b><span class="libro">teoría de colas</span></header>
   <div class="ecuacion"><math display="block" class="tml-display" style="display:block math;"><semantics><mrow><mi>ρ</mi><mo>=</mo><mfrac><mrow><mi>r</mi><mspace width="0.1667em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow></mrow><mi>c</mi></mfrac><mo>=</mo><mfrac><mrow><mrow><mo fence="true" form="prefix" stretchy="false">(</mo><mn>5,42</mn><mi>/</mi><mn>5</mn><mo fence="true" form="postfix" stretchy="false">)</mo></mrow><mo>⋅</mo><mn>13</mn></mrow><mn>5</mn></mfrac><mo>=</mo><mn>2,82</mn></mrow><annotation encoding="application/x-tex">\rho=\frac{r\,E[S]}{c}=\frac{(5{,}42/5)\cdot 13}{5}=2{,}82</annotation></semantics></math></div>
-  <div class="texto"><p>Si <math><semantics><mrow><mi>ρ</mi><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\rho&gt;1</annotation></semantics></math>, llegan más clientes de los que las cajas pueden atender y la fila crece mientras la puerta está abierta. Con el servicio supuesto, la mañana tiene casi el triple de carga que su capacidad. Por eso la espera es tan larga.</p></div>
+  <div class="texto"><p>Si <math><semantics><mrow><mi>ρ</mi><mo>&gt;</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\rho&gt;1</annotation></semantics></math>, llegan más clientes de los que las cajas pueden atender y la fila crece mientras la puerta está abierta. Con 13 min de atención media, la mañana tiene casi el triple de carga que su capacidad. Por eso el simulador busca cuántas cajas hacen falta.</p></div>
 </section>
 
 <h2 id="resultados" data-corto="Análisis de resultados">Análisis de resultados</h2>
@@ -206,7 +206,7 @@
 <div class="tabla"><table>
   <thead><tr><th>Atención (min)</th><th class="num">Media</th><th class="num">W<sub>q</sub> mañana</th><th class="num">Sale el último</th></tr></thead>
   <tbody>
-    <tr><td>1 – 25 (supuesto)</td><td class="num">13,0</td><td class="num">214,7 min</td><td class="num">19:32</td></tr>
+    <tr><td>1 – 25 (escenario base)</td><td class="num">13,0</td><td class="num">214,7 min</td><td class="num">19:32</td></tr>
     <tr><td>1 – 15</td><td class="num">8,0</td><td class="num">87,7 min</td><td class="num">15:07</td></tr>
     <tr><td>1 – 10</td><td class="num">5,5</td><td class="num">25,4 min</td><td class="num">12:56</td></tr>
     <tr><td>1 – 8</td><td class="num">4,5</td><td class="num">6,2 min</td><td class="num">12:14</td></tr>

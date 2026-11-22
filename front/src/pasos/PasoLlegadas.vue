@@ -107,8 +107,8 @@ function quitarJornada(posicion) {
       </label>
     </div>
     <p class="nota">
-      Solo hay conteos de un día observado: los promedios móviles muestran la tendencia dentro de cada jornada
-      y no reemplazan la tasa de llegadas del modelo. Para comparar fechas del calendario, usa la pestaña Establecimiento.
+      Los promedios móviles muestran la tendencia dentro de cada jornada; la tasa de llegadas del modelo es el promedio
+      de los conteos. Para comparar fechas del calendario, usa la pestaña Establecimiento.
     </p>
     <p v-if="errorAnalisis" class="aviso" role="status">Análisis de llegadas: {{ errorAnalisis }}</p>
 

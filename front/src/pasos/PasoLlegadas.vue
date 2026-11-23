@@ -66,7 +66,7 @@ function llegadasPorIntervalo(jornada) {
 }
 
 function agregarJornada() {
-  entrada.jornadas.push({ inicio: "08:00", fin: "12:00", inicioConteos: "", conteosTexto: "", minutosPorCliente: 5, servicioMinimo: 1, servicioMaximo: 10 });
+  entrada.jornadas.push({ inicio: "08:00", fin: "12:00", inicioConteos: "", conteosTexto: "", minutosPorCliente: 6, servicioMinimo: 1, servicioMaximo: 11 });
 }
 
 function quitarJornada(posicion) {

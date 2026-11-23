@@ -40,16 +40,16 @@ Las simulaciones se atienden de a una (candado `candadoSimulacion`): el modelo u
 ## Entrada
 
 - λ = promedio de los conteos · `proporcionVanACaja` · `factorLlegadas` (llegadas por intervalo).
-- Servicio (`distribucionServicio`): **uniforme** entre `servicioMinimo` y `servicioMaximo` (por defecto 1–25 min, como el documento) o **exponencial** con media `minutosPorCliente`.
+- Servicio (`distribucionServicio`): **uniforme** entre `servicioMinimo` y `servicioMaximo` (por defecto 1–11 min, media de 6, como el documento) o **exponencial** con media `minutosPorCliente`.
 - μ = `tiempoEntreTomasDeDatos` ÷ media del servicio (servicios por caja por intervalo).
 - `factorLlegadas`: 1 en un día normal, 1,3 en quincena.
-- `inicioConteos`: hora del primer conteo de la jornada (la mañana del estudio se contó de 9:40 a 11:40). Ubica los conteos en el reloj; no cambia la tasa del modelo original.
+- `inicioConteos`: hora del primer conteo de la jornada (los conteos de la mañana van de 9:10 a 11:40; los 6 de 9:10 a 9:40 son estimados con una Poisson). Ubica los conteos en el reloj; no cambia la tasa del modelo original.
 - `semilla`: si viene vacía, `resolverSemilla` toma el reloj en milisegundos. La respuesta trae `semilla` y `versionModelo`: con las mismas dos y los mismos datos, el resultado se repite.
 
 ## Planifica tu visita
 
 - **Tipo de día** (`calendario.esQuincena`): días 1 a 4, 12 a 18 y los últimos cuatro del mes. Solo escala las llegadas por `factorQuincena`, que es un **dato de experto** (Coss Bu 1.2, p. 13).
-- **Categoría de franja** (`analisisLlegadas.clasificarFranjas`): prueba χ² de homogeneidad de tasas Poisson entre franjas; si se rechaza, cada franja es pico o valle cuando |z| supera el crítico con Bonferroni. Las franjas sin conteos quedan «sin datos». Con los datos del estudio: la mañana no muestra diferencias (p = 0,12) y en la tarde 16:00–16:30 es valle (p = 0,011).
+- **Categoría de franja** (`analisisLlegadas.clasificarFranjas`): prueba χ² de homogeneidad de tasas Poisson entre franjas; si se rechaza, cada franja es pico o valle cuando |z| supera el crítico con Bonferroni. Las franjas sin conteos quedan «sin datos». Con los datos del estudio: la mañana no muestra diferencias (p = 0,064) y en la tarde 16:00–16:30 es valle (p = 0,011).
 - **Modelo de llegadas** (`modeloLlegadas`): `jornada` = una tasa por jornada (el original, por defecto); `franja` = λ constante por tramos con la tasa de las franjas pico y valle (`generarLlegadasPorTramos`, exacto por la falta de memoria de la exponencial).
 - **Continuidad de la fila:** cada jornada se simula completa y después los clientes se agrupan por su hora de llegada. Entre jornadas el banco cierra (como en el modelo original).
 - **Publicación:** un escenario por horario distinto × tipo de día, sembrado con `semilla|clave`. Se guarda con una huella de la configuración: si algo cambia, las estimaciones dejan de valer y se vuelven a publicar.

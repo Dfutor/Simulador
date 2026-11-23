@@ -452,14 +452,14 @@ class PruebasRepeticionPorKS(unittest.TestCase):
             "numeroServidores": 3, "tiempoEntreTomasDeDatos": 5, "proporcionVanACaja": 1,
             "proporcionPrioritarios": 0.05, "factorLlegadas": 1.3, "numeroCorridas": 4,
             "alfa": 0.05, "limiteIntentos": 10, "semilla": 1, "compararConCiw": True,
-            "jornadas": [{"inicio": "08:00", "fin": "12:00", "conteos": CONTEOS_MANANA, "minutosPorCliente": 13.5}],
+            "jornadas": [{"inicio": "08:00", "fin": "12:00", "conteos": CONTEOS_MANANA, "minutosPorCliente": 6}],
         }
         with patch("builtins.print"):
             resultado = iniciador.simular(entrada)
         json.dumps(resultado)
         jornada = resultado["jornadas"][0]
         self.assertEqual(len(resultado["ks"]), 4)
-        self.assertAlmostEqual(jornada["tasaLlegada"], 130 / 24 * 1.3)
+        self.assertAlmostEqual(jornada["tasaLlegada"], 171 / 30 * 1.3)
         self.assertTrue(all(corrida["pasa"] for corrida in resultado["ks"]))
         self.assertIn("Wq", jornada["ciw"])
         self.assertEqual(len(jornada["medidasPorCorrida"]), 4)
@@ -482,18 +482,19 @@ class PruebasContraSciPy(unittest.TestCase):
 # ---------------------------------------------------------------------------
 import pruebaPoisson
 
-CONTEOS_MANANA = [7, 9, 8, 6, 4, 7, 5, 11, 8, 2, 4, 6, 3, 1, 3, 9, 6, 4, 8, 7, 2, 3, 4, 3]
+# 6 conteos estimados (9:10–9:40, Poisson con la media observada) + 24 observados (9:40–11:40)
+CONTEOS_MANANA = [7, 10, 4, 5, 9, 6, 7, 9, 8, 6, 4, 7, 5, 11, 8, 2, 4, 6, 3, 1, 3, 9, 6, 4, 8, 7, 2, 3, 4, 3]
 
 
 class PruebasPoisson(unittest.TestCase):
 
     def test_conteosDeLaManana(self):
         resultado = pruebaPoisson.pruebaChiCuadradaPoisson(CONTEOS_MANANA, 0.05)
-        self.assertAlmostEqual(resultado["media"], 130 / 24)
-        self.assertAlmostEqual(resultado["varianza"], 6.949, places=3)
+        self.assertAlmostEqual(resultado["media"], 171 / 30)
+        self.assertAlmostEqual(resultado["varianza"], 6.769, places=3)
         self.assertTrue(all(clase["esperadas"] >= 5 for clase in resultado["clases"]))
-        self.assertAlmostEqual(sum(clase["esperadas"] for clase in resultado["clases"]), 24)
-        self.assertEqual(sum(clase["observadas"] for clase in resultado["clases"]), 24)
+        self.assertAlmostEqual(sum(clase["esperadas"] for clase in resultado["clases"]), 30)
+        self.assertEqual(sum(clase["observadas"] for clase in resultado["clases"]), 30)
         self.assertEqual(resultado["gradosLibertad"], len(resultado["clases"]) - 2)
         self.assertTrue(resultado["pasa"])
 
@@ -563,25 +564,25 @@ class PruebasCajasNecesarias(unittest.TestCase):
 class PruebasServicioUniforme(unittest.TestCase):
 
     def test_formulaConUnAleatorioConocido(self):
-        # R = 0.5 → x = 1 + 24 · 0.5 = 13
+        # R = 0.5 → x = 1 + 10 · 0.5 = 6
         with patch("iniciador.random.random", return_value=0.5):
-            self.assertEqual(iniciador.generarUniforme(1, 25), (0.5, 13.0))
+            self.assertEqual(iniciador.generarUniforme(1, 11), (0.5, 6.0))
 
     def test_losServiciosQuedanEntreElMinimoYElMaximo(self):
         jornadas = jornadaDePrueba()
-        jornadas[1].update(distribucionServicio="uniforme", servicioMinimo=1, servicioMaximo=25)
+        jornadas[1].update(distribucionServicio="uniforme", servicioMinimo=1, servicioMaximo=11)
         random.seed(8)
         clientes = iniciador.modelo(jornadas, numeroServidores=5)
         servicios = [cliente["tiempoServicio"] for cliente in clientes]
-        self.assertTrue(all(1 <= servicio <= 25 for servicio in servicios))
-        self.assertAlmostEqual(sum(servicios) / len(servicios), 13, delta=1.5)
+        self.assertTrue(all(1 <= servicio <= 11 for servicio in servicios))
+        self.assertAlmostEqual(sum(servicios) / len(servicios), 6, delta=0.7)
 
     def test_tasaDeServicioUsaLaMediaDeLaUniforme(self):
         entrada = {"tiempoEntreTomasDeDatos": 5, "proporcionVanACaja": 1, "factorLlegadas": 1,
                    "distribucionServicio": "uniforme",
                    "jornadas": [{"inicio": "08:00", "fin": "12:00", "conteos": CONTEOS_MANANA,
-                                 "servicioMinimo": 1, "servicioMaximo": 25}]}
-        self.assertAlmostEqual(iniciador.armarJornadas(entrada)[1]["tasaServicio"], 5 / 13)
+                                 "servicioMinimo": 1, "servicioMaximo": 11}]}
+        self.assertAlmostEqual(iniciador.armarJornadas(entrada)[1]["tasaServicio"], 5 / 6)
 
 
 class PruebasJornadaSinClientes(unittest.TestCase):
@@ -602,7 +603,7 @@ class PruebasAPI(unittest.TestCase):
 
     def test_entradaPorDefectoSeSimula(self):
         entrada = self.cliente.get("/api/entrada-por-defecto").json()
-        self.assertEqual(sum(entrada["jornadas"][0]["conteos"]), 130)
+        self.assertEqual(sum(entrada["jornadas"][0]["conteos"]), 171)
         entrada["numeroCorridas"] = 3
         with patch("builtins.print"):
             respuesta = self.cliente.post("/api/simular", json=entrada)
@@ -624,7 +625,7 @@ class PruebasAPI(unittest.TestCase):
         entrada = self.cliente.get("/api/entrada-por-defecto").json()
         self.assertEqual(entrada["numeroServidores"], 5)
         self.assertEqual(entrada["distribucionServicio"], "uniforme")
-        self.assertEqual((entrada["jornadas"][0]["servicioMinimo"], entrada["jornadas"][0]["servicioMaximo"]), (1, 25))
+        self.assertEqual((entrada["jornadas"][0]["servicioMinimo"], entrada["jornadas"][0]["servicioMaximo"]), (1, 11))
 
     def test_jornadaSinClientesDa422(self):
         entrada = self.cliente.get("/api/entrada-por-defecto").json()

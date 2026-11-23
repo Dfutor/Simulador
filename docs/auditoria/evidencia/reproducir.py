@@ -111,6 +111,24 @@ def experimento_ks(entrada, n=900):
     return estudio
 
 
+def ciw_muchas_corridas(entrada, n=1000, semilla=2024):
+    """Una diferencia de la t de Welch con 30 corridas puede ser azar: se repite con n corridas sin filtro KS."""
+    random.seed(semilla)
+    jornadas = armarJornadas(entrada)
+    estudio = {"semilla": semilla, "corridas": n}
+    for numero, jornada in jornadas.items():
+        duracion = 240 if numero == 1 else 150
+        propio = [calcularMedidas(modelo({numero: jornada}, 5, 0.05), 5, duracion) for _ in range(n)]
+        externo = [calcularMedidas(simularJornadaConCiw(jornada, duracion, 5, 0.05), 5, duracion) for _ in range(n)]
+        estudio[str(numero)] = {}
+        for medida in ("Wq", "L", "utilizacion"):
+            a, b = [m[medida] for m in propio], [m[medida] for m in externo]
+            error = (statistics.variance(a) / n + statistics.variance(b) / n) ** 0.5
+            estudio[str(numero)][medida] = {"propio": statistics.mean(a), "ciw": statistics.mean(b),
+                                            "z": (statistics.mean(a) - statistics.mean(b)) / error}
+    return estudio
+
+
 def ensayos():
     entrada = Entrada(semilla=12345).model_dump(mode="json")
     config = Establecimiento(entrada=Entrada(semilla=12345)).model_dump(mode="json")
@@ -134,7 +152,7 @@ def ensayos():
         assert abs(sum(fila["relativas"]) - 1) < 1e-12
 
     sensibilidad = {}
-    for maximo in (25, 15, 10, 8, 7, 6):
+    for maximo in (15, 11, 10, 8, 7, 6):
         modificada = {**entrada, "jornadas": [dict(j, servicioMaximo=maximo) for j in entrada["jornadas"]]}
         sensibilidad[str(maximo)] = resumen(simular(modificada))
     cajas = {nombre: buscarCajasNecesarias({**entrada, "factorLlegadas": factor}, 10)
@@ -189,7 +207,7 @@ def ensayos():
         "ks_sintetico": {"muestra": corta, "D": float(ks.statistic), "p_exacto": float(ks.pvalue)},
         "ks_criticos": criticos, "experimento_ks": experimento_ks(entrada),
         "sensibilidad": sensibilidad, "cajas": cajas,
-        "ciw": [j["ciw"] for j in ciw_base["jornadas"]],
+        "ciw": [j["ciw"] for j in ciw_base["jornadas"]], "ciw_muchas_corridas": ciw_muchas_corridas(entrada),
         "casos_adversos": {
             "franja_cero": {"franjas": clasif_cero["franjas"], **error_de(lambda: publicar(config_cero))},
             "ciw_prioridad_total": ciw_prioridad_total, "welch_constante": {"p": str(nulo["valorP"]), "coinciden": nulo["coinciden"]},

@@ -112,7 +112,7 @@ test_lasEsperasSalenDelMotor (test_planificacion.PruebasSimulacionPorFranjas.tes
 test_nuncaHayMasClientesEnCajaQueCajas (test_planificacion.PruebasSimulacionPorFranjas.test_nuncaHayMasClientesEnCajaQueCajas) ... ok
 
 ----------------------------------------------------------------------
-Ran 110 tests in 3.551s
+Ran 110 tests in 1.782s
 
 OK
 Corrida 5, intento 1: no pasó la prueba KS (servicio). Se rechaza la uniformidad; se vuelve a simular.

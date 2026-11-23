@@ -18,7 +18,8 @@ import calendario
 import iniciador
 import planificacion
 
-CONTEOS_MANANA = [7, 9, 8, 6, 4, 7, 5, 11, 8, 2, 4, 6, 3, 1, 3, 9, 6, 4, 8, 7, 2, 3, 4, 3]
+# 6 conteos estimados (9:10–9:40, Poisson con la media observada) + 24 observados (9:40–11:40)
+CONTEOS_MANANA = [7, 10, 4, 5, 9, 6, 7, 9, 8, 6, 4, 7, 5, 11, 8, 2, 4, 6, 3, 1, 3, 9, 6, 4, 8, 7, 2, 3, 4, 3]
 CONTEOS_TARDE = [3, 3, 2, 3, 3, 7, 9, 4, 7, 6, 4, 4, 6, 3, 7, 4, 8, 5, 3, 5, 9, 3, 7, 6, 4, 2, 3, 3, 2, 0]
 HABITUAL = [{"inicio": "08:00", "fin": "12:00"}, {"inicio": "14:00", "fin": "16:30"}]
 
@@ -39,10 +40,10 @@ def configuracionDePrueba(**cambios) -> dict:
             "proporcionVanACaja": 1, "proporcionPrioritarios": 0.05, "factorLlegadas": 1, "numeroCorridas": 5,
             "alfa": 0.05, "limiteIntentos": 10, "semilla": 12345, "compararConCiw": False,
             "jornadas": [
-                {"inicio": "08:00", "fin": "12:00", "conteos": CONTEOS_MANANA, "inicioConteos": "09:40",
-                 "minutosPorCliente": 13.5, "servicioMinimo": 1, "servicioMaximo": 25},
+                {"inicio": "08:00", "fin": "12:00", "conteos": CONTEOS_MANANA, "inicioConteos": "09:10",
+                 "minutosPorCliente": 6, "servicioMinimo": 1, "servicioMaximo": 11},
                 {"inicio": "14:00", "fin": "16:30", "conteos": CONTEOS_TARDE, "inicioConteos": "14:00",
-                 "minutosPorCliente": 14, "servicioMinimo": 1, "servicioMaximo": 25},
+                 "minutosPorCliente": 6, "servicioMinimo": 1, "servicioMaximo": 11},
             ],
         },
     }
@@ -197,7 +198,7 @@ class PruebasPromediosMoviles(unittest.TestCase):
     def test_ordenTemporalYSinMezclarJornadas(self):
         resultado = analisisLlegadas.analizarLlegadas(configuracionDePrueba()["entrada"], 60, 3)
         manana, tarde = resultado["jornadas"]
-        self.assertEqual([intervalo["desde"] for intervalo in manana["intervalos"][:3]], ["09:40", "09:45", "09:50"])
+        self.assertEqual([intervalo["desde"] for intervalo in manana["intervalos"][:3]], ["09:10", "09:15", "09:20"])
         self.assertEqual(manana["intervalos"][-1]["hasta"], "11:40")
         # La tarde empieza su propia ventana: no arrastra conteos de la mañana
         self.assertEqual([intervalo["promedioSimple"] for intervalo in tarde["intervalos"][:2]], [None, None])
@@ -215,11 +216,11 @@ class PruebasCategorias(unittest.TestCase):
         entrada = configuracionDePrueba()["entrada"]
         manana = analisisLlegadas.clasificarFranjas(entrada["jornadas"][0], 5, 60, 0.05)
         tarde = analisisLlegadas.clasificarFranjas(entrada["jornadas"][1], 5, 60, 0.05)
-        # Mañana: X² = 4,19 con 2 g.l. (p = 0,12) → no hay diferencia; 08–09 no se observó
-        self.assertAlmostEqual(manana["homogeneidad"]["estadistico"], 4.192, places=3)
+        # Mañana: X² = 5,49 con 2 g.l. (p = 0,064) → no hay diferencia; 08–09 no se observó
+        self.assertAlmostEqual(manana["homogeneidad"]["estadistico"], 5.487, places=3)
         self.assertFalse(manana["homogeneidad"]["rechaza"])
         self.assertEqual([franja["categoria"] for franja in manana["franjas"]], ["sinDatos", "normal", "normal", "normal"])
-        self.assertAlmostEqual(manana["tasaNormal"], 130 / 24)
+        self.assertAlmostEqual(manana["tasaNormal"], 171 / 30)
         # Tarde: X² = 8,94 (p = 0,011) → 16:00–16:30 es valle (z = −2,50 < −2,39 con Bonferroni)
         self.assertTrue(tarde["homogeneidad"]["rechaza"])
         self.assertEqual([franja["categoria"] for franja in tarde["franjas"]], ["normal", "normal", "valle"])
@@ -338,7 +339,7 @@ class PruebasLlegadasPorTramos(unittest.TestCase):
         configuracion = configuracionDePrueba(modeloLlegadas="franja")
         configuracion["entrada"] = {**configuracion["entrada"], "numeroCorridas": 2, "jornadas": [
             {"inicio": "08:00", "fin": "10:00", "conteos": [0] * 12 + [10] * 12, "inicioConteos": "08:00",
-             "minutosPorCliente": 13.5, "servicioMinimo": 1, "servicioMaximo": 25}]}
+             "minutosPorCliente": 6, "servicioMinimo": 1, "servicioMaximo": 11}]}
         with patch("builtins.print"):
             estimaciones = planificacion.publicar(configuracion)
         franjas = estimaciones["escenarios"]["regular|08:00-12:00,14:00-16:30"]["jornadas"][0]["franjas"]
@@ -470,7 +471,7 @@ class PruebasPublicacion(unittest.TestCase):
             self.assertEqual(len(serie["relativas"]), len(comparacion["clases"]))   # mismas clases
             self.assertAlmostEqual(sum(serie["relativas"]), 1)
         self.assertGreater(comparacion["series"][1]["media"], comparacion["series"][0]["media"])   # quincena: +30 %
-        self.assertEqual(comparacion["observado"]["n"], 54)   # los 54 conteos reales, como referencia
+        self.assertEqual(comparacion["observado"]["n"], 60)   # los 60 conteos del estudio, como referencia
 
     def test_compararConUnDiaCerrado(self):
         comparacion = planificacion.compararDias(self.configuracion, self.estimaciones,
@@ -557,7 +558,7 @@ class PruebasAPIEstablecimiento(unittest.TestCase):
         respuesta = self.cliente.post("/api/analisis-llegadas", json={"entrada": entrada, "ventana": 4})
         self.assertEqual(respuesta.status_code, 200)
         self.assertEqual(respuesta.json()["ventana"], 4)
-        entrada["jornadas"][0]["inicioConteos"] = "11:50"   # 24 conteos no caben desde las 11:50
+        entrada["jornadas"][0]["inicioConteos"] = "11:50"   # 30 conteos no caben desde las 11:50
         self.assertEqual(self.cliente.post("/api/analisis-llegadas", json={"entrada": entrada}).status_code, 422)
 
     def test_simularDevuelveLaSemillaUsada(self):

@@ -35,14 +35,14 @@ Se considera un **sistema aislado**: la única interacción con el exterior es l
 
 - Los datos se toman **en la entrada de la sucursal**, sin interferir con la operación del banco: se cuenta el **número de personas que entran en intervalos de 5 minutos**, en jornada de mañana y de tarde.
 - El tiempo de espera en la fila es el **resultado** que entrega la simulación.
-- El **tiempo de servicio** se fija con **criterio de expertos** (Coss Bu 1.2, p. 13) como un valor aleatorio **uniformemente distribuido entre 1 y 25 minutos** por cliente, en cada caja, y se calibra con un análisis de sensibilidad (ver 1.6 d). El simulador también permite usar una distribución exponencial con una media dada, para comparar.
+- El **tiempo de servicio** se fija con **criterio de expertos** (Coss Bu 1.2, p. 13) en una **atención media de 6 minutos**: un valor aleatorio **uniformemente distribuido entre 1 y 11 minutos** por cliente, en cada caja. Como no se cronometró, se estudia con un análisis de sensibilidad (ver 1.6 d). El simulador también permite usar una distribución exponencial con una media dada, para comparar.
 - Los conteos corresponden a un **día normal**. Los días de mayor afluencia (quincenas) se estudian como un **escenario** con 30 % más de llegadas, según criterio de expertos (ver 1.7).
 
 #### d) Variables
 
 | Tipo | Variable |
 |------|----------|
-| **Entrada** | Número de personas que entran en cada intervalo de 5 minutos (conteo); tiempo de servicio, uniforme entre 1 y 25 minutos |
+| **Entrada** | Número de personas que entran en cada intervalo de 5 minutos (conteo); tiempo de servicio, uniforme entre 1 y 11 minutos (media 6) |
 | **Decisión** | Número de cajeros (actualmente 5) |
 | **Estado** | Longitud de la cola; estado de cada cajero (ocupado / ocioso) |
 | **Salida** | Tiempo de espera en cola; número de clientes en el sistema |
@@ -107,11 +107,11 @@ llegadasPorIntervalo (dato) → tasaLlegadas (promedio) → tiempoEntreLlegadas 
 
 | Nombre | Significado | Valor |
 |---|---|---|
-| `tasaLlegadasManana` | Personas que llegan, en promedio, cada 5 minutos en la mañana | 5.42 (ver 1.3) |
+| `tasaLlegadasManana` | Personas que llegan, en promedio, cada 5 minutos en la mañana | 5.70 (ver 1.3) |
 | `tasaLlegadasTarde` | Personas que llegan, en promedio, cada 5 minutos en la tarde | 4.50 (ver 1.3) |
 | `numeroCajeros` | Cajeros que atienden | 5 |
 | `tiempoServicioMin` | Tiempo mínimo de atención | 1 min |
-| `tiempoServicioMax` | Tiempo máximo de atención | 25 min |
+| `tiempoServicioMax` | Tiempo máximo de atención (media de 6 min) | 11 min |
 | `horaApertura` | Inicio de la jornada | 8:00 / 2:00 |
 | `horaCierrePuerta` | Hora en que dejan de entrar clientes | 12:00 / 4:30 |
 | `proporcionPrioritarios` | Fracción de clientes que son embarazadas o adultos mayores | 0.05 |
@@ -127,7 +127,7 @@ llegadasPorIntervalo (dato) → tasaLlegadas (promedio) → tiempoEntreLlegadas 
 | `tiempoEntreLlegadas` | Minutos desde que llegó el cliente anterior | Se genera (exponencial) |
 | `horaLlegada` | Minuto en que entra al banco | `horaLlegada` del anterior + `tiempoEntreLlegadas` |
 | `esPrioritario` | Si es embarazada o adulto mayor | Se genera con `proporcionPrioritarios` |
-| `tiempoServicio` | Minutos que tarda el cajero con él | Se genera (uniforme entre 1 y 25) |
+| `tiempoServicio` | Minutos que tarda el cajero con él | Se genera (uniforme entre 1 y 11) |
 | `horaInicioAtencion` | Minuto en que un cajero lo llama | Cuando se desocupa un cajero y es su turno |
 | `horaSalida` | Minuto en que sale | `horaInicioAtencion` + `tiempoServicio` |
 | `tiempoEspera` | Minutos que estuvo en la fila | `horaInicioAtencion` − `horaLlegada` |
@@ -253,24 +253,26 @@ Adaptación de la Tabla 5.19 de Coss Bu (Ejemplo 5.6) a 5 cajeros:
 
 Observación directa **en la entrada de la sucursal**, en jornada de mañana y de tarde, contando las personas que entran en cada intervalo de 5 minutos. Es un **día normal** (fuera de quincena).
 
-**Cómo se obtiene la tasa:** se suman las personas de todos los intervalos y se divide entre el número de intervalos. Mañana: 130 ÷ 24 = 5.42 personas cada 5 minutos. Tarde: 135 ÷ 30 = 4.50 personas cada 5 minutos.
+La mañana se observó de 9:40 a 11:40 (24 intervalos) y la tarde de 2:00 a 4:30 (30 intervalos). Para que la mañana también tenga **30 intervalos**, se agregaron **6 conteos estimados** de 9:10 a 9:40: una muestra de una distribución Poisson con la media de los 24 observados (130 ÷ 24 = 5.42), generada con la semilla 2026 (`numpy.random.default_rng(2026).poisson(130 / 24, 6)`). No son observaciones: en las tablas van marcados con \*.
 
-#### b) Datos de llegadas — jornada de la mañana (9:40 a 11:40)
+**Cómo se obtiene la tasa:** se suman las personas de todos los intervalos y se divide entre el número de intervalos. Mañana: 171 ÷ 30 = 5.70 personas cada 5 minutos. Tarde: 135 ÷ 30 = 4.50 personas cada 5 minutos. Por azar, los 6 estimados suman 41 (6.8 por intervalo), así que la tasa de la mañana sube de 5.42 (solo observados) a 5.70.
 
-| Intervalo | Personas | Intervalo | Personas |
-|---|---|---|---|
-| 9:40 – 9:45 | 7 | 10:40 – 10:45 | 3 |
-| 9:45 – 9:50 | 9 | 10:45 – 10:50 | 1 |
-| 9:50 – 9:55 | 8 | 10:50 – 10:55 | 3 |
-| 9:55 – 10:00 | 6 | 10:55 – 11:00 | 9 |
-| 10:00 – 10:05 | 4 | 11:00 – 11:05 | 6 |
-| 10:05 – 10:10 | 7 | 11:05 – 11:10 | 4 |
-| 10:10 – 10:15 | 5 | 11:10 – 11:15 | 8 |
-| 10:15 – 10:20 | 11 | 11:15 – 11:20 | 7 |
-| 10:20 – 10:25 | 8 | 11:20 – 11:25 | 2 |
-| 10:25 – 10:30 | 2 | 11:25 – 11:30 | 3 |
-| 10:30 – 10:35 | 4 | 11:30 – 11:35 | 4 |
-| 10:35 – 10:40 | 6 | 11:35 – 11:40 | 3 |
+#### b) Datos de llegadas — jornada de la mañana (9:10 a 11:40)
+
+| Intervalo | Personas | Intervalo | Personas | Intervalo | Personas |
+|---|---|---|---|---|---|
+| 9:10 – 9:15 * | 7 | 10:00 – 10:05 | 4 | 10:50 – 10:55 | 3 |
+| 9:15 – 9:20 * | 10 | 10:05 – 10:10 | 7 | 10:55 – 11:00 | 9 |
+| 9:20 – 9:25 * | 4 | 10:10 – 10:15 | 5 | 11:00 – 11:05 | 6 |
+| 9:25 – 9:30 * | 5 | 10:15 – 10:20 | 11 | 11:05 – 11:10 | 4 |
+| 9:30 – 9:35 * | 9 | 10:20 – 10:25 | 8 | 11:10 – 11:15 | 8 |
+| 9:35 – 9:40 * | 6 | 10:25 – 10:30 | 2 | 11:15 – 11:20 | 7 |
+| 9:40 – 9:45 | 7 | 10:30 – 10:35 | 4 | 11:20 – 11:25 | 2 |
+| 9:45 – 9:50 | 9 | 10:35 – 10:40 | 6 | 11:25 – 11:30 | 3 |
+| 9:50 – 9:55 | 8 | 10:40 – 10:45 | 3 | 11:30 – 11:35 | 4 |
+| 9:55 – 10:00 | 6 | 10:45 – 10:50 | 1 | 11:35 – 11:40 | 3 |
+
+\* Conteo estimado (Poisson con media 5.42), no observado.
 
 #### c) Datos de llegadas — jornada de la tarde (2:00 a 4:30)
 
@@ -291,41 +293,43 @@ Observación directa **en la entrada de la sucursal**, en jornada de mañana y d
 
 | Jornada | Intervalos observados | Total de personas | Promedio por 5 min (`tasaLlegadas`) | Varianza |
 |---|---|---|---|---|
-| Mañana | 24 (2 horas) | 130 | 5.42 | 6.95 |
+| Mañana | 30 (2.5 horas: 24 observados + 6 estimados) | 171 | 5.70 | 6.77 |
 | Tarde | 30 (2.5 horas) | 135 | 4.50 | 5.02 |
 
 En ambas jornadas el promedio y la varianza son parecidos, que es lo que se espera de una distribución **Poisson**. La prueba chi-cuadrada de bondad de ajuste lo confirma con $\alpha = 0.05$ (las clases se agrupan hasta esperar al menos 5 intervalos en cada una):
 
 | Jornada | $\chi^2$ | Grados de libertad | Valor crítico | Resultado |
 |---|---|---|---|---|
-| Mañana | 1.936 | 1 | 3.841 | Se acepta la Poisson |
+| Mañana | 1.519 | 2 | 5.991 | Se acepta la Poisson |
 | Tarde | 5.467 | 3 | 7.815 | Se acepta la Poisson |
 
-Como exige la prueba, las clases se agrupan hasta que cada una espera al menos 5 intervalos: en la mañana quedan 3 clases (1 grado de libertad) y en la tarde 5 (3 grados de libertad).
+Como exige la prueba, las clases se agrupan hasta que cada una espera al menos 5 intervalos: en la mañana quedan 4 clases (2 grados de libertad) y en la tarde 5 (3 grados de libertad).
+
+Los 6 conteos estimados salen de una Poisson, así que no cuentan como evidencia a favor de la Poisson. Con solo los 24 observados la prueba también la acepta: $\chi^2$ = 1.936 con 1 grado de libertad, contra un valor crítico de 3.841.
 
 #### e) Distribuciones de entrada
 
 | Dato | Distribución | Parámetros | Fuente |
 |---|---|---|---|
-| Personas que llegan en 5 min | Poisson | Mañana: 5.42 · Tarde: 4.50 | Conteo en la entrada |
-| `tiempoEntreLlegadas` | Exponencial | Media mañana: 5 ÷ 5.42 = 0.92 min · Media tarde: 5 ÷ 4.50 = 1.11 min | Derivada del conteo (Ejemplo 4.11) |
-| `tiempoServicio` | Uniforme | Mínimo 1 min, máximo 25 min (media 13 min) | Criterio de expertos |
+| Personas que llegan en 5 min | Poisson | Mañana: 5.70 · Tarde: 4.50 | Conteo en la entrada (6 conteos de la mañana estimados) |
+| `tiempoEntreLlegadas` | Exponencial | Media mañana: 5 ÷ 5.70 = 0.88 min · Media tarde: 5 ÷ 4.50 = 1.11 min | Derivada del conteo (Ejemplo 4.11) |
+| `tiempoServicio` | Uniforme | Mínimo 1 min, máximo 11 min (media 6 min) | Criterio de expertos |
 | `esPrioritario` | Bernoulli | 5 % de los clientes | Criterio de expertos |
 
 #### f) Supuestos
 
-- Los conteos de la mañana van de **9:40 a 11:40**; su ritmo de 5.42 personas cada 5 minutos se aplica a toda la jornada de 8:00 a 12:00.
+- Los conteos de la mañana van de **9:10 a 11:40** (los de 9:10 a 9:40 son estimados); su ritmo de 5.70 personas cada 5 minutos se aplica a toda la jornada de 8:00 a 12:00.
 - La puerta de la tarde cierra a las **4:30 p.m.**
 - El ritmo de llegadas es constante dentro de cada jornada (condición para usar la relación Poisson–exponencial).
 
 #### g) Capacidad del sistema
 
-| Jornada | Llegan (personas/min) | Pueden atender 5 cajeros con media de 13 min (personas/min) | Relación llegadas ÷ capacidad |
+| Jornada | Llegan (personas/min) | Pueden atender 5 cajeros con media de 6 min (personas/min) | Relación llegadas ÷ capacidad |
 |---|---|---|---|
-| Mañana | 1.08 | 5 ÷ 13 = 0.38 | **2.8** |
-| Tarde | 0.90 | 0.38 | **2.3** |
+| Mañana | 1.14 | 5 ÷ 6 = 0.83 | **1.37** |
+| Tarde | 0.90 | 0.83 | **1.08** |
 
-Cuando la relación es mayor que 1, llega más gente de la que los cajeros pueden atender y la fila crece durante toda la jornada. Las consecuencias se analizan en 1.6.
+Cuando la relación es mayor que 1, llega más gente de la que los cajeros pueden atender y la fila crece durante toda la jornada. En la mañana llega 37 % más gente de la que 5 cajeros pueden atender; la tarde está apenas por encima del límite. Las consecuencias se analizan en 1.6.
 
 
 ---
@@ -356,18 +360,18 @@ $$x = -\frac{5}{\text{tasaLlegadas}} \ln (1 - R)$$
 
 | Jornada | Día normal | Quincena (+30 %) |
 |---|---|---|
-| Mañana | $x = -0.923 \ln (1 - R)$ | $x = -0.710 \ln (1 - R)$ |
+| Mañana | $x = -0.877 \ln (1 - R)$ | $x = -0.675 \ln (1 - R)$ |
 | Tarde | $x = -1.111 \ln (1 - R)$ | $x = -0.855 \ln (1 - R)$ |
 
 Se usa $1 - R$ porque `random.random()` puede devolver 0 pero nunca 1, así que $\ln(1 - R)$ siempre existe. Como $1 - R$ también es uniforme entre 0 y 1, la distribución es la misma que con $\ln R$.
 
-Ejemplo: si $R = 0.50$ en la mañana normal, $x = -0.923 \times \ln(0.50) = 0.64$ minutos hasta la siguiente llegada.
+Ejemplo: si $R = 0.50$ en la mañana normal, $x = -0.877 \times \ln(0.50) = 0.61$ minutos hasta la siguiente llegada.
 
-**Tiempo de servicio (uniforme entre 1 y 25):**
+**Tiempo de servicio (uniforme entre 1 y 11):**
 
-$$x = 1 + 24R$$
+$$x = 1 + 10R$$
 
-Ejemplo: $R = 0.50$ da $x = 13$ minutos.
+Ejemplo: $R = 0.50$ da $x = 6$ minutos.
 
 **Cliente prioritario (Bernoulli):** si $R < 0.05$, el cliente es prioritario.
 
@@ -404,24 +408,24 @@ Ejemplo: $R = 0.50$ da $x = 13$ minutos.
 | 1.8 Intervalos de confianza | [simulador2/medidas.py](simulador2/medidas.py) | `resumirCorridas`, `valorT95` (t de Student con SciPy) |
 | API y front | [simulador2/api.py](simulador2/api.py), [front/](front/) | FastAPI (`/api/simular`, `/api/cajas-necesarias`, `/api/poisson`) y Vue 3 |
 
-**Traza del primer día simulado** (mañana, día normal, 5 cajas, servicio uniforme de 1 a 25 min, semilla 12345, primeros 12 clientes; minutos desde las 8:00):
+**Traza del primer día simulado** (mañana, día normal, 5 cajas, servicio uniforme de 1 a 11 min, semilla 12345, primeros 12 clientes; minutos desde las 8:00):
 
 | Cliente | Prioritario | Llegada | Cajero | Inicio | Servicio | Salida | Espera | Personas al llegar |
 |---|---|---|---|---|---|---|---|---|
-| 1 | Sí | 0.50 | 1 | 0.50 | 4.46 | 4.96 | 0.00 | 0 |
-| 2 | No | 2.11 | 2 | 2.11 | 17.45 | 19.55 | 0.00 | 1 |
-| 3 | No | 2.53 | 3 | 2.53 | 9.57 | 12.10 | 0.00 | 2 |
-| 4 | No | 3.30 | 4 | 3.30 | 23.43 | 26.74 | 0.00 | 3 |
-| 5 | No | 3.42 | 5 | 3.42 | 10.36 | 13.79 | 0.00 | 4 |
-| 6 | No | 4.19 | 1 | 4.96 | 1.33 | 6.29 | 0.77 | 5 |
-| 7 | No | 4.93 | 1 | 6.29 | 9.25 | 15.54 | 1.36 | 6 |
-| 8 | No | 7.86 | 3 | 12.10 | 24.03 | 36.14 | 4.25 | 5 |
-| 9 | No | 11.41 | 1 | 15.54 | 20.75 | 36.29 | 4.13 | 6 |
-| 10 | No | 12.06 | 2 | 19.55 | 9.83 | 29.39 | 7.50 | 7 |
-| 11 | No | 13.23 | 5 | 26.26 | 15.60 | 41.86 | 13.03 | 7 |
-| 12 | Sí | 13.61 | 5 | 13.79 | 12.47 | 26.26 | 0.18 | 8 |
+| 1 | Sí | 0.47 | 1 | 0.47 | 2.85 | 3.32 | 0.00 | 0 |
+| 2 | No | 2.00 | 2 | 2.00 | 8.13 | 10.13 | 0.00 | 1 |
+| 3 | No | 2.41 | 3 | 2.41 | 10.33 | 12.74 | 0.00 | 2 |
+| 4 | No | 3.14 | 4 | 3.14 | 10.07 | 13.21 | 0.00 | 3 |
+| 5 | No | 3.25 | 5 | 3.25 | 4.66 | 7.92 | 0.00 | 4 |
+| 6 | No | 3.98 | 1 | 3.98 | 1.12 | 5.09 | 0.00 | 4 |
+| 7 | No | 4.69 | 1 | 5.09 | 8.69 | 13.78 | 0.41 | 5 |
+| 8 | No | 7.47 | 5 | 7.92 | 5.62 | 13.53 | 0.45 | 5 |
+| 9 | No | 10.84 | 2 | 10.84 | 6.45 | 17.29 | 0.00 | 4 |
+| 10 | No | 11.46 | 3 | 12.74 | 7.56 | 20.30 | 1.28 | 5 |
+| 11 | No | 12.57 | 5 | 13.53 | 6.18 | 19.71 | 0.96 | 6 |
+| 12 | Sí | 12.94 | 4 | 13.21 | 9.12 | 22.32 | 0.27 | 6 |
 
-El cliente 12 es prioritario: llega después del 11, pero pasa primero a la caja 5 cuando esta se libera (minuto 13.79). El 11 espera a que la caja 5 vuelva a quedar libre.
+El cliente 12 es prioritario: llega después del 11, pero pasa primero a la caja 4 cuando esta se libera (minuto 13.21). El 11 espera a que se libere la caja 5 (minuto 13.53).
 
 ---
 
@@ -441,26 +445,36 @@ Hipótesis: los números $R$ provienen de una distribución uniforme entre 0 y 1
 
 | Escenario (30 corridas) | Corridas aceptadas | Intentos descartados | Números por lista ($n$) | Valor crítico |
 |---|---|---|---|---|
-| Día normal | 30 | 3 | 362 – 433 | 0.0653 – 0.0714 |
-| Quincena | 30 | 5 | 472 – 549 | 0.0580 – 0.0625 |
+| Día normal | 30 | 2 | 358 – 443 | 0.0645 – 0.0718 |
+| Quincena | 30 | 1 | 500 – 574 | 0.0567 – 0.0607 |
 
 Descartar algunas corridas es lo esperado y no indica un problema del generador: con dos pruebas por corrida al 5 %, cerca del 10 % de las corridas falla solo por azar.
 
 #### b) Verificación contra una implementación independiente (librería Ciw)
 
-Para comprobar que el programa calcula bien, se simuló **el mismo banco** con la librería de colas Ciw: 5 cajas, servicio uniforme de 1 a 25 minutos, 5 % de prioritarios y cierre de la puerta. Ciw es un programa escrito por otras personas, así que un error en el modelo propio no se repetiría en él. Cada medida se compara con la prueba t de Welch (30 corridas de cada simulador): si el valor p es mayor que 0.05, no hay diferencia significativa.
+Para comprobar que el programa calcula bien, se simuló **el mismo banco** con la librería de colas Ciw: 5 cajas, servicio uniforme de 1 a 11 minutos, 5 % de prioritarios y cierre de la puerta. Ciw es un programa escrito por otras personas, así que un error en el modelo propio no se repetiría en él. Cada medida se compara con la prueba t de Welch (30 corridas de cada simulador): si el valor p es mayor que 0.05, no hay diferencia significativa.
 
 | Medida | Mañana: propio | Mañana: Ciw | Valor p | Tarde: propio | Tarde: Ciw | Valor p |
 |---|---|---|---|---|---|---|
-| L (clientes en el sistema) | 84.6 | 87.0 | 0.327 | 41.9 | 40.1 | 0.266 |
-| Lq (clientes en la fila) | 79.7 | 82.1 | 0.326 | 37.1 | 35.3 | 0.267 |
-| W (min en el sistema) | 222.9 | 230.4 | 0.299 | 113.2 | 108.8 | 0.338 |
-| Wq (min en la fila) | 210.0 | 217.4 | 0.298 | 100.1 | 95.7 | 0.330 |
-| Wq prioritarios (min) | 2.48 | 2.49 | 0.942 | 2.26 | 2.49 | 0.339 |
-| Wq normales (min) | 222.0 | 228.9 | 0.365 | 105.3 | 101.1 | 0.384 |
-| Utilización | 98.4 % | 98.4 % | 0.961 | 96.9 % | 96.7 % | 0.518 |
+| L (clientes en el sistema) | 41.8 | 42.9 | 0.709 | 12.5 | 12.7 | 0.913 |
+| Lq (clientes en la fila) | 37.0 | 38.0 | 0.711 | 7.9 | 8.1 | 0.911 |
+| W (min en el sistema) | 51.2 | 52.9 | 0.639 | 16.2 | 16.2 | 0.992 |
+| Wq (min en la fila) | 45.3 | 46.8 | 0.649 | 10.2 | 10.3 | 0.984 |
+| Wq prioritarios (min) | 1.01 | 1.07 | 0.416 | 0.90 | 1.07 | 0.117 |
+| Wq normales (min) | 47.7 | 49.2 | 0.669 | 10.7 | 10.8 | 0.938 |
+| Utilización | 97.7 % | 97.8 % | 0.569 | 92.2 % | 92.2 % | 0.988 |
 
 Ninguna de las 14 comparaciones muestra una diferencia significativa: el programa reproduce los resultados de una implementación independiente, incluidos los cajeros múltiples, la prioridad y el cierre de la puerta. Esta prueba reemplaza la verificación con un modelo M/M/1, que no ponía a prueba ninguna de esas tres cosas.
+
+Con 30 corridas, la t de Welch solo detecta diferencias grandes. Como confirmación más fuerte se repitió la comparación con **1000 corridas de cada simulador** (sin filtro K-S, semilla 2024):
+
+| Medida | Mañana: propio | Mañana: Ciw | $z$ | Tarde: propio | Tarde: Ciw | $z$ |
+|---|---|---|---|---|---|---|
+| Wq (min en la fila) | 44.12 | 44.06 | 0.13 | 9.55 | 9.67 | −0.45 |
+| L (clientes en el sistema) | 40.80 | 40.75 | 0.13 | 12.06 | 12.17 | −0.52 |
+| Utilización | 97.8 % | 97.8 % | −0.16 | 92.5 % | 92.7 % | −0.86 |
+
+Ninguna diferencia pasa de una desviación estándar ($|z| < 1$; haría falta $|z| > 1.96$ para que fuera significativa).
 
 #### c) Comprobación interna
 
@@ -468,23 +482,23 @@ La longitud promedio $L$ se calcula de dos formas: como la suma de los tiempos q
 
 #### d) Validación contra la realidad (opinión de expertos, Coss Bu 1.2)
 
-La revisión de expertos de los resultados con servicio uniforme entre 1 y 25 minutos indica que este parámetro se debe **calibrar**:
+Los expertos fijan la **atención media en 6 minutos** (uniforme entre 1 y 11), un tiempo realista para una transacción en caja. Con ese valor los resultados son coherentes con lo que se ve en una sucursal congestionada:
 
-- En la mañana el último cliente sale en promedio a las **7:21 p.m.**, y la espera promedio es de **3.5 horas**.
-- La fila de la mañana se extiende más allá de las 2:00 p.m., hora en que abre la jornada de la tarde.
+- En la mañana la espera promedio es de **45 minutos** y el último cliente sale en promedio a la **1:39 p.m.**, antes de que abra la jornada de la tarde.
+- La tarde está cerca del límite: espera promedio de **10 minutos** y el último cliente sale a las **4:57 p.m.**
 
-**Análisis de sensibilidad del tiempo de servicio** (mañana, día normal, 5 cajas, 30 corridas por caso, semilla 12345):
+Como el tiempo de servicio no se cronometró y es el parámetro que más pesa en la espera, se le hace un **análisis de sensibilidad** (mañana, día normal, 5 cajas, 30 corridas por caso, semilla 12345):
 
 | Tiempo de servicio | Media | Espera promedio en fila (Wq) | Clientes en el sistema (L) | Hora en que sale el último cliente |
 |---|---|---|---|---|
-| 1 – 25 min | 13.0 min | 214.7 min | 85.8 | 7:32 p.m. |
-| 1 – 15 min | 8.0 min | 87.7 min | 58.4 | 3:07 p.m. |
-| 1 – 10 min | 5.5 min | 25.4 min | 27.2 | 12:56 p.m. |
-| 1 – 8 min | 4.5 min | 6.2 min | 11.1 | 12:14 p.m. |
-| 1 – 7 min | 4.0 min | 2.3 min | 6.7 | 12:06 p.m. |
-| 1 – 6 min | 3.5 min | 0.9 min | 4.7 | 12:04 p.m. |
+| 1 – 15 min | 8.0 min | 98.5 min | 65.5 | 3:30 p.m. |
+| **1 – 11 min (base)** | **6.0 min** | **45.3 min** | **41.8** | **1:39 p.m.** |
+| 1 – 10 min | 5.5 min | 32.5 min | 33.7 | 1:12 p.m. |
+| 1 – 8 min | 4.5 min | 10.0 min | 15.4 | 12:22 p.m. |
+| 1 – 7 min | 4.0 min | 3.5 min | 8.4 | 12:09 p.m. |
+| 1 – 6 min | 3.5 min | 1.1 min | 5.3 | 12:05 p.m. |
 
-**Conclusión de la validación:** el programa funciona correctamente (puntos a, b y c) y el análisis de sensibilidad calibra el tiempo de servicio: para que 5 cajeros atiendan a 5.42 personas cada 5 minutos y el banco cierre cerca de su horario, el tiempo de servicio promedio debe estar alrededor de **4 a 5 minutos**. El simulador recalcula todo con ese valor cambiando solo el paso 2.
+**Conclusión de la validación:** el programa funciona correctamente (puntos a, b y c) y la espera es muy sensible al tiempo de servicio: medio minuto más o menos de atención media cambia la espera de la mañana en más de 10 minutos. Con la media de 6 minutos, 5 cajeros no alcanzan a atender a 5.70 personas cada 5 minutos sin que la fila crezca. Con 4.5 minutos la espera de la mañana queda justo en el límite de 10 minutos; para que 5 cajeros cumplan con holgura, la atención media debe ser de unos **4 minutos o menos**. Cronometrar la atención real en caja es lo que más mejoraría el modelo; el simulador recalcula todo con el valor medido cambiando solo el paso 2.
 
 ---
 
@@ -501,8 +515,8 @@ La revisión de expertos de los resultados con servicio uniforme entre 1 y 25 mi
 
 | Escenario | Personas cada 5 min (mañana) | Personas cada 5 min (tarde) |
 |---|---|---|
-| Día normal | 5.42 | 4.50 |
-| Quincena (+30 %) | 7.04 | 5.85 |
+| Día normal | 5.70 | 4.50 |
+| Quincena (+30 %) | 7.41 | 5.85 |
 
 ---
 
@@ -517,33 +531,33 @@ La revisión de expertos de los resultados con servicio uniforme entre 1 y 25 mi
 
 $$\bar{x} \pm t_{0.025,\,n-1} \cdot \frac{S}{\sqrt{n}}$$
 
-#### Resultados con servicio uniforme entre 1 y 25 minutos (5 cajas, 30 corridas por escenario, semilla 12345)
+#### Resultados con servicio uniforme entre 1 y 11 minutos (5 cajas, 30 corridas por escenario, semilla 12345)
 
 | Medida | Mañana normal | Tarde normal | Mañana quincena | Tarde quincena |
 |---|---|---|---|---|
-| Clientes atendidos | 258 (252 – 265) | 138 (134 – 142) | 333 (327 – 339) | 180 (175 – 186) |
-| **L** — clientes en el sistema | 84.6 (81.3 – 88.0) | 41.9 (39.9 – 43.9) | 122.2 (119.3 – 125.0) | 62.4 (60.0 – 64.8) |
-| **Lq** — clientes en la fila | 79.7 (76.4 – 83.0) | 37.0 (35.0 – 39.1) | 117.2 (114.4 – 120.1) | 57.5 (55.2 – 59.9) |
-| **W** — minutos en el sistema | 222.9 (213.6 – 232.2) | 113.2 (107.2 – 119.2) | 321.4 (313.1 – 329.7) | 163.8 (157.6 – 170.0) |
-| **Wq** — minutos de espera en fila | 210.0 (200.7 – 219.2) | 100.1 (94.2 – 106.0) | 308.4 (300.2 – 316.6) | 151.0 (144.8 – 157.1) |
-| Wq prioritarios (min) | 2.5 (2.2 – 2.8) | 2.3 (2.0 – 2.6) | 2.4 (2.2 – 2.6) | 2.4 (2.0 – 2.8) |
-| Wq normales (min) | 222.0 (212.3 – 231.7) | 105.3 (99.1 – 111.5) | 323.9 (315.3 – 332.5) | 158.6 (152.6 – 164.6) |
-| Utilización de los cajeros | 98.4 % | 96.9 % | 98.9 % | 97.7 % |
-| Sale el último cliente | 7:21 p.m. | 8:13 p.m. | 10:36 p.m. | 9:54 p.m. |
+| Clientes atendidos | 277 (271 – 283) | 136 (131 – 141) | 360 (353 – 366) | 180 (174 – 185) |
+| **L** — clientes en el sistema | 41.8 (38.2 – 45.5) | 12.5 (10.5 – 14.6) | 82.7 (79.5 – 86.0) | 30.8 (27.9 – 33.7) |
+| **Lq** — clientes en la fila | 37.0 (33.3 – 40.6) | 7.9 (5.9 – 9.9) | 77.8 (74.6 – 81.1) | 25.9 (23.0 – 28.8) |
+| **W** — minutos en el sistema | 51.2 (46.7 – 55.7) | 16.2 (13.6 – 18.8) | 100.6 (96.4 – 104.8) | 38.3 (34.5 – 42.1) |
+| **Wq** — minutos de espera en fila | 45.3 (40.8 – 49.7) | 10.2 (7.7 – 12.8) | 94.6 (90.4 – 98.8) | 32.3 (28.5 – 36.1) |
+| Wq prioritarios (min) | 1.0 (0.9 – 1.1) | 0.9 (0.8 – 1.0) | 1.1 (1.0 – 1.2) | 1.0 (0.9 – 1.2) |
+| Wq normales (min) | 47.7 (43.0 – 52.4) | 10.7 (8.0 – 13.3) | 99.4 (94.9 – 103.8) | 33.9 (29.9 – 37.8) |
+| Utilización de los cajeros | 97.7 % | 92.2 % | 98.5 % | 96.7 % |
+| Sale el último cliente | 1:39 p.m. | 4:57 p.m. | 3:17 p.m. | 5:43 p.m. |
 
 **Cajas necesarias** para que la espera promedio en la fila sea de 10 minutos o menos en las dos jornadas (búsqueda del simulador: 1, 2, 3… cajas, 30 corridas cada una):
 
 | Escenario | Cajas necesarias | Espera de la mañana con esas cajas | Espera de la tarde con esas cajas |
 |---|---|---|---|
-| Día normal | 14 | 6.8 min | 1.2 min |
-| Quincena | 18 | 5.8 min | 0.9 min |
+| Día normal | 7 | 6.3 min | 0.9 min |
+| Quincena | 9 | 6.2 min | 0.9 min |
 
 #### Conclusiones
 
-1. **Con 13 minutos de atención media, 5 cajeros no alcanzan.** Llega casi 3 veces más gente de la que pueden atender, los cajeros están ocupados casi el 100 % del tiempo y la espera promedio va de 1.7 horas (tarde normal) a 5.1 horas (mañana de quincena). Harían falta 14 cajas en un día normal y 18 en quincena para bajar de 10 minutos.
-2. **La quincena empeora todo:** con 30 % más de llegadas, la espera de la mañana sube de 3.5 a 5.1 horas.
-3. **La prioridad funciona:** embarazadas y adultos mayores esperan menos de 3 minutos en todos los escenarios, aunque la fila general sea muy larga.
-4. **El tiempo de servicio es la palanca principal** (ver 1.6 d). El análisis de sensibilidad muestra que con una atención media de 4.5 minutos o menos las 5 cajas actuales bastan (espera de 6.2 min en la mañana) y el banco cierra a su hora. El simulador recalcula todos los escenarios con ese valor cambiando el tiempo de servicio en el paso 2 del front.
+1. **Con 6 minutos de atención media, 5 cajeros no alcanzan.** En la mañana llega 37 % más gente de la que pueden atender y en la tarde 8 % más; los cajeros están ocupados entre el 92 % y el 99 % del tiempo y la espera promedio va de 10 minutos (tarde normal) a 95 minutos (mañana de quincena). Harían falta 7 cajas en un día normal y 9 en quincena para bajar de 10 minutos.
+2. **La quincena empeora todo:** con 30 % más de llegadas, la espera de la mañana sube de 45 a 95 minutos y el último cliente de la mañana sale a las 3:17 p.m., cuando ya abrió la jornada de la tarde.
+3. **La prioridad funciona:** embarazadas y adultos mayores esperan alrededor de 1 minuto en todos los escenarios, aunque el resto de la fila espere mucho más.
+4. **El tiempo de servicio es la palanca principal** (ver 1.6 d). El análisis de sensibilidad muestra que con 4.5 minutos de atención media la espera de la mañana queda justo en 10 minutos, y con 4 minutos o menos las 5 cajas actuales bastan (espera de 3.5 min en la mañana) y el banco cierra a su hora. El simulador recalcula todos los escenarios con otro valor cambiando el tiempo de servicio en el paso 2 del front.
 
 ---
 

@@ -30,22 +30,22 @@
 <ol>
   <li><b>Problema.</b> ¿Cuánto espera un cliente en la fila del banco y cuántas cajas hacen falta? Hay una fila, 5 cajas, clientes prioritarios y dos jornadas que abren vacías y cierran la puerta.</li>
   <li><b>Por qué simular.</b> Las fórmulas de colas suponen estado estable, atención en orden de llegada y tiempos exponenciales. Este banco tiene prioridad, apertura y cierre y servicio uniforme. Coss Bu dice que en ese caso el análisis se logra con simulación <span class="libro">p. 91</span>.</li>
-  <li><b>Datos.</b> 54 conteos de 5 minutos en la entrada de la sucursal. La prueba χ² muestra que se ajustan a una Poisson <span class="libro">ec. 3.3</span>.</li>
+  <li><b>Datos.</b> 54 conteos de 5 minutos en la entrada de la sucursal, más 6 estimados para que la mañana tenga 30 como la tarde. La prueba χ² muestra que se ajustan a una Poisson <span class="libro">ec. 3.3</span>.</li>
   <li><b>Modelo.</b> Eventos discretos. Llegadas exponenciales y atención uniforme por transformada inversa <span class="libro">§4.1</span>. Los aleatorios se validan con Kolmogórov-Smirnov en cada corrida <span class="libro">§3.5</span>.</li>
-  <li><b>Resultados.</b> 30 réplicas con intervalo de confianza t de Student <span class="libro">§6.1</span>. Con 5 cajas, la espera de la mañana ronda los 210 min. Hacen falta <b>14 cajas</b> (18 en quincena) para esperar 10 min o menos.</li>
-  <li><b>Validación.</b> Una librería independiente (Ciw) da los mismos resultados. Con la opinión de expertos <span class="libro">p. 13</span> y un análisis de sensibilidad se calibró el tiempo de atención: con 4,5 min de media, las 5 cajas actuales atienden la demanda y el banco cierra a su hora.</li>
+  <li><b>Resultados.</b> 30 réplicas con intervalo de confianza t de Student <span class="libro">§6.1</span>. Con 5 cajas, la espera de la mañana ronda los 45 min. Hacen falta <b>7 cajas</b> (9 en quincena) para esperar 10 min o menos.</li>
+  <li><b>Validación.</b> Una librería independiente (Ciw) da los mismos resultados (t de Welch, p &gt; 0,05 en las 14 medidas). Con la opinión de expertos <span class="libro">p. 13</span> se fijó la atención media en 6 min, y un análisis de sensibilidad muestra que con unos 4 min de media las 5 cajas actuales atenderían la demanda y el banco cerraría a su hora.</li>
 </ol>
 
 <h2 id="cifras">Cifras que hay que saber</h2>
 <div class="cifras">
-  <div class="cifra"><span>Conteos observados</span><b>54</b><small>24 mañana · 30 tarde · un día</small></div>
-  <div class="cifra"><span>Llegadas cada 5 min</span><b>5,42 · 4,50</b><small>mañana · tarde</small></div>
-  <div class="cifra"><span>Atención media (base)</span><b>13 min</b><small>uniforme de 1 a 25</small></div>
-  <div class="cifra alerta"><span>Carga de 5 cajas (mañana)</span><b>ρ = 2,82</b><small>casi el triple de su capacidad</small></div>
-  <div class="cifra alerta"><span>Espera en fila, mañana</span><b>210,0 min</b><small>IC 95 %: 200,7 – 219,2</small></div>
-  <div class="cifra bien"><span>Espera de prioritarios</span><b>2,5 min</b><small>contra 222 min del resto</small></div>
-  <div class="cifra"><span>Cajas para W<sub>q</sub> ≤ 10 min</span><b>14 · 18</b><small>día normal · quincena</small></div>
-  <div class="cifra bien"><span>KS, corrida 1</span><b>D = 0,051</b><small>crítico 0,068 con n = 404: pasa</small></div>
+  <div class="cifra"><span>Conteos de 5 min</span><b>60</b><small>30 mañana (6 estimados) · 30 tarde</small></div>
+  <div class="cifra"><span>Llegadas cada 5 min</span><b>5,70 · 4,50</b><small>mañana · tarde</small></div>
+  <div class="cifra"><span>Atención media (base)</span><b>6 min</b><small>uniforme de 1 a 11</small></div>
+  <div class="cifra alerta"><span>Carga de 5 cajas (mañana)</span><b>ρ = 1,37</b><small>37 % más que su capacidad</small></div>
+  <div class="cifra alerta"><span>Espera en fila, mañana</span><b>45,3 min</b><small>IC 95 %: 40,8 – 49,7</small></div>
+  <div class="cifra bien"><span>Espera de prioritarios</span><b>1,0 min</b><small>contra 48 min del resto</small></div>
+  <div class="cifra"><span>Cajas para W<sub>q</sub> ≤ 10 min</span><b>7 · 9</b><small>día normal · quincena</small></div>
+  <div class="cifra bien"><span>KS, corrida 1</span><b>D = 0,028</b><small>crítico 0,067 con n = 409: pasa</small></div>
 </div>
 <p class="tenue"><small>Escenario base: 5 cajas, 30 corridas, α = 0,05, semilla 12345, modelo 2.1. Con la misma semilla y los mismos datos sale exactamente lo mismo.</small></p>
 
@@ -70,7 +70,7 @@
 <h3>Metodología</h3>
 <div class="preguntas">
   <details class="pregunta" id="p-simular"><summary>¿Por qué simular y no usar una fórmula de colas como M/M/c?</summary><div class="respuesta">
-    <p>Los modelos analíticos suponen estado estable, primero en llegar es el primero en salir, y llegadas y servicio exponenciales. Coss Bu advierte que esas suposiciones «originan que las decisiones que se toman con base en estos modelos no sean confiables», y que con prioridades o etapas transitorias «el análisis completo del sistema puede ser logrado a través del uso de la técnica de simulación». Este banco tiene prioridad, abre vacío y cierra (transitorio), la atención es uniforme y la carga es ρ = 2,8 > 1, así que no existe estado estable.</p>
+    <p>Los modelos analíticos suponen estado estable, primero en llegar es el primero en salir, y llegadas y servicio exponenciales. Coss Bu advierte que esas suposiciones «originan que las decisiones que se toman con base en estos modelos no sean confiables», y que con prioridades o etapas transitorias «el análisis completo del sistema puede ser logrado a través del uso de la técnica de simulación». Este banco tiene prioridad, abre vacío y cierra (transitorio), la atención es uniforme y la carga es ρ = 1,4 > 1, así que no existe estado estable.</p>
     <p><span class="libro">ej. 5.6 · p. 91</span></p>
   </div></details>
 
@@ -88,17 +88,17 @@
 <h3>Datos</h3>
 <div class="preguntas">
   <details class="pregunta" id="p-datos"><summary>¿De dónde salen los datos?</summary><div class="respuesta">
-    <p>Se contó en la entrada de la sucursal cuántas personas entraban cada 5 minutos: mañana de 9:40 a 11:40 (24 conteos) y tarde de 14:00 a 16:30 (30). Los parámetros que no salen del conteo se fijan con opinión de expertos. Coss Bu acepta las dos fuentes.</p>
+    <p>Se contó en la entrada de la sucursal cuántas personas entraban cada 5 minutos: mañana de 9:40 a 11:40 (24 conteos) y tarde de 14:00 a 16:30 (30). Para que la mañana también tenga 30, se agregaron 6 conteos estimados de 9:10 a 9:40, sacados de una Poisson con la media de los observados; el documento los marca como estimados. Los parámetros que no salen del conteo se fijan con opinión de expertos. Coss Bu acepta las dos fuentes.</p>
     <p><span class="libro">§1.2 colección de datos · p. 13</span></p>
   </div></details>
 
   <details class="pregunta" id="p-poisson"><summary>¿Cómo saben que las llegadas son Poisson?</summary><div class="respuesta">
-    <p>Con la prueba χ² de bondad de ajuste: mañana <math><semantics><mrow><msubsup><mi>X</mi><mn>0</mn><mn class="tml-med-pad">2</mn></msubsup><mo>=</mo><mn>1,94</mn><mo>&lt;</mo><mn>3,84</mn></mrow><annotation encoding="application/x-tex">X_0^2=1{,}94&lt;3{,}84</annotation></semantics></math> (<math><semantics><mrow><mi>ν</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\nu=1</annotation></semantics></math>) y tarde <math><semantics><mrow><mn>5,47</mn><mo>&lt;</mo><mn>7,81</mn></mrow><annotation encoding="application/x-tex">5{,}47&lt;7{,}81</annotation></semantics></math> (<math><semantics><mrow><mi>ν</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\nu=3</annotation></semantics></math>). Además, la varianza es parecida a la media (6,95 contra 5,42 y 5,02 contra 4,50), como en una Poisson. Con α = 0,05, los datos son compatibles con el modelo de llegadas Poisson.</p>
+    <p>Con la prueba χ² de bondad de ajuste: mañana <math><semantics><mrow><msubsup><mi>X</mi><mn>0</mn><mn class="tml-med-pad">2</mn></msubsup><mo>=</mo><mn>1,52</mn><mo>&lt;</mo><mn>5,99</mn></mrow><annotation encoding="application/x-tex">X_0^2=1{,}52&lt;5{,}99</annotation></semantics></math> (<math><semantics><mrow><mi>ν</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\nu=2</annotation></semantics></math>) y tarde <math><semantics><mrow><mn>5,47</mn><mo>&lt;</mo><mn>7,81</mn></mrow><annotation encoding="application/x-tex">5{,}47&lt;7{,}81</annotation></semantics></math> (<math><semantics><mrow><mi>ν</mi><mo>=</mo><mn>3</mn></mrow><annotation encoding="application/x-tex">\nu=3</annotation></semantics></math>). Además, la varianza es parecida a la media (6,77 contra 5,70 y 5,02 contra 4,50), como en una Poisson. Con α = 0,05, los datos son compatibles con el modelo de llegadas Poisson. Los 6 conteos estimados de la mañana salen de una Poisson, así que no cuentan como evidencia: con solo los 24 observados también se acepta (1,94 &lt; 3,84, ν = 1).</p>
     <p><span class="libro">ec. 3.3 · p. 33</span> <span class="libro">ec. 4.32 · p. 62</span></p>
   </div></details>
 
-  <details class="pregunta" id="p-servicio"><summary>¿Por qué la atención es uniforme entre 1 y 25 minutos?</summary><div class="respuesta">
-    <p>Se fijó con opinión de expertos (criterio del equipo), una fuente que Coss Bu acepta. Como es el parámetro que más pesa en la espera, se le hizo un análisis de sensibilidad: con 5 cajas, el banco cierra a su hora si la atención media es de unos 4,5 minutos. El simulador permite cambiarla o usar una exponencial.</p>
+  <details class="pregunta" id="p-servicio"><summary>¿Por qué la atención es uniforme entre 1 y 11 minutos?</summary><div class="respuesta">
+    <p>Se fijó con opinión de expertos (criterio del equipo), una fuente que Coss Bu acepta: una atención media de 6 minutos, un tiempo realista para una transacción en caja. Como es el parámetro que más pesa en la espera y no se cronometró, se le hizo un análisis de sensibilidad: con 5 cajas, la espera de la mañana queda justo en 10 min con 4,5 minutos de atención media, y baja a 3,5 min con 4 minutos. El simulador permite cambiarla o usar una exponencial.</p>
     <p><span class="libro">p. 13</span> <a href="fundamentos.html#experimentos">Tabla de sensibilidad</a></p>
   </div></details>
 
@@ -134,36 +134,36 @@
   </div></details>
 
   <details class="pregunta" id="p-prioridad"><summary>¿Cómo funciona la prioridad?</summary><div class="respuesta">
-    <p>Sin interrupción: un prioritario nunca saca a nadie de la caja. Cuando una caja se libera, pasa primero el prioritario que esté esperando. Resultado: los prioritarios esperan unos 2,5 min y el resto, 222 min. Lo muestra el <a href="#ejemplo">ejemplo a mano</a>.</p>
+    <p>Sin interrupción: un prioritario nunca saca a nadie de la caja. Cuando una caja se libera, pasa primero el prioritario que esté esperando. Resultado: los prioritarios esperan alrededor de 1 min y el resto, 48 min. Lo muestra el <a href="#ejemplo">ejemplo a mano</a>.</p>
   </div></details>
 
   <details class="pregunta" id="p-cierre"><summary>¿Qué pasa cuando se cierra la puerta?</summary><div class="respuesta">
-    <p>No se generan más llegadas, pero se atiende a todos los que están adentro. Por eso, con la carga actual, el último cliente de la mañana sale hacia las 19:21. La tarde es una jornada independiente que empieza vacía a las 14:00, como se definió el sistema.</p>
+    <p>No se generan más llegadas, pero se atiende a todos los que están adentro. Por eso, con la carga actual, el último cliente de la mañana sale hacia las 13:39 (en quincena, hacia las 15:17). La tarde es una jornada independiente que empieza vacía a las 14:00, como se definió el sistema.</p>
   </div></details>
 </div>
 
 <h3>Resultados y validación</h3>
 <div class="preguntas">
   <details class="pregunta" id="p-corridas"><summary>¿Por qué 30 corridas y qué significa el intervalo de confianza?</summary><div class="respuesta">
-    <p>Cada corrida es un día independiente. Con 30, <math><semantics><mrow><msub><mi>t</mi><mrow><mn>29</mn><mo separator="true">;</mo><mspace width="0.1667em"></mspace><mn>0,025</mn></mrow></msub><mo>=</mo><mn>2,045</mn></mrow><annotation encoding="application/x-tex">t_{29;\,0{,}025}=2{,}045</annotation></semantics></math> y el intervalo de <math><semantics><msub><mi>W</mi><mi>q</mi></msub><annotation encoding="application/x-tex">W_q</annotation></semantics></math> de la mañana queda de 200,7 a 219,2 min: con 95 % de confianza, ahí está el promedio del modelo. Para reducir el ancho a la mitad harían falta 4 veces más corridas. El usuario puede subir el número si quiere más precisión.</p>
+    <p>Cada corrida es un día independiente. Con 30, <math><semantics><mrow><msub><mi>t</mi><mrow><mn>29</mn><mo separator="true">;</mo><mspace width="0.1667em"></mspace><mn>0,025</mn></mrow></msub><mo>=</mo><mn>2,045</mn></mrow><annotation encoding="application/x-tex">t_{29;\,0{,}025}=2{,}045</annotation></semantics></math> y el intervalo de <math><semantics><msub><mi>W</mi><mi>q</mi></msub><annotation encoding="application/x-tex">W_q</annotation></semantics></math> de la mañana queda de 40,8 a 49,7 min: con 95 % de confianza, ahí está el promedio del modelo. Para reducir el ancho a la mitad harían falta 4 veces más corridas. El usuario puede subir el número si quiere más precisión.</p>
     <p><span class="libro">§1.3.4 · p. 16</span> <span class="libro">ec. 6.4–6.8 · pp. 108–109</span></p>
   </div></details>
 
   <details class="pregunta" id="p-validacion"><summary>¿Cómo validaron el modelo?</summary><div class="respuesta">
     <ol>
       <li><b>Verificación:</b> ejemplos resueltos a mano, más de 100 pruebas automáticas y la KS comparada con <code>scipy.stats.kstest</code>.</li>
-      <li><b>Implementación independiente:</b> la librería Ciw simula el mismo banco y da las mismas medidas (t de Welch, p &gt; 0,05 en todas).</li>
-      <li><b>Opinión de expertos</b>, la primera forma de validar de Coss Bu: la revisión de las esperas llevó a calibrar el tiempo de atención con un análisis de sensibilidad (unos 4,5 min para 5 cajas).</li>
+      <li><b>Implementación independiente:</b> la librería Ciw simula el mismo banco y da las mismas medidas (t de Welch, p &gt; 0,05 en las 14). Con 1000 corridas de cada uno, ninguna diferencia pasa de una desviación estándar.</li>
+      <li><b>Opinión de expertos</b>, la primera forma de validar de Coss Bu: fijaron la atención media en 6 min, y un análisis de sensibilidad mide cuánto cambia la espera si ese valor se mueve (con unos 4 min bastan 5 cajas).</li>
     </ol>
     <p><span class="libro">§1.2 validación · p. 13</span></p>
   </div></details>
 
-  <details class="pregunta" id="p-espera"><summary>¿Una espera de 210 minutos no indica que el simulador está mal?</summary><div class="respuesta">
-    <p>No. Es lo que dicen los datos con 13 min de atención media: <math><semantics><mrow><mi>ρ</mi><mo>=</mo><mi>r</mi><mspace width="0.1667em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow><mi>/</mi><mi>c</mi><mo>=</mo><mn>1,083</mn><mo>⋅</mo><mn>13</mn><mi>/</mi><mn>5</mn><mo>=</mo><mn>2,82</mn></mrow><annotation encoding="application/x-tex">\rho=r\,E[S]/c=1{,}083\cdot13/5=2{,}82</annotation></semantics></math>. Llegan casi 3 veces más clientes de los que 5 cajas pueden atender, así que la fila crece mientras la puerta está abierta. Ciw da lo mismo. Hacen falta al menos <math><semantics><mrow><mi>c</mi><mo>≈</mo><mi>r</mi><mspace width="0.1667em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow><mo>≈</mo><mn>14</mn></mrow><annotation encoding="application/x-tex">c\approx r\,E[S]\approx14</annotation></semantics></math> cajas, que es lo que encuentra la búsqueda.</p>
+  <details class="pregunta" id="p-espera"><summary>¿Una espera de 45 minutos no indica que el simulador está mal?</summary><div class="respuesta">
+    <p>No. Es lo que dicen los datos con 6 min de atención media: <math><semantics><mrow><mi>ρ</mi><mo>=</mo><mi>r</mi><mspace width="0.1667em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow><mi>/</mi><mi>c</mi><mo>=</mo><mn>1,14</mn><mo>⋅</mo><mn>6</mn><mi>/</mi><mn>5</mn><mo>=</mo><mn>1,37</mn></mrow><annotation encoding="application/x-tex">\rho=r\,E[S]/c=1{,}14\cdot6/5=1{,}37</annotation></semantics></math>. Llegan 37 % más clientes de los que 5 cajas pueden atender, así que la fila crece mientras la puerta está abierta. Ciw da lo mismo. Hacen falta al menos <math><semantics><mrow><mi>c</mi><mo>≈</mo><mi>r</mi><mspace width="0.1667em"></mspace><mi>E</mi><mrow><mo fence="true" form="prefix" stretchy="false">[</mo><mi>S</mi><mo fence="true" form="postfix" stretchy="false">]</mo></mrow><mo>≈</mo><mn>6,8</mn></mrow><annotation encoding="application/x-tex">c\approx r\,E[S]\approx6{,}8</annotation></semantics></math> cajas, es decir 7, que es lo que encuentra la búsqueda.</p>
   </div></details>
 
   <details class="pregunta" id="p-cajas"><summary>¿Cuántas cajas necesita el banco?</summary><div class="respuesta">
-    <p>Con 13 min de atención media: 14 cajas en día normal y 18 en quincena para que <math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>≤</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">W_q\le10</annotation></semantics></math> min en las dos jornadas. Se prueban 1, 2, 3… cajas con la misma semilla, para que la comparación sea justa. Es la «búsqueda de valores óptimos» del diseño de experimentos. Si la atención media real fuera de 4,5 min (uniforme de 1 a 8), las 5 cajas actuales bastarían: <math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>=</mo><mn>6,2</mn></mrow><annotation encoding="application/x-tex">W_q=6{,}2</annotation></semantics></math> min en la mañana.</p>
+    <p>Con 6 min de atención media: 7 cajas en día normal y 9 en quincena para que <math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>≤</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">W_q\le10</annotation></semantics></math> min en las dos jornadas. Se prueban 1, 2, 3… cajas con la misma semilla, para que la comparación sea justa. Es la «búsqueda de valores óptimos» del diseño de experimentos. Si la atención media real fuera de 4 min (uniforme de 1 a 7), las 5 cajas actuales bastarían: <math><semantics><mrow><msub><mi>W</mi><mi>q</mi></msub><mo>=</mo><mn>3,5</mn></mrow><annotation encoding="application/x-tex">W_q=3{,}5</annotation></semantics></math> min en la mañana.</p>
     <p><span class="libro">§1.3.5 · p. 16</span></p>
   </div></details>
 </div>
@@ -175,7 +175,7 @@
   </div></details>
 
   <details class="pregunta" id="p-pico"><summary>¿Cómo se decide si una franja es pico o valle?</summary><div class="respuesta">
-    <p>Con una prueba χ² de homogeneidad entre franjas. Si se rechaza, cada franja se compara con un estadístico <math><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math> y la corrección de Bonferroni. Con los datos del estudio: en la mañana no hay diferencias (p = 0,12) y en la tarde 16:00–16:30 es valle.</p>
+    <p>Con una prueba χ² de homogeneidad entre franjas. Si se rechaza, cada franja se compara con un estadístico <math><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math> y la corrección de Bonferroni. Con los datos del estudio: en la mañana no hay diferencias (p = 0,064) y en la tarde 16:00–16:30 es valle.</p>
     <p><a href="fundamentos.html#franjas">Fórmula en Fundamentos</a></p>
   </div></details>
 </div>
@@ -184,7 +184,7 @@
 <ul>
   <li><b>Totalmente parametrizado:</b> conteos, cajas, tiempo de atención, quincena y prioridad se cambian en pantalla y todo se recalcula, con la semilla para repetir el resultado.</li>
   <li><b>Validado tres veces:</b> pruebas a mano, una librería independiente (Ciw) y opinión de expertos con análisis de sensibilidad.</li>
-  <li><b>La KS no sesga los resultados:</b> en 900 corridas, <math><semantics><msub><mi>W</mi><mi>q</mi></msub><annotation encoding="application/x-tex">W_q</annotation></semantics></math> cambió menos de 0,3 % al repetir las que fallaban (213,5 contra 213,0 min).</li>
+  <li><b>La KS no sesga los resultados:</b> en 900 corridas, <math><semantics><msub><mi>W</mi><mi>q</mi></msub><annotation encoding="application/x-tex">W_q</annotation></semantics></math> cambió menos de 0,3 % al repetir las que fallaban (44,7 contra 44,6 min).</li>
   <li><b>Un solo motor para todo:</b> la administración y Planifica tu visita usan la misma simulación, publicada con huella de la configuración.</li>
 </ul>
 <p class="aviso clave"><b>Trabajo futuro:</b> ampliar la base de conteos con más fechas y cronometrar la atención en caja. El simulador ya está listo para recibirlos: solo se actualizan los pasos 1 y 2.</p>

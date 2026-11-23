@@ -24,7 +24,12 @@ from pruebaPoisson import pruebaChiCuadradaPoisson
 CARPETA_FRONT_COMPILADO = Path(__file__).resolve().parent.parent / "front" / "dist"
 
 # Conteos en la entrada de la sucursal (documento, sección 1.3)
-CONTEOS_MANANA = [7, 9, 8, 6, 4, 7, 5, 11, 8, 2, 4, 6, 3, 1, 3, 9, 6, 4, 8, 7, 2, 3, 4, 3]
+# Mañana: 24 conteos observados de 9:40 a 11:40, y 6 estimados de 9:10 a 9:40 para completar 30 como la tarde.
+# Los estimados son una muestra Poisson con la media de los observados (130 / 24):
+#   numpy.random.default_rng(2026).poisson(130 / 24, 6)
+CONTEOS_MANANA_OBSERVADOS = [7, 9, 8, 6, 4, 7, 5, 11, 8, 2, 4, 6, 3, 1, 3, 9, 6, 4, 8, 7, 2, 3, 4, 3]
+CONTEOS_MANANA_ESTIMADOS = [7, 10, 4, 5, 9, 6]
+CONTEOS_MANANA = CONTEOS_MANANA_ESTIMADOS + CONTEOS_MANANA_OBSERVADOS
 CONTEOS_TARDE = [3, 3, 2, 3, 3, 7, 9, 4, 7, 6, 4, 4, 6, 3, 7, 4, 8, 5, 3, 5, 9, 3, 7, 6, 4, 2, 3, 3, 2, 0]
 
 
@@ -34,9 +39,10 @@ class Jornada(BaseModel):
     conteos: list[int] = Field(min_length=2, description="Personas que entraron en cada intervalo")
     inicioConteos: time | None = Field(None, description="Hora del primer conteo (vacío = cuando abre la jornada). "
                                                          "Ubica cada conteo en el reloj para los promedios móviles y las franjas")
-    minutosPorCliente: float = Field(13.5, gt=0, description="Media del servicio si es exponencial")
+    # Atención media de 6 min (criterio de experto): uniforme de 1 a 11 o exponencial con media 6
+    minutosPorCliente: float = Field(6, gt=0, description="Media del servicio si es exponencial")
     servicioMinimo: float = Field(1, ge=0, description="Mínimo del servicio si es uniforme")
-    servicioMaximo: float = Field(25, gt=0, description="Máximo del servicio si es uniforme")
+    servicioMaximo: float = Field(11, gt=0, description="Máximo del servicio si es uniforme")
 
     @model_validator(mode="after")
     def revisarJornada(self):
@@ -64,11 +70,9 @@ class Entrada(BaseModel):
     semilla: int | None = None
     compararConCiw: bool = False
     jornadas: list[Jornada] = Field(min_length=1, default_factory=lambda: [
-        # La mañana se contó de 9:40 a 11:40 (documento, sección 1.3)
-        Jornada(inicio=time(8, 0), fin=time(12, 0), conteos=CONTEOS_MANANA, minutosPorCliente=13.5,
-                inicioConteos=time(9, 40)),
-        Jornada(inicio=time(14, 0), fin=time(16, 30), conteos=CONTEOS_TARDE, minutosPorCliente=14,
-                inicioConteos=time(14, 0)),
+        # Conteos de la mañana de 9:10 a 11:40: los 6 primeros son estimados (documento, sección 1.3)
+        Jornada(inicio=time(8, 0), fin=time(12, 0), conteos=CONTEOS_MANANA, inicioConteos=time(9, 10)),
+        Jornada(inicio=time(14, 0), fin=time(16, 30), conteos=CONTEOS_TARDE, inicioConteos=time(14, 0)),
     ])
 
 
